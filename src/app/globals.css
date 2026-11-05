@@ -1,0 +1,390 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================================================
+   PEROKIO DESIGN SYSTEM — High-Fidelity Prototype Match
+   - Deep Dark #0A0F0D background (always-on, no light mode)
+   - Signal Lime #D8EF70 / Opportunity Orange #ED7A42 / Alert Red #E5484D
+   - Fraunces (headings, serif) · Inter (UI) · JetBrains Mono (numbers/timers)
+   - Glassmorphism: rgba(255,255,255,0.04) + 1px rgba(255,255,255,0.08) + blur(20px)
+   ============================================================================ */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter), var(--font-noto-arabic), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  /* Forced Deep Dark — no light mode for the prototype */
+  --radius: 0.85rem;
+
+  --background: #0A0F0D;
+  --foreground: rgba(255, 255, 255, 0.92);
+
+  --card: rgba(255, 255, 255, 0.04);
+  --card-foreground: rgba(255, 255, 255, 0.92);
+
+  --popover: rgba(15, 22, 18, 0.95);
+  --popover-foreground: rgba(255, 255, 255, 0.92);
+
+  /* Signal Lime — the brand color, primary CTAs */
+  --primary: #D8EF70;
+  --primary-foreground: #0A0F0D;
+
+  /* Opportunity Orange — secondary CTAs, opportunities, warnings */
+  --secondary: rgba(237, 122, 66, 0.12);
+  --secondary-foreground: #ED7A42;
+
+  --muted: rgba(255, 255, 255, 0.04);
+  --muted-foreground: rgba(255, 255, 255, 0.55);
+
+  --accent: rgba(216, 239, 112, 0.12);
+  --accent-foreground: #D8EF70;
+
+  /* Alert Red — destructive / blocked / critical */
+  --destructive: #E5484D;
+  --destructive-foreground: rgba(255, 255, 255, 0.95);
+
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.06);
+  --ring: #D8EF70;
+
+  --chart-1: #D8EF70; /* Lime */
+  --chart-2: #ED7A42; /* Orange */
+  --chart-3: #E5484D; /* Red */
+  --chart-4: #6FD3C7; /* Cool teal — for "verified" tertiary */
+  --chart-5: #B6A6FF; /* Soft violet — for accents */
+
+  --sidebar: rgba(8, 12, 10, 0.88);
+  --sidebar-foreground: rgba(255, 255, 255, 0.92);
+  --sidebar-primary: #D8EF70;
+  --sidebar-primary-foreground: #0A0F0D;
+  --sidebar-accent: rgba(255, 255, 255, 0.06);
+  --sidebar-accent-foreground: rgba(255, 255, 255, 0.92);
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-ring: #D8EF70;
+}
+
+/* Dark class kept for compatibility but identical — Deep Dark is the only mode */
+.dark {
+  --background: #0A0F0D;
+  --foreground: rgba(255, 255, 255, 0.92);
+  --card: rgba(255, 255, 255, 0.04);
+  --card-foreground: rgba(255, 255, 255, 0.92);
+  --popover: rgba(15, 22, 18, 0.95);
+  --popover-foreground: rgba(255, 255, 255, 0.92);
+  --primary: #D8EF70;
+  --primary-foreground: #0A0F0D;
+  --secondary: rgba(237, 122, 66, 0.12);
+  --secondary-foreground: #ED7A42;
+  --muted: rgba(255, 255, 255, 0.04);
+  --muted-foreground: rgba(255, 255, 255, 0.55);
+  --accent: rgba(216, 239, 112, 0.12);
+  --accent-foreground: #D8EF70;
+  --destructive: #E5484D;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.06);
+  --ring: #D8EF70;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html,
+  body {
+    background-color: #0A0F0D;
+    color: rgba(255, 255, 255, 0.92);
+    /* Subtle ambient gradient — gives the deep dark a sense of depth */
+    background-image:
+      radial-gradient(ellipse 1200px 600px at 80% -10%, rgba(216, 239, 112, 0.05), transparent 60%),
+      radial-gradient(ellipse 1000px 700px at -10% 100%, rgba(237, 122, 66, 0.04), transparent 60%);
+    background-attachment: fixed;
+  }
+  body {
+    font-family: var(--font-inter), var(--font-noto-arabic), ui-sans-serif, system-ui, sans-serif;
+    font-feature-settings: "cv11", "ss01";
+    -webkit-font-smoothing: antialiased;
+  }
+  /* Headings use Fraunces serif */
+  h1, h2, h3, h4, h5, h6,
+  .font-serif {
+    font-family: var(--font-fraunces), ui-serif, Georgia, serif;
+    letter-spacing: -0.02em;
+  }
+  /* Numbers, timers, codes, monetary values use JetBrains Mono */
+  .font-mono, .tabular, [data-mono] {
+    font-family: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+  /* RTL support */
+  [dir="rtl"] {
+    font-family: var(--font-noto-arabic), var(--font-inter), sans-serif;
+  }
+}
+
+@layer utilities {
+  /* ---------- Glassmorphism Card ---------- */
+  .glass {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+  }
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(28px) saturate(160%);
+    -webkit-backdrop-filter: blur(28px) saturate(160%);
+  }
+  .glass-lime {
+    background: linear-gradient(135deg, rgba(216, 239, 112, 0.10), rgba(216, 239, 112, 0.02));
+    border: 1px solid rgba(216, 239, 112, 0.25);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+  .glass-orange {
+    background: linear-gradient(135deg, rgba(237, 122, 66, 0.10), rgba(237, 122, 66, 0.02));
+    border: 1px solid rgba(237, 122, 66, 0.25);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+  .glass-red {
+    background: linear-gradient(135deg, rgba(229, 72, 77, 0.10), rgba(229, 72, 77, 0.02));
+    border: 1px solid rgba(229, 72, 77, 0.30);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  /* ---------- Custom Scrollbar ---------- */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.12);
+    border-radius: 9999px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(216, 239, 112, 0.35);
+  }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* ---------- Text color tokens ---------- */
+  .text-fg { color: rgba(255, 255, 255, 0.92); }
+  .text-muted-fg { color: rgba(255, 255, 255, 0.55); }
+  .text-subtle { color: rgba(255, 255, 255, 0.35); }
+  .text-lime { color: #D8EF70; }
+  .text-orange { color: #ED7A42; }
+  .text-red { color: #E5484D; }
+  .text-teal { color: #6FD3C7; }
+
+  /* ---------- Gradient text ---------- */
+  .text-gradient-lime {
+    background: linear-gradient(135deg, #D8EF70 0%, #6FD3C7 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  .text-gradient-orange {
+    background: linear-gradient(135deg, #ED7A42 0%, #E5484D 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* ---------- Glow shadows ---------- */
+  .glow-lime { box-shadow: 0 0 24px -4px rgba(216, 239, 112, 0.5); }
+  .glow-orange { box-shadow: 0 0 24px -4px rgba(237, 122, 66, 0.5); }
+  .glow-red { box-shadow: 0 0 24px -4px rgba(229, 72, 77, 0.5); }
+
+  /* ---------- Elevation tokens (§6 extension — Cycle 2) ---------- */
+  .shadow-glass { box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+  .shadow-lime-glow { box-shadow: 0 0 24px rgba(216,239,112,0.4); }
+  .shadow-orange-glow { box-shadow: 0 0 24px rgba(237,122,66,0.4); }
+
+  /* ---------- Reduced motion — kill all loops + transforms ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    /* Hide decorative animations entirely */
+    .animate-ticker,
+    .animate-scan-line,
+    .animate-now-line,
+    .animate-gradient-drift,
+    .animate-pulse-glow,
+    .animate-pulse-glow-red,
+    .animate-ring-pulse,
+    .animate-parrot-blink,
+    .animate-blink-once {
+      animation: none !important;
+    }
+  }
+
+  /* ---------- Animations ---------- */
+  @keyframes parrot-blink {
+    0%, 88%, 100% { transform: scaleY(1); }
+    94% { transform: scaleY(0.08); }
+  }
+  .animate-parrot-blink {
+    animation: parrot-blink 5s ease-in-out infinite;
+    transform-origin: center;
+  }
+
+  /* One-shot blink — used when the view count updates */
+  @keyframes blink-once {
+    0% { transform: scaleY(1); }
+    20% { transform: scaleY(0.08); }
+    35% { transform: scaleY(1); }
+    45% { transform: scaleY(0.15); }
+    60%, 100% { transform: scaleY(1); }
+  }
+  .animate-blink-once {
+    animation: blink-once 0.55s ease-out;
+    transform-origin: center;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(216, 239, 112, 0.55); }
+    50% { box-shadow: 0 0 0 10px rgba(216, 239, 112, 0); }
+  }
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-glow-red {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(229, 72, 77, 0.6); }
+    50% { box-shadow: 0 0 0 8px rgba(229, 72, 77, 0); }
+  }
+  .animate-pulse-glow-red {
+    animation: pulse-glow-red 1.6s ease-in-out infinite;
+  }
+
+  @keyframes ticker-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .animate-ticker {
+    animation: ticker-scroll 38s linear infinite;
+  }
+  [dir="rtl"] .animate-ticker {
+    animation: ticker-scroll-rtl 38s linear infinite;
+  }
+  @keyframes ticker-scroll-rtl {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(50%); }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
+  }
+  .shimmer {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite linear;
+  }
+
+  /* Scan-line for parrot eye panel */
+  @keyframes scan-line {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+  }
+  .animate-scan-line {
+    animation: scan-line 3.5s linear infinite;
+  }
+
+  /* NOW line glow for the timeline */
+  @keyframes now-line-glow {
+    0%, 100% { box-shadow: 0 0 8px rgba(229, 72, 77, 0.8), 0 0 16px rgba(229, 72, 77, 0.4); }
+    50% { box-shadow: 0 0 14px rgba(229, 72, 77, 1), 0 0 24px rgba(229, 72, 77, 0.6); }
+  }
+  .animate-now-line {
+    animation: now-line-glow 1.8s ease-in-out infinite;
+  }
+
+  /* Gradient drift for Hot Drops carousel cards */
+  @keyframes gradient-drift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  .animate-gradient-drift {
+    background-size: 200% 200%;
+    animation: gradient-drift 6s ease infinite;
+  }
+
+  /* Ring fill for CPM progress */
+  @keyframes ring-pulse {
+    0%, 100% { opacity: 0.55; }
+    50% { opacity: 1; }
+  }
+  .animate-ring-pulse {
+    animation: ring-pulse 2.2s ease-in-out infinite;
+  }
+
+  /* Hide number input arrows */
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
