@@ -187,6 +187,11 @@ export function ClaimEdit() {
                   )
                 })}
               </div>
+
+              {/* §4: Perokio watermark — director's signature, bottom-left of the 9:16 frame */}
+              <div className="absolute bottom-1.5 start-1.5 z-20" style={{ opacity: 0.4 }}>
+                <span className="text-[8px] font-mono text-white/90 tracking-wider">🦜 Perokio</span>
+              </div>
             </div>
           </div>
 

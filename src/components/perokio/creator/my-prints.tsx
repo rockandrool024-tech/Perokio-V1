@@ -254,6 +254,11 @@ function PrintCard({ video, index, reduced, onClick, stageLabel, t }: PrintCardP
             {video.durationSec}s
           </span>
         </div>
+
+        {/* §4: Perokio watermark — director's signature on each portfolio thumbnail */}
+        <div className="absolute bottom-1 start-1 z-20" style={{ opacity: 0.35 }}>
+          <span className="text-[7px] font-mono text-white/90 tracking-wider">🦜 Perokio</span>
+        </div>
       </div>
 
       {/* === Card body === */}

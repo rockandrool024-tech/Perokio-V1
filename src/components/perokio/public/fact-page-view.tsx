@@ -1,14 +1,17 @@
 'use client'
 
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Badge } from '@/components/ui/badge'
 import { ShareCardPreview } from '@/components/perokio/shared/share-card-preview'
+import { ShareModal } from '@/components/perokio/shared/share-modal'
+import { useGrowthStore } from '@/lib/perokio/use-growth-store'
 import { formatCompact, formatUSD } from '@/lib/perokio/format'
 import type { FactBundle, Video, Creator, Brand } from '@/lib/perokio/types'
 import { easeEditorial } from '@/lib/perokio/motion'
 import {
-  ShieldCheck, Eye, TrendingUp, Users, Flame, ArrowRight, ExternalLink,
+  ShieldCheck, Eye, TrendingUp, Users, Flame, ArrowRight, ExternalLink, Share2,
 } from 'lucide-react'
 
 /**
@@ -40,6 +43,7 @@ export function FactPageView({
 }: FactPageViewProps) {
   const verifiedLines = fact.scriptLines.filter((l) => l.sourceId).length
   const totalLines = fact.scriptLines.length
+  const [shareOpen, setShareOpen] = useState(false)
 
   return (
     <div className="space-y-8">
@@ -108,6 +112,21 @@ export function FactPageView({
             <Stat label="Total views" value={formatCompact(aggregateViews)} icon={Eye} accent="orange" />
             <Stat label="Paid out" value={formatUSD(aggregateEarnings)} icon={TrendingUp} accent="lime" />
             <Stat label="Base fee" value={`$${fact.baseFee}`} icon={ShieldCheck} accent="lime" />
+          </div>
+
+          {/* §2: Share Fact button — opens the ShareModal (P04 share entry point) */}
+          <div className="flex justify-end pt-4 border-t border-white/[0.06]">
+            <button
+              type="button"
+              onClick={() => {
+                setShareOpen(true)
+                useGrowthStore.getState().trackFactShare()
+              }}
+              className="glass rounded-full px-4 py-2 text-xs font-medium text-lime hover:bg-lime/10 transition-colors flex items-center gap-1.5 border border-lime/25"
+            >
+              <Share2 className="h-3.5 w-3.5" />
+              Share Fact
+            </button>
           </div>
         </div>
       </motion.section>
@@ -223,6 +242,15 @@ export function FactPageView({
           </div>
         </section>
       )}
+
+      {/* §2: ShareModal — P04 share dialog with live OG card + social buttons */}
+      <ShareModal
+        open={shareOpen}
+        onOpenChange={setShareOpen}
+        type="fact"
+        fact={fact}
+        shareUrl={`perokio.com/wall/${fact.code}`}
+      />
     </div>
   )
 }

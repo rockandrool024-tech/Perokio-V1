@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { TRENDS } from '@/lib/perokio/data'
+import { usePerokioStore } from '@/store/perokio'
 import { useT } from '@/lib/perokio/i18n'
 import { formatCompact } from '@/lib/perokio/live'
 import { TrendingUp, Flame, Plus, RefreshCw, Sparkles } from 'lucide-react'
@@ -14,6 +15,7 @@ import { useToast } from '@/hooks/use-toast'
 export function TrendInput() {
   const { toast } = useToast()
   const t = useT()
+  const setAdminView = usePerokioStore((s) => s.setAdminView)
 
   return (
     <div className="space-y-6">
@@ -80,7 +82,12 @@ export function TrendInput() {
                   size="sm"
                   variant="outline"
                   className="w-full mt-2 gap-1 text-xs"
-                  onClick={() => toast({ title: `🎯 ${t('Trend locked')}`, description: `${t('A Fact Bundle will be drafted from')} ${tr.keyword}.` })}
+                  onClick={() => {
+                    toast({ title: `🎬 Opening Studio…`, description: `Drafting a Fact Bundle from ${tr.keyword}.` })
+                    setTimeout(() => {
+                      setAdminView('authoring')
+                    }, 400)
+                  }}
                 >
                   <Sparkles className="h-3 w-3" /> {t('Convert to Fact Bundle')}
                 </Button>
@@ -139,7 +146,12 @@ export function TrendInput() {
                   size="sm"
                   variant="ghost"
                   className="opacity-0 group-hover:opacity-100 transition-opacity gap-1 text-xs"
-                  onClick={() => toast({ title: `🎯 ${t('Trend locked')}`, description: `${tr.keyword} → Fact Bundle` })}
+                  onClick={() => {
+                    toast({ title: `🎬 Opening Studio…`, description: `Drafting a Fact Bundle from ${tr.keyword}.` })
+                    setTimeout(() => {
+                      setAdminView('authoring')
+                    }, 400)
+                  }}
                 >
                   <Plus className="h-3 w-3" /> {t('Convert to Fact Bundle')}
                 </Button>

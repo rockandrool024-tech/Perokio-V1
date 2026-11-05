@@ -1,13 +1,15 @@
 'use client'
 
+import { useState } from 'react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { CREATORS, TRANSACTIONS, USD_TO_TND, MAX_CPM_PAYOUT, VIEW_CAP } from '@/lib/perokio/data'
 import { getCreatorStats, EARNINGS_CURVE_5D } from '@/lib/perokio/mock-data'
+import { useGrowthStore } from '@/lib/perokio/use-growth-store'
 import { useT } from '@/lib/perokio/i18n'
 import { formatTND, formatUSD, formatCompact } from '@/lib/perokio/format'
 import { useLiveEarnings } from '@/lib/perokio/use-live-views'
-import { Flame, Wallet, TrendingUp, Gift, ArrowDownToLine, Zap, Crown, Trophy } from 'lucide-react'
+import { Flame, Wallet, TrendingUp, Gift, ArrowDownToLine, Zap, Crown, Trophy, Copy, Check, UserPlus } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { useToast } from '@/hooks/use-toast'
@@ -90,6 +92,8 @@ export function WalletView() {
   const myTx = TRANSACTIONS.filter((tx) => tx.party === creator.name)
   const { toast } = useToast()
   const t = useT()
+  const trackInviteSent = useGrowthStore((s) => s.trackInviteSent)
+  const [inviteCopied, setInviteCopied] = useState(false)
 
   // === §1 BLOCKING PATCH: shared live views via useLiveEarnings ===
   // Both WL01 and B17 consume this hook for the same video → identical numbers.
@@ -275,6 +279,61 @@ export function WalletView() {
               <Area type="monotone" dataKey="e" stroke="#D8EF70" strokeWidth={2} fill="url(#earningsGrad)" animationDuration={1200} filter="url(#earningsGlow)" />
             </AreaChart>
           </ResponsiveContainer>
+        </div>
+
+        {/* §1 (Cycle 8): Invite a Creator — referral CTA, $20 bonus per verified creator */}
+        <div
+          className="rounded-2xl p-5 glass"
+          style={{ borderColor: 'rgba(216,239,112,0.30)' }}
+        >
+          <div className="flex items-center gap-2 mb-2">
+            <Gift className="h-4 w-4 text-lime" />
+            <span className="font-serif text-base font-semibold">{t('Invite a Creator')}</span>
+            <Badge className="text-[10px] bg-lime/15 text-lime border border-lime/25">+$20</Badge>
+          </div>
+          <p className="text-xs text-muted-fg mb-3">
+            {t('Earn')} <span className="text-lime font-semibold">$20</span> {t('per verified creator you invite. They get a fast-track to Elite status.')}
+          </p>
+
+          {/* Copyable referral link */}
+          <div className="flex items-center gap-2 mb-3">
+            <input
+              type="text"
+              readOnly
+              value="perokio.com/join?ref=amira.tn"
+              className="flex-1 min-w-0 px-3 py-2 rounded-lg glass border border-white/10 bg-white/[0.02] text-xs font-mono focus:outline-none"
+              data-mono
+            />
+            <Button
+              variant="outline"
+              size="sm"
+              className="shrink-0 gap-1.5 glass border-lime/25 text-lime hover:bg-lime/10"
+              onClick={() => {
+                if (navigator.clipboard) {
+                  navigator.clipboard.writeText('perokio.com/join?ref=amira.tn').catch(() => {})
+                }
+                trackInviteSent()
+                toast({
+                  title: `🎁 ${t('Invite link copied')}`,
+                  description: t("You'll earn $20 when they post their first video."),
+                })
+                setInviteCopied(true)
+                setTimeout(() => setInviteCopied(false), 2000)
+              }}
+            >
+              {inviteCopied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+              {inviteCopied ? t('Copied') : t('Copy Invite Link')}
+            </Button>
+          </div>
+
+          {/* Mini referral stats footer */}
+          <div className="flex items-center justify-between text-[10px] text-muted-fg pt-2 border-t border-white/[0.06]">
+            <span className="flex items-center gap-1">
+              <UserPlus className="h-3 w-3" />
+              <span className="font-mono" data-mono>10 {t('invites sent')}</span>
+            </span>
+            <span className="text-lime font-mono" data-mono>7 {t('accepted')} · $140 {t('earned')}</span>
+          </div>
         </div>
 
         {/* Rewards */}

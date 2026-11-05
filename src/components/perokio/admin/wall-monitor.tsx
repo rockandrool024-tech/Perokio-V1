@@ -23,13 +23,14 @@ const HEALTH = [
   { name: 'Hyperframe editor', status: '✓ Healthy', detail: 'Response < 200ms' },
 ]
 
-// Mock growth metrics — share/invite funnel
-const GROWTH_METRICS = [
-  { label: 'K-factor', value: '1.34', hint: 'viral coefficient', tone: 'lime' as const },
-  { label: 'Share rate', value: '23%', hint: 'of creators shared profile', tone: 'lime' as const },
-  { label: 'Invite acceptance', value: '67%', hint: 'of invites accepted', tone: 'orange' as const },
-  { label: 'Publish rate', value: '8.2/day', hint: 'avg videos published daily', tone: 'orange' as const },
-]
+// §1: Growth metrics now pulled from useGrowthStore (was hardcoded mock)
+import {
+  useGrowthStore,
+  useKFactor,
+  useShareRate,
+  useInviteAcceptance,
+  PUBLISH_RATE,
+} from '@/lib/perokio/use-growth-store'
 
 const GROWTH_TONE_CLASS: Record<'lime' | 'orange', string> = {
   lime: 'text-primary',
@@ -43,6 +44,21 @@ export function WallMonitor() {
   const activeCreators = CREATORS.filter((c) => c.reliabilityScore > 80)
   const pendingLocked = VIDEOS.filter((v) => v.stage === 'locked_pending')
   const lockedLines = FACTS.reduce((s, f) => s + f.scriptLines.filter((l) => l.sourceId).length, 0)
+
+  // §1: Pull live growth metrics from the store (was hardcoded)
+  const kFactor = useKFactor()
+  const shareRate = useShareRate()
+  const inviteAcceptance = useInviteAcceptance()
+  const profileShares = useGrowthStore((s) => s.profileShares)
+  const factShares = useGrowthStore((s) => s.factShares)
+  const invitesSent = useGrowthStore((s) => s.invitesSent)
+
+  const growthMetrics = [
+    { label: 'K-factor', value: kFactor.toFixed(2), hint: `${invitesSent} invites × 0.67 / ${5} creators`, tone: 'lime' as const },
+    { label: 'Share rate', value: `${Math.round(shareRate)}%`, hint: `${profileShares + factShares} shares / ${5} creators`, tone: 'lime' as const },
+    { label: 'Invite acceptance', value: `${Math.round(inviteAcceptance)}%`, hint: 'of invites accepted', tone: 'orange' as const },
+    { label: 'Publish rate', value: `${PUBLISH_RATE}/day`, hint: 'avg videos published daily', tone: 'orange' as const },
+  ]
 
   return (
     <div className="space-y-6">
@@ -215,17 +231,18 @@ export function WallMonitor() {
         </CardContent>
       </Card>
 
-      {/* Growth panel — mock share/invite metrics */}
+      {/* Growth panel — §1: pulls from useGrowthStore (live tracking) */}
       <Card>
         <CardHeader className="pb-3">
           <CardTitle className="text-base flex items-center gap-2">
             <Sparkles className="h-4 w-4 text-primary" />
             {t('Growth')}
+            <Badge variant="outline" className="text-[10px] ms-2">Live</Badge>
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-            {GROWTH_METRICS.map((m) => (
+            {growthMetrics.map((m) => (
               <div
                 key={m.label}
                 className="glass rounded-xl p-3 border border-border/60"

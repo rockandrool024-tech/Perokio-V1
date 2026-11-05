@@ -1,13 +1,16 @@
 'use client'
 
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Badge } from '@/components/ui/badge'
 import { ShareCardPreview } from '@/components/perokio/shared/share-card-preview'
+import { ShareModal } from '@/components/perokio/shared/share-modal'
+import { useGrowthStore } from '@/lib/perokio/use-growth-store'
 import { formatCompact, formatUSD } from '@/lib/perokio/format'
 import type { Creator, FactBundle, Video, Brand } from '@/lib/perokio/types'
 import type { CreatorDisplayStats } from '@/lib/perokio/mock-data'
 import { easeEditorial } from '@/lib/perokio/motion'
-import { Star, Flame, TrendingUp, Eye, Crown, ShieldCheck, ArrowRight } from 'lucide-react'
+import { Star, Flame, TrendingUp, Eye, Crown, ShieldCheck, ArrowRight, Share2 } from 'lucide-react'
 
 /**
  * CreatorProfileView — the visual body of P03.
@@ -33,6 +36,7 @@ export function CreatorProfileView({
   printedBrands,
 }: CreatorProfileViewProps) {
   const hasActiveStreak = creator.streak >= 3
+  const [shareOpen, setShareOpen] = useState(false)
 
   return (
     <div className="space-y-8">
@@ -126,6 +130,21 @@ export function CreatorProfileView({
             Join Perokio <ArrowRight className="h-3 w-3" />
           </a>
         </div>
+
+        {/* §2: Share Profile button — opens the ShareModal (P03 share entry point) */}
+        <div className="relative z-10 mt-4 flex justify-end">
+          <button
+            type="button"
+            onClick={() => {
+              setShareOpen(true)
+              useGrowthStore.getState().trackProfileShare()
+            }}
+            className="glass rounded-full px-4 py-2 text-xs font-medium text-lime hover:bg-lime/10 transition-colors flex items-center gap-1.5 border border-lime/25"
+          >
+            <Share2 className="h-3.5 w-3.5" />
+            Share Profile
+          </button>
+        </div>
       </motion.section>
 
       {/* === Live OG card preview (the shareable card) === */}
@@ -209,6 +228,15 @@ export function CreatorProfileView({
           </div>
         </section>
       )}
+
+      {/* §2: ShareModal — P03 share dialog with live OG card + social buttons */}
+      <ShareModal
+        open={shareOpen}
+        onOpenChange={setShareOpen}
+        type="creator"
+        creator={creator}
+        shareUrl={`perokio.com/creator/${creator.handle.replace('@', '')}`}
+      />
     </div>
   )
 }
