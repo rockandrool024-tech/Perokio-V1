@@ -4,7 +4,7 @@ import { usePerokioStore } from '@/store/perokio'
 import { SidebarItem } from '@/components/perokio/shared/sidebar-item'
 import { BRANDS, VIDEOS, FACTS } from '@/lib/perokio/data'
 import { useT, usePick } from '@/lib/perokio/i18n'
-import { LayoutDashboard, Film, ShieldCheck, FileText, Eye, Receipt, ChevronDown, Activity, BarChart3 } from 'lucide-react'
+import { LayoutDashboard, Film, ShieldCheck, FileText, Eye, Receipt, ChevronDown, Activity, BarChart3, Calendar, Sparkles } from 'lucide-react'
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
@@ -17,6 +17,9 @@ import { VideoReview } from './video-review'
 import { Billing } from './billing'
 import { ClaimFeed } from './claim-feed'
 import { VideoReviewDetail } from './video-review-detail'
+import { PostingQueue } from './posting-queue'
+import { Results } from './results'
+import { NextCycle } from './next-cycle'
 
 export function BrandSidebar() {
   const view = usePerokioStore((s) => s.brandView)
@@ -99,6 +102,9 @@ export function BrandSidebar() {
         <SidebarItem icon={Activity} label="Claim Feed" code="B13" active={view === 'feed'} onClick={() => setView('feed')} />
         <SidebarItem icon={Eye} label={t('Video Review')} code="B12" active={view === 'review'} badge={pendingReview || undefined} onClick={() => setView('review')} />
         <SidebarItem icon={BarChart3} label="Video Detail" code="B14" active={view === 'detail'} onClick={() => setView('detail')} />
+        <SidebarItem icon={Calendar} label="Posting Queue" code="B15" active={view === 'queue'} onClick={() => setView('queue')} />
+        <SidebarItem icon={BarChart3} label="Results" code="B17" active={view === 'results'} onClick={() => setView('results')} />
+        <SidebarItem icon={Sparkles} label="Next Cycle" code="B18" active={view === 'next'} onClick={() => setView('next')} />
         <SidebarItem icon={Receipt} label={t('Billing')} code="B19" active={view === 'billing'} onClick={() => setView('billing')} />
       </nav>
 
@@ -133,10 +139,12 @@ export function BrandApp() {
           {view === 'machine' && <ContentMachine />}
           {view === 'script' && <ScriptReview />}
           {view === 'library' && <FactLibrary />}
-          {/* ClaimFeed remounts on brand change via key — resets feed state cleanly */}
           {view === 'feed' && <ClaimFeed key={`feed-${brandId}`} />}
           {view === 'review' && <VideoReview />}
           {view === 'detail' && <VideoReviewDetail />}
+          {view === 'queue' && <PostingQueue key={`queue-${brandId}`} />}
+          {view === 'results' && <Results />}
+          {view === 'next' && <NextCycle />}
           {view === 'billing' && <Billing />}
         </div>
       </div>

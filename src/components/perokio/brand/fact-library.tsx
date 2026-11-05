@@ -27,6 +27,7 @@ import { easeEditorial } from '@/lib/perokio/motion'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { useToast } from '@/hooks/use-toast'
 import {
   Library, Flame, Star, Eye, TrendingUp, ShieldCheck, Filter, Search,
   X, ChevronRight, Plus,
@@ -69,14 +70,24 @@ export function FactLibrary() {
   const setRole = usePerokioStore((s) => s.setRole)
   const setAdminView = usePerokioStore((s) => s.setAdminView)
   const t = useT()
+  const { toast } = useToast()
+  const [transitioning, setTransitioning] = useState(false)
 
-  // Issue 1 fix: prominent "New Fact" CTA — switches to Studio role
-  // and opens A07 Fact Authoring (the canonical fact creation surface).
-  // The Studio is shared across all brand users (in production this would
-  // be scoped to the brand's account; in the demo it opens the Studio authoring view).
+  // Issue 1 fix (refined): "New Fact" shows a toast + 400ms transition
+  // BEFORE switching to Studio role. The delay signals intent and prevents
+  // the jarring instantaneous role-flip. The toast sets user expectation.
   const handleNewFact = () => {
-    setRole('admin')
-    setAdminView('authoring')
+    if (transitioning) return
+    setTransitioning(true)
+    toast({
+      title: '🎬 Opening Studio…',
+      description: 'Switching to authoring mode to draft your new fact.',
+    })
+    setTimeout(() => {
+      setRole('admin')
+      setAdminView('authoring')
+      setTransitioning(false)
+    }, 400)
   }
   const pick = usePick()
 
@@ -134,14 +145,30 @@ export function FactLibrary() {
               className="w-full ps-10 pe-3 py-2.5 rounded-lg bg-white/[0.02] border border-white/10 text-sm focus:outline-none focus:ring-2 focus:ring-lime/40 placeholder:text-subtle"
             />
           </div>
-          {/* New Fact CTA — switches role to Studio + navigates to A07 Authoring */}
+          {/* New Fact CTA — shows toast + 400ms transition before switching role */}
           <Button
             onClick={handleNewFact}
-            className="gap-2 bg-lime text-[#0A0F0D] hover:bg-lime/90 shrink-0 shadow-lime-glow"
+            disabled={transitioning}
+            className="gap-2 bg-lime text-[#0A0F0D] hover:bg-lime/90 shrink-0 shadow-lime-glow disabled:opacity-60"
           >
-            <Plus className="h-4 w-4" />
-            <span className="hidden sm:inline">New Fact</span>
-            <span className="sm:hidden">New</span>
+            {transitioning ? (
+              <>
+                <motion.span
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                  className="inline-block"
+                >
+                  <Plus className="h-4 w-4" />
+                </motion.span>
+                <span className="hidden sm:inline">Opening…</span>
+              </>
+            ) : (
+              <>
+                <Plus className="h-4 w-4" />
+                <span className="hidden sm:inline">New Fact</span>
+                <span className="sm:hidden">New</span>
+              </>
+            )}
           </Button>
         </div>
 

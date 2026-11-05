@@ -591,6 +591,30 @@ export const VIDEOS: Video[] = [
     reviewDeadline: 9,
     approved: false,
   },
+  {
+    // Underperforming published video — 35% of view cap after 12h.
+    // Triggers B16 Assisted Post modal from B17 Results.
+    id: 'vid_009',
+    factId: 'fact_005',
+    factCode: 'F-2024-1025-05',
+    factClaim: 'A cup of coffee consumed in Tunisia has a 47% lower carbon footprint than in Europe',
+    brandName: 'Café Dar Zaitouna',
+    creatorId: 'cr_sara',
+    creatorName: 'Sara Mansour',
+    creatorAvatar: '👩🏽',
+    stage: 'counting',
+    createdAt: '2024-11-04 08:00',
+    publishedAt: '2024-11-04 14:00',
+    durationSec: 16,
+    thumbnail: '🌱',
+    platform: 'instagram',
+    views: 3500,  // 35% of 10000 cap — underperforming
+    viewCap: 10000,
+    earningsBase: 6,
+    earningsCpm: 10.5,  // (3500/1000) * 3 = 10.5
+    hoursToPublish: 0,
+    approved: true,
+  },
 ]
 
 // ============== Transactions ==============

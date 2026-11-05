@@ -18,6 +18,7 @@ import {
   Activity,
   Sparkles,
   BarChart3,
+  Calendar,
   MoreHorizontal,
   X,
   type LucideIcon,
@@ -62,7 +63,11 @@ const MORE_NAVS: Record<'brand' | 'creator' | 'admin', NavItem[]> = {
     { id: 'script', label: 'Script Review', icon: ShieldCheck },
     { id: 'review', label: 'Video Review', icon: Eye },
     { id: 'detail', label: 'Video Detail', icon: BarChart3 },
+    { id: 'queue', label: 'Posting Queue', icon: Calendar },
+    { id: 'results', label: 'Results', icon: BarChart3 },
+    { id: 'next', label: 'Next Cycle', icon: Sparkles },
     { id: 'billing', label: 'Billing', icon: Receipt },
+    // Note: B16 Assisted Post is a MODAL, not a screen — never in nav
   ],
   creator: [],  // creator has only 4 items, no More sheet needed
   admin: [
