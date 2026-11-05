@@ -2,7 +2,7 @@
 
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Countdown } from '@/components/perokio/shared/countdown'
+import { TimerBar } from '@/components/perokio/shared/timer-bar'
 import { usePerokioStore, useActiveFact } from '@/store/perokio'
 import { MAX_CPM_PAYOUT } from '@/lib/perokio/data'
 import { useT, usePick } from '@/lib/perokio/i18n'
@@ -47,10 +47,10 @@ export function ClaimEdit() {
     setIsLocked(true)
     // E2E: use the store action so the brand sees this in B09 → B12
     lockVideo(fact.id, 'cr_amira')
-    toast({
-      title: `🔒 ${t('Video locked')}`,
-      description: `${fact.code} ${t('submitted to the brand for review, reply expected within ~12h.')}`,
-    })
+    // Route to C05 Lock Confirmation (calm, not celebration)
+    setTimeout(() => {
+      setView('lockconfirm')
+    }, 300)
   }
 
   return (
@@ -96,15 +96,18 @@ export function ClaimEdit() {
             </div>
           </div>
 
-          {/* === Large orange timer — 23:59:59 === */}
-          <div className="flex flex-col items-center gap-2 p-5 rounded-2xl glass-orange">
-            <Clock className="h-5 w-5 text-orange" />
-            <span className="text-xs text-muted-fg">{t('24h lock countdown')}</span>
-            <Countdown
-              hours={23}
-              size="xl"
-              variant="orange"
-              className="!text-4xl lg:!text-5xl text-orange glow-orange"
+          {/* === 24h TimerBar pinned to top (§1: replaced Countdown with TimerBar) === */}
+          <div className="flex flex-col gap-2 p-5 rounded-2xl glass-orange">
+            <div className="flex items-center gap-2">
+              <Clock className="h-4 w-4 text-orange" />
+              <span className="text-xs text-muted-fg">{t('24h lock countdown')}</span>
+            </div>
+            <TimerBar
+              hours={24}
+              layout="bar"
+              size="lg"
+              label={t('Review window')}
+              className="w-full"
             />
             <span className="text-[10px] text-muted-fg text-center max-w-[180px] leading-snug">
               {t('The fact auto-returns to the Wall if you miss it')}

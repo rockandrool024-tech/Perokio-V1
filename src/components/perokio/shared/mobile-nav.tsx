@@ -22,6 +22,8 @@ import {
   MoreHorizontal,
   Settings as SettingsIcon,
   X,
+  Grid3x3,
+  Bell,
   type LucideIcon,
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -41,20 +43,18 @@ const PRIMARY_NAVS: Record<'brand' | 'creator' | 'admin', NavItem[]> = {
     { id: 'machine', label: 'Content', icon: Film },
     { id: 'library', label: 'Facts', icon: FileText },
     { id: 'feed', label: 'Feed', icon: Activity },
-    // 5th slot is the "More" button — handled separately below
   ],
   creator: [
     { id: 'wall', label: 'Wall', icon: Sparkles },
+    { id: 'prints', label: 'Prints', icon: Grid3x3 },
     { id: 'claim', label: 'Edit', icon: Film },
-    { id: 'wallet', label: 'Wallet', icon: Wallet },
-    { id: 'profile', label: 'Profile', icon: User },
+    { id: 'notifications', label: 'Alerts', icon: Bell },
   ],
   admin: [
     { id: 'pipeline', label: 'Pipe', icon: Building2 },
     { id: 'vetting', label: 'Vet', icon: Users },
     { id: 'qa', label: 'QA', icon: ShieldCheck },
     { id: 'trends', label: 'Trends', icon: TrendingUp },
-    // 5th slot is "More"
   ],
 }
 
@@ -71,7 +71,11 @@ const MORE_NAVS: Record<'brand' | 'creator' | 'admin', NavItem[]> = {
     { id: 'settings', label: 'Settings', icon: SettingsIcon },
     // Note: B16 Assisted Post is a MODAL, not a screen — never in nav
   ],
-  creator: [],  // creator has only 4 items, no More sheet needed
+  creator: [
+    { id: 'wallet', label: 'Wallet', icon: Wallet },
+    { id: 'profile', label: 'Profile', icon: User },
+    { id: 'profile-edit', label: 'Edit Profile', icon: SettingsIcon },
+  ],
   admin: [
     { id: 'monitor', label: 'Wall Monitor', icon: Activity },
     { id: 'authoring', label: 'Fact Authoring', icon: Sparkles },

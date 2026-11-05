@@ -7,7 +7,7 @@ import type { Lang } from '@/lib/perokio/i18n'
 import { FACTS, VIDEOS, CREATORS } from '@/lib/perokio/data'
 
 type BrandView = 'command' | 'machine' | 'script' | 'library' | 'review' | 'billing' | 'feed' | 'detail' | 'queue' | 'results' | 'next' | 'settings'
-type CreatorView = 'wall' | 'claim' | 'wallet' | 'profile'
+type CreatorView = 'wall' | 'factdetail' | 'claimconfirm' | 'claim' | 'lockconfirm' | 'prints' | 'profile' | 'profile-edit' | 'wallet' | 'notifications'
 type AdminView = 'pipeline' | 'vetting' | 'qa' | 'trends' | 'monitor' | 'authoring'
 
 interface PerokioState {

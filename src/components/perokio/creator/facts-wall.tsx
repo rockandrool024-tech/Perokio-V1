@@ -31,6 +31,9 @@ export function FactsWall() {
   const pick = usePick()
   const [filter, setFilter] = useState<'all' | 'hot' | 'premium' | 'high_cpm'>('all')
   const [q, setQ] = useState('')
+  // §2: Auto-advance state — tracks which Hot Drop card was claimed
+  // so we can animate it out and slide the next one in.
+  const [claimedHotDropId, setClaimedHotDropId] = useState<string | null>(null)
 
   const creatorId = 'cr_amira'
   const creator = CREATORS[0]
@@ -50,17 +53,32 @@ export function FactsWall() {
     const fact = FACTS.find((f) => f.id === factId)
     if (!fact) return
     if (fact.claimedBy.includes(creatorId)) {
+      // Already claimed — go directly to editor
       setActiveFact(factId)
       setView('claim')
       return
     }
+    // §2: Auto-advance — claim, toast "next drop", then route to C03 confirmation
     claimFact(factId, creatorId)
+    setClaimedHotDropId(factId) // triggers slide-out animation
+
+    // Show "Claimed ✓ — next drop" toast
     toast({
-      title: `🎯 ${t('Fact Bundle claimed')}`,
-      description: `${fact.code} · ${t('You have 24 hours to edit and lock.')}`,
+      title: `✓ Claimed`,
+      description: `${fact.code} · Next drop loaded. You have 24 hours.`,
     })
+
+    // After a brief delay (for the animation), route to C03 Claim Confirmation
+    setTimeout(() => {
+      setActiveFact(factId)
+      setView('claimconfirm')
+    }, 600)
+  }
+
+  // For card click (not claim) — go to C02 Fact Detail
+  const handleCardClick = (factId: string) => {
     setActiveFact(factId)
-    setView('claim')
+    setView('factdetail')
   }
 
   return (
@@ -90,13 +108,20 @@ export function FactsWall() {
         </div>
 
         <div className="flex gap-3 overflow-x-auto scrollbar-thin pb-2 -mx-1 px-1 snap-x">
-          {hotDrops.map((f, idx) => (
+          {hotDrops.map((f, idx) => {
+            // §2: Auto-advance — claimed card animates out (slide + fade)
+            const isClaimed = claimedHotDropId === f.id
+            return (
             <motion.button
               key={f.id}
               initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: idx * 0.07 }}
-              whileHover={{ scale: 1.03, y: -2 }}
+              animate={
+                isClaimed
+                  ? { opacity: 0, x: -100, scale: 0.8 } // slide out left
+                  : { opacity: 1, x: 0 }
+              }
+              transition={isClaimed ? { duration: 0.5, ease: 'easeOut' } : { delay: idx * 0.07 }}
+              whileHover={isClaimed ? undefined : { scale: 1.03, y: -2 }}
               onClick={() => handleClaim(f.id)}
               className="snap-start flex-shrink-0 w-64 text-start rounded-2xl overflow-hidden relative group"
               style={{ background: HOT_DROPS_GRADIENTS[idx % HOT_DROPS_GRADIENTS.length] }}
@@ -141,7 +166,8 @@ export function FactsWall() {
                 </span>
               </div>
             </motion.button>
-          ))}
+            )
+          })}
         </div>
       </div>
 

@@ -4,11 +4,17 @@ import { usePerokioStore } from '@/store/perokio'
 import { SidebarItem } from '@/components/perokio/shared/sidebar-item'
 import { CREATORS, FACTS } from '@/lib/perokio/data'
 import { useT } from '@/lib/perokio/i18n'
-import { LayoutGrid, Film, Wallet, User } from 'lucide-react'
+import { LayoutGrid, Film, Wallet, User, Bell, Grid3x3, Settings } from 'lucide-react'
 import { ClaimEdit } from './claim-edit'
 import { FactsWall } from './facts-wall'
 import { WalletView } from './wallet'
 import { CreatorProfile } from './profile'
+import { FactDetail } from './fact-detail'
+import { ClaimConfirmation } from './claim-confirmation'
+import { LockConfirmation } from './lock-confirmation'
+import { MyPrints } from './my-prints'
+import { ProfileEditor } from './profile-editor'
+import { NotificationsView } from './notifications'
 
 export function CreatorApp() {
   const view = usePerokioStore((s) => s.creatorView)
@@ -64,9 +70,12 @@ export function CreatorApp() {
 
         <nav className="flex-1 p-2 space-y-1 overflow-y-auto scrollbar-thin">
           <SidebarItem icon={LayoutGrid} label={t('Facts Wall')} code="C01" active={view === 'wall'} onClick={() => setView('wall')} />
-          <SidebarItem icon={Film} label={t('Edit Studio')} code="C04" active={view === 'claim'} badge={claimedCount} onClick={() => setView('claim')} />
+          <SidebarItem icon={Grid3x3} label="My Prints" code="C06" active={view === 'prints'} badge={claimedCount || undefined} onClick={() => setView('prints')} />
+          <SidebarItem icon={Film} label={t('Edit Studio')} code="C04" active={view === 'claim'} onClick={() => setView('claim')} />
+          <SidebarItem icon={Bell} label="Notifications" code="U01" active={view === 'notifications'} onClick={() => setView('notifications')} />
           <SidebarItem icon={Wallet} label={t('Wallet')} code="WL01" active={view === 'wallet'} onClick={() => setView('wallet')} />
           <SidebarItem icon={User} label={t('Profile')} code="P03" active={view === 'profile'} onClick={() => setView('profile')} />
+          <SidebarItem icon={Settings} label="Edit Profile" code="C07" active={view === 'profile-edit'} onClick={() => setView('profile-edit')} />
         </nav>
 
         {/* Streak banner */}
@@ -88,9 +97,15 @@ export function CreatorApp() {
       <div className="flex-1 overflow-y-auto scrollbar-thin">
         <div className="p-4 lg:p-6 max-w-6xl mx-auto pb-24">
           {view === 'wall' && <FactsWall />}
+          {view === 'factdetail' && <FactDetail />}
+          {view === 'claimconfirm' && <ClaimConfirmation />}
           {view === 'claim' && <ClaimEdit />}
+          {view === 'lockconfirm' && <LockConfirmation />}
+          {view === 'prints' && <MyPrints />}
+          {view === 'notifications' && <NotificationsView />}
           {view === 'wallet' && <WalletView />}
           {view === 'profile' && <CreatorProfile />}
+          {view === 'profile-edit' && <ProfileEditor />}
         </div>
       </div>
     </>
