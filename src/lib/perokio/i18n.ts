@@ -64,6 +64,8 @@ export const AR: Record<string, string> = {
   'Trends': 'الترندات',
   'Monitor': 'المراقبة',
   'Create': 'التأليف',
+  'More': 'المزيد',
+  'Content': 'المحتوى',
 
   // ===== Command Center =====
   'Live total views': 'إجمالي المشاهدات المباشرة',

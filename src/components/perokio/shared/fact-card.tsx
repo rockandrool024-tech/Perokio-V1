@@ -101,7 +101,9 @@ export function FactCard({
           </Badge>
         </div>
 
-        {/* Verified-lines indicator — the moat signal */}
+        {/* Verified-lines indicator — the moat signal.
+            Issue 4 fix: explicit label 'verified' so N/M format isn't ambiguous
+            with the creators-claimed counter below. */}
         {variant !== 'pipeline' && (
           <Badge
             className={cn(
@@ -115,6 +117,7 @@ export function FactCard({
             <span className="font-mono" data-mono>
               {verifiedLines}/{totalLines}
             </span>
+            <span className="font-normal opacity-70">verified</span>
           </Badge>
         )}
       </div>
@@ -141,6 +144,8 @@ export function FactCard({
         </div>
       )}
 
+      {/* Rating — standardized across all variants: star icons + numeric value.
+          Issue 3 fix: no more "★ 4.7" vs "★★★★ 4.8" inconsistency. */}
       {showRating && fact.rating > 0 && (
         <div className="flex items-center gap-2 text-xs mb-2">
           <div className="flex items-center gap-0.5">
@@ -155,7 +160,7 @@ export function FactCard({
             ))}
           </div>
           <span className="font-mono font-bold text-lime" data-mono>
-            {fact.rating}
+            {fact.rating.toFixed(1)}
           </span>
         </div>
       )}
@@ -173,7 +178,9 @@ export function FactCard({
         </div>
       )}
 
-      {/* Footer (claimants + views + spots left) */}
+      {/* Footer (claimants + views + spots left).
+          Issue 4 fix: explicit 'claimed' label so N/M format isn't ambiguous
+          with the verified-lines counter above. */}
       {footer ?? (
         <div className="flex items-center justify-between text-xs text-muted-fg">
           <div className="flex items-center gap-3">
@@ -182,6 +189,7 @@ export function FactCard({
               <span className="font-mono" data-mono>
                 {fact.claimedBy.length}/{fact.maxCreators}
               </span>
+              <span className="opacity-70">claimed</span>
             </span>
             {fact.totalViews > 0 && (
               <span className="flex items-center gap-1">

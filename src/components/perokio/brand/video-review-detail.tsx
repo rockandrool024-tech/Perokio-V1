@@ -16,7 +16,7 @@
  * B14 is "Understand why this video performed how it did, after the fact."
  */
 
-import { useState } from 'react'
+import { useState, useRef, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { usePerokioStore } from '@/store/perokio'
 import { BRANDS, VIDEOS, FACTS, CREATORS, MAX_CPM_PAYOUT } from '@/lib/perokio/data'
@@ -67,6 +67,25 @@ export function VideoReviewDetail() {
   const pick = usePick()
   const reduced = useReducedMotion()
   const [selectedLine, setSelectedLine] = useState<string | null>(null)
+  // Refs to each line card for scrollIntoView when timeline tab is clicked
+  const lineRefs = useRef<Record<string, HTMLButtonElement | null>>({})
+
+  // Click a timeline tab (L1/L2/L3) → toggle selection AND scroll the line into view
+  const handleLineSelect = useCallback((lineId: string | null) => {
+    setSelectedLine((prev) => {
+      const next = prev === lineId ? null : lineId
+      // Scroll into view if we're selecting (not deselecting)
+      if (next) {
+        setTimeout(() => {
+          lineRefs.current[next]?.scrollIntoView({
+            behavior: reduced ? 'auto' : 'smooth',
+            block: 'center',
+          })
+        }, 50)
+      }
+      return next
+    })
+  }, [reduced])
 
   const brand = BRANDS.find((b) => b.id === brandId) || BRANDS[0]
   const brandStats = getBrandStats(brand.id)
@@ -228,7 +247,8 @@ export function VideoReviewDetail() {
           <span className="text-xs text-muted-fg">Tap a line to see its source</span>
         </div>
 
-        {/* Timeline visualization — horizontal bar of script segments */}
+        {/* Timeline visualization — horizontal bar of script segments.
+            Clicking a tab selects + scrolls the line into view (jump-to-line). */}
         <div className="mb-6">
           <div className="flex items-center gap-1 h-8 rounded-lg overflow-hidden glass">
             {fact?.scriptLines.map((line, i) => {
@@ -238,14 +258,15 @@ export function VideoReviewDetail() {
               return (
                 <button
                   key={line.id}
-                  onClick={() => setSelectedLine(isSelected ? null : line.id)}
+                  onClick={() => handleLineSelect(line.id)}
                   className={cn(
                     'h-full flex items-center justify-center text-[10px] font-mono transition-colors border-r border-white/[0.06] last:border-r-0',
                     isSelected ? 'bg-lime text-[#0A0F0D]' : source ? 'bg-lime/15 text-lime hover:bg-lime/25' : 'bg-red/15 text-red',
                   )}
                   style={{ width: `${widthPct}%` }}
                   data-mono
-                  title={line.text}
+                  title={`L${i + 1} · ${line.text}`}
+                  aria-label={`Jump to line ${i + 1}: ${line.text}`}
                 >
                   L{i + 1}
                 </button>
@@ -271,7 +292,8 @@ export function VideoReviewDetail() {
             return (
               <motion.button
                 key={line.id}
-                onClick={() => setSelectedLine(isSelected ? null : line.id)}
+                ref={(el) => { lineRefs.current[line.id] = el }}
+                onClick={() => handleLineSelect(line.id)}
                 whileHover={reduced ? undefined : { x: 4 }}
                 className={cn(
                   'w-full text-start rounded-xl p-3 border transition-all flex items-start gap-3',

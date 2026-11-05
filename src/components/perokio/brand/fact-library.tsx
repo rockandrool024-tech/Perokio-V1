@@ -66,7 +66,18 @@ export function FactLibrary() {
   usePerokioStore((s) => s.walletTick)
   const setView = usePerokioStore((s) => s.setBrandView)
   const setActiveFact = usePerokioStore((s) => s.setActiveFact)
+  const setRole = usePerokioStore((s) => s.setRole)
+  const setAdminView = usePerokioStore((s) => s.setAdminView)
   const t = useT()
+
+  // Issue 1 fix: prominent "New Fact" CTA — switches to Studio role
+  // and opens A07 Fact Authoring (the canonical fact creation surface).
+  // The Studio is shared across all brand users (in production this would
+  // be scoped to the brand's account; in the demo it opens the Studio authoring view).
+  const handleNewFact = () => {
+    setRole('admin')
+    setAdminView('authoring')
+  }
   const pick = usePick()
 
   const [tierFilter, setTierFilter] = useState<TierFilter>('all')
@@ -107,24 +118,31 @@ export function FactLibrary() {
             {brand.logo} {brand.name} · {brandFacts.length} facts · {brandFacts.filter((f) => f.status === 'live' || f.status === 'claimed').length} active
           </p>
         </div>
-        <Button onClick={() => setView('machine')} className="gap-2 bg-lime text-[#0A0F0D] hover:bg-lime/90">
-          <Plus className="h-4 w-4" />
-          New Fact Bundle
-        </Button>
       </div>
 
-      {/* === Filters — single row, not a wall === */}
+      {/* === Action bar: search + prominent New Fact CTA (Issue 1 fix) === */}
       <div className="glass rounded-2xl p-3 space-y-3">
-        {/* Search */}
-        <div className="relative">
-          <Search className="absolute start-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-fg" />
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search your facts…"
-            className="w-full ps-10 pe-3 py-2 rounded-lg bg-white/[0.02] border border-white/10 text-sm focus:outline-none focus:ring-2 focus:ring-lime/40 placeholder:text-subtle"
-          />
+        <div className="flex items-center gap-2">
+          {/* Search */}
+          <div className="relative flex-1">
+            <Search className="absolute start-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-fg" />
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search your facts…"
+              className="w-full ps-10 pe-3 py-2.5 rounded-lg bg-white/[0.02] border border-white/10 text-sm focus:outline-none focus:ring-2 focus:ring-lime/40 placeholder:text-subtle"
+            />
+          </div>
+          {/* New Fact CTA — switches role to Studio + navigates to A07 Authoring */}
+          <Button
+            onClick={handleNewFact}
+            className="gap-2 bg-lime text-[#0A0F0D] hover:bg-lime/90 shrink-0 shadow-lime-glow"
+          >
+            <Plus className="h-4 w-4" />
+            <span className="hidden sm:inline">New Fact</span>
+            <span className="sm:hidden">New</span>
+          </Button>
         </div>
 
         {/* Filter chips — tier + status + language in a single scrollable row */}
@@ -189,12 +207,13 @@ export function FactLibrary() {
       {/* === Smaller facts — 2-col grid === */}
       <section>
         <div className="flex items-center justify-between mb-3">
+          {/* Issue 5 fix: drop redundant "below the featured" sub-label.
+              The count alone tells the user what's here. */}
           <h3 className="font-serif text-lg font-semibold">
-            {filtered.length} {filtered.length === 1 ? 'fact' : 'facts'}
+            {filtered.length === 1
+              ? '1 fact'
+              : `${filtered.length} facts`}
           </h3>
-          <span className="text-xs text-muted-fg">
-            {rest.length} below the featured
-          </span>
         </div>
 
         {rest.length === 0 ? (
@@ -206,7 +225,7 @@ export function FactLibrary() {
                 : 'No facts match your filters. Try clearing them.'}
             </p>
             {brandFacts.length === 0 && (
-              <Button onClick={() => setView('machine')} variant="outline" className="mt-4 gap-2">
+              <Button onClick={handleNewFact} variant="outline" className="mt-4 gap-2">
                 <Plus className="h-4 w-4" />
                 Create first fact
               </Button>
@@ -311,12 +330,15 @@ function FeaturedHeroCard({
         <div className="space-y-2">
           <div className="grid grid-cols-2 gap-2">
             <StatCell label="Status" value={t(FACT_STATUS_LABELS[fact.status])} accent="lime" />
-            <StatCell label="Rating" value={`★ ${fact.rating}`} accent="lime" />
+            {/* Issue 3 fix: standardized rating display — star icon + numeric value (matches FactCard) */}
+            <StatCell label="Rating" value={`★ ${fact.rating.toFixed(1)}`} accent="lime" />
             <StatCell label="Views" value={formatCompact(fact.totalViews)} accent="orange" />
             <StatCell label="CPM spent" value={`$${cpmSpent}`} accent="lime" />
           </div>
+          {/* Issue 4 fix: explicit label 'claimed' so N/M format isn't ambiguous
+              with the 'lines locked' counter above. */}
           <div className="glass rounded-lg p-2 flex items-center justify-between text-xs">
-            <span className="text-muted-fg">Creators</span>
+            <span className="text-muted-fg">Creators claimed</span>
             <span className="font-mono" data-mono>
               {fact.claimedBy.length} / {fact.maxCreators}
             </span>
