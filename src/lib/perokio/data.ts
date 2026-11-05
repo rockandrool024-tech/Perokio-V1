@@ -19,6 +19,10 @@ export const VIEW_CAP = 10000 // per creator per video
 export const MAX_CPM_PAYOUT = (VIEW_CAP / 1000) * CPM_RATE // $30
 export const USD_TO_TND = 3.1
 
+// B19 Billing threshold — when video credits remaining fall below this,
+// surface the "Top up" / "Upgrade tier" conversion card.
+export const LOW_CREDITS_THRESHOLD = 5
+
 // ============== Brands ==============
 export const BRANDS: Brand[] = [
   {
@@ -592,26 +596,50 @@ export const VIDEOS: Video[] = [
     approved: false,
   },
   {
-    // Underperforming published video — 35% of view cap after 12h.
-    // Triggers B16 Assisted Post modal from B17 Results.
-    id: 'vid_009',
-    factId: 'fact_005',
-    factCode: 'F-2024-1025-05',
-    factClaim: 'A cup of coffee consumed in Tunisia has a 47% lower carbon footprint than in Europe',
-    brandName: 'Café Dar Zaitouna',
+    // Organic underperformer #1 — Bloom Cosmetics, 42% of cap after 12h.
+    // Naturally triggers B16 Assisted Post modal from B17 Results.
+    id: 'vid_010',
+    factId: 'fact_003',
+    factCode: 'F-2024-1028-03',
+    factClaim: 'The MENA beauty market will reach $46B in 2024, growing 11% a year',
+    brandName: 'Bloom Cosmetics',
     creatorId: 'cr_sara',
     creatorName: 'Sara Mansour',
     creatorAvatar: '👩🏽',
     stage: 'counting',
-    createdAt: '2024-11-04 08:00',
-    publishedAt: '2024-11-04 14:00',
-    durationSec: 16,
-    thumbnail: '🌱',
+    createdAt: '2024-11-04 06:00',
+    publishedAt: '2024-11-04 12:00',
+    durationSec: 19,
+    thumbnail: '💄',
     platform: 'instagram',
-    views: 3500,  // 35% of 10000 cap — underperforming
+    views: 4200,  // 42% of 10000 cap — underperforming
     viewCap: 10000,
-    earningsBase: 6,
-    earningsCpm: 10.5,  // (3500/1000) * 3 = 10.5
+    earningsBase: 25,
+    earningsCpm: 12.6,  // (4200/1000) * 3 = 12.6
+    hoursToPublish: 0,
+    approved: true,
+  },
+  {
+    // Organic underperformer #2 — Olive & Co, 28% of cap after 12h.
+    // Spread across a different brand than vid_010.
+    id: 'vid_011',
+    factId: 'fact_002',
+    factCode: 'F-2024-1101-02',
+    factClaim: 'Tunisia’s olive oil exports grew 32% in 2024, overtaking Morocco and Greece',
+    brandName: 'Olive & Co',
+    creatorId: 'cr_lina',
+    creatorName: 'Lina Khelifi',
+    creatorAvatar: '👩🏻',
+    stage: 'counting',
+    createdAt: '2024-11-04 09:00',
+    publishedAt: '2024-11-04 15:00',
+    durationSec: 14,
+    thumbnail: '🫒',
+    platform: 'tiktok',
+    views: 2800,  // 28% of 10000 cap — underperforming
+    viewCap: 10000,
+    earningsBase: 10,
+    earningsCpm: 8.4,  // (2800/1000) * 3 = 8.4
     hoursToPublish: 0,
     approved: true,
   },

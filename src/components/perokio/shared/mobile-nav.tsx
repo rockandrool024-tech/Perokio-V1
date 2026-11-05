@@ -20,6 +20,7 @@ import {
   BarChart3,
   Calendar,
   MoreHorizontal,
+  Settings as SettingsIcon,
   X,
   type LucideIcon,
 } from 'lucide-react'
@@ -67,6 +68,7 @@ const MORE_NAVS: Record<'brand' | 'creator' | 'admin', NavItem[]> = {
     { id: 'results', label: 'Results', icon: BarChart3 },
     { id: 'next', label: 'Next Cycle', icon: Sparkles },
     { id: 'billing', label: 'Billing', icon: Receipt },
+    { id: 'settings', label: 'Settings', icon: SettingsIcon },
     // Note: B16 Assisted Post is a MODAL, not a screen — never in nav
   ],
   creator: [],  // creator has only 4 items, no More sheet needed

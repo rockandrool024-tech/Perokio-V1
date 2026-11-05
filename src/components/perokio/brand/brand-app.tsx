@@ -4,7 +4,7 @@ import { usePerokioStore } from '@/store/perokio'
 import { SidebarItem } from '@/components/perokio/shared/sidebar-item'
 import { BRANDS, VIDEOS, FACTS } from '@/lib/perokio/data'
 import { useT, usePick } from '@/lib/perokio/i18n'
-import { LayoutDashboard, Film, ShieldCheck, FileText, Eye, Receipt, ChevronDown, Activity, BarChart3, Calendar, Sparkles } from 'lucide-react'
+import { LayoutDashboard, Film, ShieldCheck, FileText, Eye, Receipt, ChevronDown, Activity, BarChart3, Calendar, Sparkles, Settings as SettingsIcon } from 'lucide-react'
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
@@ -20,6 +20,7 @@ import { VideoReviewDetail } from './video-review-detail'
 import { PostingQueue } from './posting-queue'
 import { Results } from './results'
 import { NextCycle } from './next-cycle'
+import { Settings } from './settings'
 
 export function BrandSidebar() {
   const view = usePerokioStore((s) => s.brandView)
@@ -106,6 +107,7 @@ export function BrandSidebar() {
         <SidebarItem icon={BarChart3} label="Results" code="B17" active={view === 'results'} onClick={() => setView('results')} />
         <SidebarItem icon={Sparkles} label="Next Cycle" code="B18" active={view === 'next'} onClick={() => setView('next')} />
         <SidebarItem icon={Receipt} label={t('Billing')} code="B19" active={view === 'billing'} onClick={() => setView('billing')} />
+        <SidebarItem icon={SettingsIcon} label={t('Settings')} code="B20" active={view === 'settings'} onClick={() => setView('settings')} />
       </nav>
 
       {/* Moat status footer */}
@@ -146,6 +148,7 @@ export function BrandApp() {
           {view === 'results' && <Results />}
           {view === 'next' && <NextCycle />}
           {view === 'billing' && <Billing />}
+          {view === 'settings' && <Settings key={`settings-${brandId}`} />}
         </div>
       </div>
     </>

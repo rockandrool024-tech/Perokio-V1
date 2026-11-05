@@ -3,23 +3,15 @@
 /**
  * B17 Results — per-video analytics deep-dive.
  *
- * Per Cycle 5c brief:
- *   "Per-video analytics: view curve over 24h, CPM spent, conversion.
- *    MUST import CPM_RATE, VIEW_CAP, BASE_FEE_BY_TIER from mock-data.ts.
- *    No hardcoded $ values. No '3' as a literal. All math derives from constants.
- *    If any number doesn't match WL01's numbers for the same video, cycle fails."
+ * §1 BLOCKING PATCH (Cycle 5d):
+ *   B17 and WL01 both consume useLiveEarnings(videoId) — a single Zustand
+ *   selector. When both screens view the same video, they render identical
+ *   numbers at every tick. There is no "snapshot vs live" distinction.
  *
- * CRITICAL INVARIANT: The earnings formula MUST be identical to WL01's:
- *   earned = earningsBase + (views / 1000) * CPM_RATE
- *
- * WL01 (in wallet.tsx) computes:
- *   liveDollars = 8 + (8400 / 1000) * 3   ← for vid_001 with 8400 views
- *   = $8 + $25.20 = $33.20
- *
- * B17 must produce the same $33.20 for vid_001. To guarantee this, we
- * import CPM_RATE directly and use the same formula. We do NOT use the
- * pre-computed `earningsCpm` field on the Video object — we recompute it
- * from the constant + views, exactly as WL01 does.
+ * Formula (shared via useLiveEarnings):
+ *   earned = earningsBase + (liveViews / 1000) * CPM_RATE
+ *   where CPM_RATE = 3 (from data.ts) and liveViews comes from the
+ *   shared Zustand store in use-live-views.ts.
  */
 
 import { useState } from 'react'
@@ -31,6 +23,7 @@ import { useT, usePick } from '@/lib/perokio/i18n'
 import { formatCompact, formatUSD } from '@/lib/perokio/format'
 import { easeEditorial } from '@/lib/perokio/motion'
 import { useReducedMotion } from '@/lib/perokio/use-reduced-motion'
+import { useLiveEarnings } from '@/lib/perokio/use-live-views'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -79,6 +72,11 @@ export function Results() {
     VIDEOS.find((v) => v.id === activeVideoId && brandVideos.includes(v)) ||
     brandVideos[0]
 
+  // === §1 BLOCKING PATCH: shared live views via useLiveEarnings ===
+  // Must be called unconditionally (before early return) to satisfy
+  // React's rules-of-hooks. When activeVideo is null, pass null → returns zeros.
+  const { views: liveViews, totalEarned, cpmEarned, progress: liveProgress } = useLiveEarnings(activeVideo?.id)
+
   if (!activeVideo) {
     return (
       <div className="glass rounded-2xl border-dashed border-white/10 p-12 text-center">
@@ -126,26 +124,23 @@ export function Results() {
   const fact = FACTS.find((f) => f.id === activeVideo.factId)
   const creator = CREATORS.find((c) => c.id === activeVideo.creatorId)
 
-  // === CRITICAL: earnings math using the SAME constants as WL01 ===
-  // WL01 formula: earningsBase + (views / 1000) * CPM_RATE
-  // We do NOT use activeVideo.earningsCpm — we recompute from the constant.
-  const cpmEarned = (activeVideo.views / 1000) * CPM_RATE
-  const totalEarned = activeVideo.earningsBase + cpmEarned
+  // useLiveEarnings is already called above (before early return) —
+  // liveViews, totalEarned, cpmEarned, liveProgress are all in scope.
   const maxPossibleCpm = (VIEW_CAP / 1000) * CPM_RATE
   const maxPossibleEarned = activeVideo.earningsBase + maxPossibleCpm
-  const viewsRatio = activeVideo.views / activeVideo.viewCap
+  const viewsRatio = liveViews / activeVideo.viewCap
   const isUnderperforming = viewsRatio < 0.5
 
-  // Effective CPM = (CPM earned / views) * 1000 — same as B14's calculation
-  const effectiveCpm = activeVideo.views > 0 ? (cpmEarned / activeVideo.views) * 1000 : 0
+  // Effective CPM = CPM_RATE (constant) — both screens resolve to the same source
+  const effectiveCpm = liveViews > 0 ? (cpmEarned / liveViews) * 1000 : 0
   const brandAvgCpm = brand.avgCpm
   const cpmDelta = brandAvgCpm > 0 ? ((effectiveCpm - brandAvgCpm) / brandAvgCpm) * 100 : 0
 
-  const views24h = generate24hCurve(activeVideo.views)
+  const views24h = generate24hCurve(liveViews)
   const peakHour = views24h.reduce((max, p) => (p.v > max.v ? p : max), views24h[0])
 
   // Conversion: views / followers (engagement rate)
-  const engagementRate = creator ? (activeVideo.views / creator.followers) * 100 : 0
+  const engagementRate = creator ? (liveViews / creator.followers) * 100 : 0
 
   return (
     <div className="space-y-6">
@@ -244,7 +239,7 @@ export function Results() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
             <Metric
               label="Views"
-              value={formatCompact(activeVideo.views)}
+              value={formatCompact(liveViews)}
               sub={`of ${formatCompact(VIEW_CAP)} cap`}
               accent={viewsRatio < 0.5 ? 'orange' : 'lime'}
               icon={Eye}
@@ -252,7 +247,7 @@ export function Results() {
             {/* CRITICAL: total earned matches WL01's liveDollars exactly */}
             <Metric
               label="Earned"
-              value={formatUSD(totalEarned)}
+              value={`$${totalEarned.toFixed(2)}`}
               sub={`$${activeVideo.earningsBase} + $${cpmEarned.toFixed(2)}`}
               accent="lime"
               icon={DollarSign}
@@ -353,7 +348,7 @@ export function Results() {
           </div>
           <div className="flex items-center justify-between">
             <span className="text-muted-fg">
-              CPM ({formatCompact(activeVideo.views)} views × ${CPM_RATE}/1k)
+              CPM ({formatCompact(liveViews)} views × ${CPM_RATE}/1k)
             </span>
             <span className="font-mono text-lime" data-mono>
               ${cpmEarned.toFixed(2)}
@@ -362,7 +357,7 @@ export function Results() {
           <div className="flex items-center justify-between pt-2 border-t border-white/[0.06]">
             <span className="font-medium">Total paid to {activeVideo.creatorName.split(' ')[0]}</span>
             <span className="font-mono text-lime font-bold text-lg" data-mono>
-              {formatUSD(totalEarned)}
+              {`$${totalEarned.toFixed(2)}`}
             </span>
           </div>
         </div>
@@ -370,13 +365,9 @@ export function Results() {
         {/* Math proof — shows the formula + constants used (for verification) */}
         <div className="mt-4 pt-3 border-t border-white/[0.06] text-[10px] text-muted-fg font-mono" data-mono>
           <div>Formula: earningsBase + (views / 1000) × CPM_RATE</div>
-          <div>= ${activeVideo.earningsBase} + ({formatCompact(activeVideo.views)} / 1000) × ${CPM_RATE}</div>
+          <div>= ${activeVideo.earningsBase} + ({formatCompact(liveViews)} / 1000) × ${CPM_RATE}</div>
           <div>= ${activeVideo.earningsBase} + ${cpmEarned.toFixed(2)}</div>
-          <div className="text-lime mt-1">= ${totalEarned.toFixed(2)} ✓ matches WL01</div>
-          <div className="text-muted-fg/60 mt-1">
-            Note: WL01 shows a live-ticking value (starts at this number, ticks up).
-            This screen shows the snapshot at current view count.
-          </div>
+          <div className="text-lime mt-1">= ${totalEarned.toFixed(2)} ✓ matches WL01 (single source)</div>
         </div>
       </motion.div>
 

@@ -6,7 +6,7 @@ import type { Role, FactBundle, Video } from '@/lib/perokio/types'
 import type { Lang } from '@/lib/perokio/i18n'
 import { FACTS, VIDEOS, CREATORS } from '@/lib/perokio/data'
 
-type BrandView = 'command' | 'machine' | 'script' | 'library' | 'review' | 'billing' | 'feed' | 'detail' | 'queue' | 'results' | 'next'
+type BrandView = 'command' | 'machine' | 'script' | 'library' | 'review' | 'billing' | 'feed' | 'detail' | 'queue' | 'results' | 'next' | 'settings'
 type CreatorView = 'wall' | 'claim' | 'wallet' | 'profile'
 type AdminView = 'pipeline' | 'vetting' | 'qa' | 'trends' | 'monitor' | 'authoring'
 

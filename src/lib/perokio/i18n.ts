@@ -46,6 +46,7 @@ export const AR: Record<string, string> = {
   'Fact Library': 'مكتبة الحقائق',
   'Video Review': 'مراجعة الفيديو',
   'Billing': 'الفوترة',
+  'Settings': 'الإعدادات',
   'Moat Engine Active': 'محرك الحماية يعمل',
   'All script lines locked · 0 unverified · 0 legal risk': 'جميع سطور النص مقفلة · 0 غير موثّق · 0 مخاطر قانونية',
 

@@ -5,12 +5,12 @@ import { Button } from '@/components/ui/button'
 import { CREATORS, TRANSACTIONS, USD_TO_TND, MAX_CPM_PAYOUT, VIEW_CAP } from '@/lib/perokio/data'
 import { getCreatorStats, EARNINGS_CURVE_5D } from '@/lib/perokio/mock-data'
 import { useT } from '@/lib/perokio/i18n'
-import { formatTND, formatUSD, formatCompact } from '@/lib/perokio/live'
+import { formatTND, formatUSD, formatCompact } from '@/lib/perokio/format'
+import { useLiveEarnings } from '@/lib/perokio/use-live-views'
 import { Flame, Wallet, TrendingUp, Gift, ArrowDownToLine, Zap, Crown, Trophy } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { useToast } from '@/hooks/use-toast'
-import { useEffect, useState } from 'react'
 
 const earningsData = EARNINGS_CURVE_5D
 
@@ -91,22 +91,12 @@ export function WalletView() {
   const { toast } = useToast()
   const t = useT()
 
-  // === Live ticking CPM tracker ===
-  // Simulates the 24h view window: views count up, dollars tick up in real-time
-  const [liveViews, setLiveViews] = useState(8400)
-  const [liveDollars, setLiveDollars] = useState(8 + (8400 / 1000) * 3)
-  const liveProgress = liveViews / VIEW_CAP
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setLiveViews((v) => {
-        const next = Math.min(VIEW_CAP, v + Math.floor(Math.random() * 37) + 3)
-        setLiveDollars(8 + (next / 1000) * 3)
-        return next
-      })
-    }, 2200)
-    return () => clearInterval(id)
-  }, [])
+  // === §1 BLOCKING PATCH: shared live views via useLiveEarnings ===
+  // Both WL01 and B17 consume this hook for the same video → identical numbers.
+  // The independent liveDollars/liveViews state is removed.
+  // vid_001 is Amira's published video (the one the wallet tracks).
+  const trackedVideoId = 'vid_001'
+  const { views: liveViews, totalEarned: liveDollars, progress: liveProgress } = useLiveEarnings(trackedVideoId)
 
   const streakToNext = creator.streak >= 28 ? 30 : creator.streak >= 14 ? 28 : stats.streakCycleDays
   const streakProgress = (creator.streak / streakToNext) * 100
