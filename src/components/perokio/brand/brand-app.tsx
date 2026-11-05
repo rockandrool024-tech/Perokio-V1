@@ -4,7 +4,7 @@ import { usePerokioStore } from '@/store/perokio'
 import { SidebarItem } from '@/components/perokio/shared/sidebar-item'
 import { BRANDS, VIDEOS, FACTS } from '@/lib/perokio/data'
 import { useT, usePick } from '@/lib/perokio/i18n'
-import { LayoutDashboard, Film, ShieldCheck, FileText, Eye, Receipt, ChevronDown } from 'lucide-react'
+import { LayoutDashboard, Film, ShieldCheck, FileText, Eye, Receipt, ChevronDown, Activity, BarChart3 } from 'lucide-react'
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
@@ -15,6 +15,8 @@ import { ScriptReview } from './script-review'
 import { FactLibrary } from './fact-library'
 import { VideoReview } from './video-review'
 import { Billing } from './billing'
+import { ClaimFeed } from './claim-feed'
+import { VideoReviewDetail } from './video-review-detail'
 
 export function BrandSidebar() {
   const view = usePerokioStore((s) => s.brandView)
@@ -94,8 +96,10 @@ export function BrandSidebar() {
         <SidebarItem icon={Film} label={t('Content Machine')} code="B09" active={view === 'machine'} badge={activeFacts} onClick={() => setView('machine')} />
         <SidebarItem icon={ShieldCheck} label={t('Script Review · Moat')} code="B11" active={view === 'script'} onClick={() => setView('script')} />
         <SidebarItem icon={FileText} label={t('Fact Library')} code="B10" active={view === 'library'} onClick={() => setView('library')} />
+        <SidebarItem icon={Activity} label="Claim Feed" code="B13" active={view === 'feed'} onClick={() => setView('feed')} />
         <SidebarItem icon={Eye} label={t('Video Review')} code="B12" active={view === 'review'} badge={pendingReview || undefined} onClick={() => setView('review')} />
-        <SidebarItem icon={Receipt} label={t('Billing')} code="B13" active={view === 'billing'} onClick={() => setView('billing')} />
+        <SidebarItem icon={BarChart3} label="Video Detail" code="B14" active={view === 'detail'} onClick={() => setView('detail')} />
+        <SidebarItem icon={Receipt} label={t('Billing')} code="B19" active={view === 'billing'} onClick={() => setView('billing')} />
       </nav>
 
       {/* Moat status footer */}
@@ -119,6 +123,7 @@ export function BrandSidebar() {
 
 export function BrandApp() {
   const view = usePerokioStore((s) => s.brandView)
+  const brandId = usePerokioStore((s) => s.activeBrandId)
   return (
     <>
       <BrandSidebar />
@@ -128,7 +133,10 @@ export function BrandApp() {
           {view === 'machine' && <ContentMachine />}
           {view === 'script' && <ScriptReview />}
           {view === 'library' && <FactLibrary />}
+          {/* ClaimFeed remounts on brand change via key — resets feed state cleanly */}
+          {view === 'feed' && <ClaimFeed key={`feed-${brandId}`} />}
           {view === 'review' && <VideoReview />}
+          {view === 'detail' && <VideoReviewDetail />}
           {view === 'billing' && <Billing />}
         </div>
       </div>

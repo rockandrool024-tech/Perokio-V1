@@ -16,6 +16,7 @@ import {
   TrendingUp,
   Activity,
   Sparkles,
+  BarChart3,
   type LucideIcon,
 } from 'lucide-react'
 import { motion } from 'framer-motion'
@@ -29,7 +30,9 @@ const NAVS: Record<'brand' | 'creator' | 'admin', NavItem[]> = {
     { id: 'machine', label: 'Machine', icon: Film },
     { id: 'script', label: 'Script', icon: ShieldCheck },
     { id: 'library', label: 'Facts', icon: FileText },
+    { id: 'feed', label: 'Feed', icon: Activity },
     { id: 'review', label: 'Review', icon: Eye },
+    { id: 'detail', label: 'Detail', icon: BarChart3 },
     { id: 'billing', label: 'Billing', icon: Receipt },
   ],
   creator: [

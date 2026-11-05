@@ -109,13 +109,13 @@ export async function GET(request: Request) {
             <div style={{ display: 'flex', color: 'rgba(255,255,255,0.2)' }}>·</div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <div style={{ display: 'flex', fontSize: 24 }}>{brand?.logo ?? '📋'}</div>
-              <div style={{ display: 'flex', fontSize: 16, color: 'rgba(255,255,255,0.8)' }}>
+              <div style={{ display: 'flex', fontSize: 16, color: '#FFFFFF' }}>
                 {fact.brandName}
               </div>
             </div>
           </div>
 
-          {/* The claim */}
+          {/* The claim — explicit #FFFFFF for max contrast at thumbnail size */}
           <div
             style={{
               display: 'flex',
@@ -124,6 +124,7 @@ export async function GET(request: Request) {
               fontFamily: 'serif',
               lineHeight: 1.2,
               maxWidth: 1000,
+              color: '#FFFFFF',
             }}
           >
             "{fact.claim.length > 140 ? fact.claim.slice(0, 140) + '…' : fact.claim}"
