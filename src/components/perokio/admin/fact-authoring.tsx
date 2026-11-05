@@ -9,11 +9,16 @@ import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { BRANDS, SOURCES } from '@/lib/perokio/data'
 import { useT } from '@/lib/perokio/i18n'
-import { Plus, FileText, Link2, Trash2, Sparkles, ShieldCheck, AlertCircle, Save, Send, Wand2, X } from 'lucide-react'
-import { useState } from 'react'
+import { Plus, FileText, Link2, Trash2, Sparkles, ShieldCheck, AlertCircle, Save, Send, Wand2, X, Zap, DollarSign, BarChart3 } from 'lucide-react'
+import { useState, useRef, useEffect } from 'react'
 import { useToast } from '@/hooks/use-toast'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
 
 interface DraftLine {
   id: string
@@ -57,6 +62,50 @@ export function FactAuthoring() {
     { id: 'l3', text: '', durationSec: 2, isHook: false },
   ])
   const [sources, setSources] = useState<DraftSource[]>(SOURCES.slice(0, 2).map((s) => ({ ...s })))
+
+  // === §2: Slash command state ===
+  const [slashOpen, setSlashOpen] = useState(false)
+  const [slashLineId, setSlashLineId] = useState<string | null>(null)
+  const slashTriggerRef = useRef<HTMLTextAreaElement>(null)
+
+  // Slash command options
+  const slashCommands = [
+    { id: 'hook', label: 'Insert hook', icon: Zap, template: 'Did you know? ', action: (lineId: string) => {
+      updateLine(lineId, 'text', 'Did you know? ')
+      updateLine(lineId, 'isHook', true)
+    }},
+    { id: 'data', label: 'Insert data point', icon: BarChart3, template: 'According to recent data, ', action: (lineId: string) => {
+      updateLine(lineId, 'text', 'According to recent data, ')
+    }},
+    { id: 'cta', label: 'Insert CTA', icon: DollarSign, template: 'Try it today — ', action: (lineId: string) => {
+      updateLine(lineId, 'text', 'Try it today — ')
+    }},
+    { id: 'source', label: 'Insert source link', icon: Link2, template: '', action: (lineId: string) => {
+      // Focus the source selector for this line
+      toast({ title: '🔗 Link a source', description: 'Use the source dropdown below to link this line.' })
+    }},
+  ]
+
+  const handleSlashKey = (e: React.KeyboardEvent<HTMLTextAreaElement>, lineId: string) => {
+    if (e.key === '/' && (e.currentTarget.value === '' || e.currentTarget.value.endsWith(' '))) {
+      e.preventDefault()
+      setSlashLineId(lineId)
+      setSlashOpen(true)
+    }
+    if (e.key === 'Escape' && slashOpen) {
+      setSlashOpen(false)
+    }
+  }
+
+  const handleSlashSelect = (cmd: typeof slashCommands[number]) => {
+    if (slashLineId) {
+      cmd.action(slashLineId)
+    }
+    setSlashOpen(false)
+    setSlashLineId(null)
+    // Refocus the textarea
+    setTimeout(() => slashTriggerRef.current?.focus(), 50)
+  }
 
   const verifiedLines = lines.filter((l) => l.text && l.sourceId).length
   const totalLines = lines.filter((l) => l.text).length
@@ -351,13 +400,40 @@ export function FactAuthoring() {
                       <X className="h-3.5 w-3.5" />
                     </Button>
                   </div>
-                  <Textarea
-                    placeholder={`L${idx + 1}...`}
-                    value={line.text}
-                    onChange={(e) => updateLine(line.id, 'text', e.target.value)}
-                    rows={2}
-                    className="text-sm"
-                  />
+                  <Popover open={slashOpen && slashLineId === line.id} onOpenChange={setSlashOpen}>
+                    <PopoverTrigger asChild>
+                      <Textarea
+                        ref={slashLineId === line.id ? slashTriggerRef : undefined}
+                        placeholder={`L${idx + 1}... (type / for commands)`}
+                        value={line.text}
+                        onChange={(e) => updateLine(line.id, 'text', e.target.value)}
+                        onKeyDown={(e) => handleSlashKey(e, line.id)}
+                        rows={2}
+                        className="text-sm"
+                      />
+                    </PopoverTrigger>
+                    <PopoverContent className="w-64 p-1" align="start">
+                      <div className="space-y-0.5">
+                        {slashCommands.map((cmd) => {
+                          const Icon = cmd.icon
+                          return (
+                            <button
+                              key={cmd.id}
+                              onClick={() => handleSlashSelect(cmd)}
+                              className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm hover:bg-white/[0.05] transition-colors text-start"
+                            >
+                              <Icon className="h-4 w-4 text-lime shrink-0" />
+                              <span className="flex-1">{cmd.label}</span>
+                              <span className="text-[10px] font-mono text-muted-fg" data-mono>/</span>
+                            </button>
+                          )
+                        })}
+                      </div>
+                      <div className="mt-1 pt-1 border-t border-white/[0.06] px-3 py-1.5 text-[10px] text-muted-fg">
+                        Type / in any script line to insert templates
+                      </div>
+                    </PopoverContent>
+                  </Popover>
                   <div className="mt-2 flex items-center gap-2">
                     <span className="text-xs text-muted-foreground shrink-0">{t('Link source:')}</span>
                     {hasText ? (

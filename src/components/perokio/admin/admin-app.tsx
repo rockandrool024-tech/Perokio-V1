@@ -11,6 +11,8 @@ import { ScriptQA } from './script-qa'
 import { TrendInput } from './trend-input'
 import { WallMonitor } from './wall-monitor'
 import { FactAuthoring } from './fact-authoring'
+import { CommandPalette } from './command-palette'
+import { QualityDashboard } from './quality-dashboard'
 
 export function AdminApp() {
   const view = usePerokioStore((s) => s.adminView)
@@ -49,7 +51,8 @@ export function AdminApp() {
           <SidebarItem icon={ShieldCheck} label={t('Script QA')} code="A03" active={view === 'qa'} badge={qaPending} onClick={() => setView('qa')} />
           <SidebarItem icon={TrendingUp} label={t('Trend Input')} code="A04" active={view === 'trends'} onClick={() => setView('trends')} />
           <SidebarItem icon={Activity} label={t('Wall Monitor')} code="A05" active={view === 'monitor'} badge={liveFacts} onClick={() => setView('monitor')} />
-          <SidebarItem icon={Sparkles} label={t('Fact Authoring')} code="A06·A07" active={view === 'authoring'} onClick={() => setView('authoring')} />
+          <SidebarItem icon={ShieldCheck} label="Quality Dashboard" code="A06" active={view === 'quality'} onClick={() => setView('quality')} />
+          <SidebarItem icon={Sparkles} label={t('Fact Authoring')} code="A07" active={view === 'authoring'} onClick={() => setView('authoring')} />
         </nav>
 
         {/* Footer status */}
@@ -76,9 +79,13 @@ export function AdminApp() {
           {view === 'qa' && <ScriptQA />}
           {view === 'trends' && <TrendInput />}
           {view === 'monitor' && <WallMonitor />}
+          {view === 'quality' && <QualityDashboard />}
           {view === 'authoring' && <FactAuthoring />}
         </div>
       </div>
+
+      {/* §2: Global Cmd+K command palette — mounted at Admin root */}
+      <CommandPalette />
     </>
   )
 }

@@ -8,17 +8,22 @@ import { PENDING_CREATORS } from '@/lib/perokio/data'
 import { useT } from '@/lib/perokio/i18n'
 import { formatCompact } from '@/lib/perokio/live'
 import { CheckCircle2, X, ExternalLink, Star, Users, Shield, Clock } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
+import { cn } from '@/lib/utils'
 
 export function CreatorVetting() {
   const { toast } = useToast()
   const t = useT()
   const [pending, setPending] = useState(PENDING_CREATORS)
+  // Index of the currently-selected applicant (for keyboard navigation)
+  const [currentIdx, setCurrentIdx] = useState(0)
 
   const handleApprove = (id: string) => {
     setPending((list) => list.filter((c) => c.id !== id))
     const c = PENDING_CREATORS.find((x) => x.id === id)
+    // Clamp selection to bounds after removal (closure uses old length)
+    setCurrentIdx((i) => Math.min(i, Math.max(pending.length - 2, 0)))
     toast({
       title: `✅ ${t('Creator approved')}`,
       description: `${c?.name} ${t('joined the creator pool — will appear on the Facts Wall.')}`,
@@ -27,12 +32,43 @@ export function CreatorVetting() {
 
   const handleReject = (id: string) => {
     setPending((list) => list.filter((c) => c.id !== id))
+    setCurrentIdx((i) => Math.min(i, Math.max(pending.length - 2, 0)))
     toast({
       title: `❌ ${t('Rejected')}`,
       description: t('The applicant has been notified.'),
       variant: 'destructive',
     })
   }
+
+  // Keyboard shortcuts: A=approve, R=reject, J=next, K=prev
+  // Ignore when typing in inputs/textareas
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null
+      const tag = target?.tagName
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || target?.isContentEditable) return
+      if (pending.length === 0) return
+
+      const key = e.key.toLowerCase()
+      if (key === 'j') {
+        e.preventDefault()
+        setCurrentIdx((i) => Math.min(i + 1, pending.length - 1))
+      } else if (key === 'k') {
+        e.preventDefault()
+        setCurrentIdx((i) => Math.max(i - 1, 0))
+      } else if (key === 'a') {
+        e.preventDefault()
+        const c = pending[currentIdx]
+        if (c) handleApprove(c.id)
+      } else if (key === 'r') {
+        e.preventDefault()
+        const c = pending[currentIdx]
+        if (c) handleReject(c.id)
+      }
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [pending, currentIdx, t])
 
   return (
     <div className="space-y-6">
@@ -46,8 +82,15 @@ export function CreatorVetting() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {pending.map((c) => (
-          <Card key={c.id} className="hover:shadow-md transition-shadow">
+        {pending.map((c, idx) => (
+          <Card
+            key={c.id}
+            className={cn(
+              'hover:shadow-md transition-all',
+              idx === currentIdx && 'ring-2 ring-primary/60 border-primary/40'
+            )}
+            onClick={() => setCurrentIdx(idx)}
+          >
             <CardContent className="p-4">
               <div className="flex items-start gap-3">
                 <Avatar className="h-12 w-12 border">
@@ -61,6 +104,11 @@ export function CreatorVetting() {
                     <Badge variant="outline" className="text-[10px]">{c.handle}</Badge>
                     {c.status === 'reviewing' && (
                       <Badge variant="secondary" className="text-[10px]">{t('In review')}</Badge>
+                    )}
+                    {idx === currentIdx && (
+                      <Badge variant="outline" className="text-[10px] border-primary/40 text-primary">
+                        ⌨ {t('Selected')}
+                      </Badge>
                     )}
                   </div>
                   <div className="text-xs text-muted-foreground mt-0.5">
@@ -134,6 +182,23 @@ export function CreatorVetting() {
           </CardContent>
         </Card>
       )}
+
+      {/* Keyboard shortcuts hint */}
+      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 pointer-events-none">
+        <div className="glass rounded-full px-4 py-1.5 shadow-lg border border-border/60 flex items-center gap-2 text-[11px]">
+          <span className="text-muted-foreground">⌨</span>
+          <span className="font-mono font-bold text-primary" data-mono>A</span>
+          <span className="text-muted-foreground">{t('Approve')}</span>
+          <span className="text-muted-foreground/50">·</span>
+          <span className="font-mono font-bold text-chart-3" data-mono>R</span>
+          <span className="text-muted-foreground">{t('Reject')}</span>
+          <span className="text-muted-foreground/50">·</span>
+          <span className="font-mono font-bold text-foreground" data-mono>J</span>
+          <span className="text-muted-foreground">/</span>
+          <span className="font-mono font-bold text-foreground" data-mono>K</span>
+          <span className="text-muted-foreground">{t('Navigate')}</span>
+        </div>
+      </div>
     </div>
   )
 }

@@ -20,7 +20,6 @@ const STATUS_LABELS: Record<string, string> = {
 }
 
 export function ScriptQA() {
-  const setActiveFact = usePerokioStore((s) => s.setActiveFact)
   const setRole = usePerokioStore((s) => s.setRole)
   const setBrandView = usePerokioStore((s) => s.setBrandView)
   const { toast } = useToast()
@@ -171,16 +170,17 @@ export function ScriptQA() {
                   <Button
                     size="sm"
                     variant="ghost"
-                    className="gap-1 text-xs"
+                    className="gap-1 text-xs text-primary hover:text-primary hover:bg-primary/10"
                     onClick={() => {
                       if (fact) {
-                        setActiveFact(fact.id)
+                        // Cross-link to B11 Script Review: set fact, switch to brand role, open Script view
+                        usePerokioStore.getState().setActiveFact(fact.id)
                         setRole('brand')
-                        setBrandView('script') // Fixed: previously jumped role without opening the B11 view
+                        setBrandView('script')
                       }
                     }}
                   >
-                    <Eye className="h-3.5 w-3.5" /> {t('View script')} <ChevronRight className="h-3 w-3" />
+                    {t('Review Script')} <ChevronRight className="h-3.5 w-3.5" />
                   </Button>
                   <div className="flex-1" />
                   {q.status !== 'approved' && (

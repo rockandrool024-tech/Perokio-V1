@@ -78,6 +78,7 @@ const MORE_NAVS: Record<'brand' | 'creator' | 'admin', NavItem[]> = {
   ],
   admin: [
     { id: 'monitor', label: 'Wall Monitor', icon: Activity },
+    { id: 'quality', label: 'Quality Dashboard', icon: ShieldCheck },
     { id: 'authoring', label: 'Fact Authoring', icon: Sparkles },
   ],
 }

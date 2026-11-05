@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { FACTS, CREATORS, VIDEOS } from '@/lib/perokio/data'
 import { useT, usePick } from '@/lib/perokio/i18n'
 import { formatCompact } from '@/lib/perokio/live'
-import { Eye, Users, Activity, ShieldCheck } from 'lucide-react'
+import { Eye, Users, Activity, ShieldCheck, Sparkles } from 'lucide-react'
 import { motion } from 'framer-motion'
 
 const STATUS_BADGE: Record<string, string> = {
@@ -22,6 +22,19 @@ const HEALTH = [
   { name: 'Flouci payouts', status: '⚠ Degraded', detail: 'Some withdrawals delayed' },
   { name: 'Hyperframe editor', status: '✓ Healthy', detail: 'Response < 200ms' },
 ]
+
+// Mock growth metrics — share/invite funnel
+const GROWTH_METRICS = [
+  { label: 'K-factor', value: '1.34', hint: 'viral coefficient', tone: 'lime' as const },
+  { label: 'Share rate', value: '23%', hint: 'of creators shared profile', tone: 'lime' as const },
+  { label: 'Invite acceptance', value: '67%', hint: 'of invites accepted', tone: 'orange' as const },
+  { label: 'Publish rate', value: '8.2/day', hint: 'avg videos published daily', tone: 'orange' as const },
+]
+
+const GROWTH_TONE_CLASS: Record<'lime' | 'orange', string> = {
+  lime: 'text-primary',
+  orange: 'text-chart-2',
+}
 
 export function WallMonitor() {
   const t = useT()
@@ -196,6 +209,39 @@ export function WallMonitor() {
                   {t(h.status)}
                 </div>
                 <div className="text-[10px] text-muted-foreground">{t(h.detail)}</div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Growth panel — mock share/invite metrics */}
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-base flex items-center gap-2">
+            <Sparkles className="h-4 w-4 text-primary" />
+            {t('Growth')}
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+            {GROWTH_METRICS.map((m) => (
+              <div
+                key={m.label}
+                className="glass rounded-xl p-3 border border-border/60"
+              >
+                <div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1.5">
+                  {t(m.label)}
+                </div>
+                <div
+                  className={`text-2xl font-bold font-mono ${GROWTH_TONE_CLASS[m.tone]}`}
+                  data-mono
+                >
+                  {m.value}
+                </div>
+                <div className="text-[10px] text-muted-foreground mt-1">
+                  {t(m.hint)}
+                </div>
               </div>
             ))}
           </div>

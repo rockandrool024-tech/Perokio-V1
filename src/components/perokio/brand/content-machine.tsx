@@ -2,7 +2,7 @@
 
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Countdown } from '@/components/perokio/shared/countdown'
+import { TimerBar } from '@/components/perokio/shared/timer-bar'
 import { usePerokioStore } from '@/store/perokio'
 import { BRANDS, VIDEOS, FACTS, STAGE_LABELS } from '@/lib/perokio/data'
 import { useT } from '@/lib/perokio/i18n'
@@ -315,10 +315,10 @@ function TimelineVideoCard({ video: v, t, onReview, onApprove, onPublish, onSett
             </div>
             <div className="flex items-center gap-2 shrink-0">
               {v.stage === 'editing' && v.hoursToLock !== undefined && (
-                <Countdown hours={v.hoursToLock} size="sm" variant="orange" showIcon="clock" />
+                <TimerBar hours={v.hoursToLock} layout="inline" size="sm" />
               )}
               {v.stage === 'locked_pending' && v.reviewDeadline !== undefined && (
-                <Countdown hours={v.reviewDeadline} size="sm" variant="critical" showIcon="lock" />
+                <TimerBar hours={v.reviewDeadline} layout="inline" size="sm" />
               )}
               {v.stage === 'published' && (
                 <div className="text-[10px] px-2 py-0.5 rounded bg-lime/10 text-lime font-mono flex items-center gap-1 border border-lime/20" data-mono>

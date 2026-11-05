@@ -249,8 +249,9 @@ export function FactsWall() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.05 }}
+              onClick={() => handleCardClick(f.id)}
               className={cn(
-                'break-inside-avoid rounded-2xl p-4 transition-all',
+                'break-inside-avoid rounded-2xl p-4 transition-all cursor-pointer',
                 claimedByMe ? 'glass-lime' : 'glass hover:bg-white/[0.05]',
               )}
             >
@@ -335,9 +336,9 @@ export function FactsWall() {
                 </span>
               </div>
 
-              {/* CTA */}
+              {/* CTA — stopPropagation so card click doesn't also fire */}
               <Button
-                onClick={() => handleClaim(f.id)}
+                onClick={(e) => { e.stopPropagation(); handleClaim(f.id) }}
                 className={cn(
                   'w-full gap-2',
                   claimedByMe

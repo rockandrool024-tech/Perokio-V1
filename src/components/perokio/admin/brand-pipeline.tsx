@@ -9,6 +9,8 @@ import { formatUSD } from '@/lib/perokio/live'
 import { Building2, Users, DollarSign, TrendingUp, Plus } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
+import { useRef, useState } from 'react'
+import type { PipelineBrand } from '@/lib/perokio/types'
 
 // English source labels — passed through t() for Arabic
 const STAGE_META = {
@@ -17,12 +19,57 @@ const STAGE_META = {
   pilot: { label: 'Pilot', color: 'text-chart-2', bg: 'bg-chart-2/10' },
   active: { label: 'Active', color: 'text-primary', bg: 'bg-primary/10' },
   churned: { label: 'Churned', color: 'text-destructive', bg: 'bg-destructive/10' },
-}
+} as const
+
+type StageKey = keyof typeof STAGE_META
 
 export function BrandPipeline() {
   const t = useT()
-  const totalMRR = PIPELINE_BRANDS.reduce((s, b) => s + b.mrr, 0)
-  const activeCount = PIPELINE_BRANDS.filter((b) => b.stage === 'active').length
+  // Local mutable copy so drag-and-drop can move brands between stages
+  const [brands, setBrands] = useState<PipelineBrand[]>(PIPELINE_BRANDS)
+  const draggedIdRef = useRef<string | null>(null)
+  const [draggingId, setDraggingId] = useState<string | null>(null)
+  const [dropTarget, setDropTarget] = useState<StageKey | null>(null)
+
+  const totalMRR = brands.reduce((s, b) => s + b.mrr, 0)
+  const activeCount = brands.filter((b) => b.stage === 'active').length
+
+  const handleDragStart = (e: React.DragEvent<HTMLDivElement>, brandId: string) => {
+    draggedIdRef.current = brandId
+    setDraggingId(brandId)
+    e.dataTransfer.effectAllowed = 'move'
+    // Required for Firefox to initiate drag
+    e.dataTransfer.setData('text/plain', brandId)
+  }
+
+  const handleDragEnd = () => {
+    draggedIdRef.current = null
+    setDraggingId(null)
+    setDropTarget(null)
+  }
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>, stage: StageKey) => {
+    e.preventDefault()
+    e.dataTransfer.dropEffect = 'move'
+    if (dropTarget !== stage) setDropTarget(stage)
+  }
+
+  const handleDragLeave = (stage: StageKey) => {
+    if (dropTarget === stage) setDropTarget(null)
+  }
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>, stage: StageKey) => {
+    e.preventDefault()
+    const id = draggedIdRef.current
+    if (id) {
+      setBrands((list) =>
+        list.map((b) => (b.id === id ? { ...b, stage } : b))
+      )
+    }
+    draggedIdRef.current = null
+    setDraggingId(null)
+    setDropTarget(null)
+  }
 
   return (
     <div className="space-y-6">
@@ -83,9 +130,20 @@ export function BrandPipeline() {
       {/* Kanban */}
       <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
         {Object.entries(STAGE_META).map(([stageKey, meta]) => {
-          const items = PIPELINE_BRANDS.filter((b) => b.stage === stageKey)
+          const stage = stageKey as StageKey
+          const items = brands.filter((b) => b.stage === stageKey)
+          const isDropTarget = dropTarget === stage
           return (
-            <div key={stageKey} className="space-y-2">
+            <div
+              key={stageKey}
+              onDragOver={(e) => handleDragOver(e, stage)}
+              onDragLeave={() => handleDragLeave(stage)}
+              onDrop={(e) => handleDrop(e, stage)}
+              className={cn(
+                'space-y-2 rounded-lg p-1.5 transition-colors',
+                isDropTarget && 'bg-primary/5 ring-2 ring-primary/50 ring-inset'
+              )}
+            >
               <div className="flex items-center justify-between px-1">
                 <div className={cn('text-xs font-semibold flex items-center gap-1.5', meta.color)}>
                   <span className={cn('h-1.5 w-1.5 rounded-full', meta.bg)} />
@@ -93,10 +151,27 @@ export function BrandPipeline() {
                 </div>
                 <span className="text-[10px] text-muted-foreground">{items.length}</span>
               </div>
-              <div className="space-y-2 min-h-[60px]">
+              <div
+                className={cn(
+                  'space-y-2 min-h-[60px] rounded-md transition-colors',
+                  isDropTarget && 'bg-primary/5'
+                )}
+              >
                 {items.map((b) => (
-                  <motion.div key={b.id} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}>
-                    <Card className="hover:shadow-md transition-shadow cursor-pointer">
+                  <motion.div
+                    key={b.id}
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                  >
+                    <Card
+                      draggable
+                      onDragStart={(e) => handleDragStart(e, b.id)}
+                      onDragEnd={handleDragEnd}
+                      className={cn(
+                        'hover:shadow-md transition-shadow cursor-grab active:cursor-grabbing',
+                        draggingId === b.id && 'opacity-50'
+                      )}
+                    >
                       <CardContent className="p-3">
                         <div className="flex items-center justify-between mb-1.5">
                           <span className="text-sm font-semibold truncate">{b.name}</span>
