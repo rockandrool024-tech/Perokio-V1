@@ -141,12 +141,12 @@ export interface Video {
   platform: 'tiktok' | 'instagram' | 'youtube'
   views: number
   viewCap: number
-  earningsBase: number
-  earningsCpm: number
   // Phase 1 (Cycle 9): Commercial metrics
   clicks: number            // total link clicks from the shortlink
   shortlink: string         // e.g., "pero.to/f-101-amira"
   successScore: number      // 0-100, composite of CTR + engagement + brand fit
+  earningsBase: number
+  earningsCpm: number
   hoursToPublish?: number // countdown
   hoursToLock?: number // countdown
   reviewDeadline?: number // brand 12h review window
