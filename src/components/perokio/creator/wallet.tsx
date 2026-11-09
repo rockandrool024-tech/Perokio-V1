@@ -3,13 +3,13 @@
 import { useState } from 'react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { CREATORS, TRANSACTIONS, USD_TO_TND, MAX_CPM_PAYOUT, VIEW_CAP } from '@/lib/perokio/data'
+import { CREATORS, TRANSACTIONS, USD_TO_TND, MAX_CPM_PAYOUT, VIEW_CAP, VIDEOS } from '@/lib/perokio/data'
 import { getCreatorStats, EARNINGS_CURVE_5D } from '@/lib/perokio/mock-data'
 import { useGrowthStore } from '@/lib/perokio/use-growth-store'
 import { useT } from '@/lib/perokio/i18n'
 import { formatTND, formatUSD, formatCompact } from '@/lib/perokio/format'
 import { useLiveEarnings } from '@/lib/perokio/use-live-views'
-import { Flame, Wallet, TrendingUp, Gift, ArrowDownToLine, Zap, Crown, Trophy, Copy, Check, UserPlus } from 'lucide-react'
+import { Flame, Wallet, TrendingUp, Gift, ArrowDownToLine, Zap, Crown, Trophy, Copy, Check, UserPlus, Link2 } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { useToast } from '@/hooks/use-toast'
@@ -93,7 +93,11 @@ export function WalletView() {
   const { toast } = useToast()
   const t = useT()
   const trackInviteSent = useGrowthStore((s) => s.trackInviteSent)
+  const trackProfileShare = useGrowthStore((s) => s.trackProfileShare)
   const [inviteCopied, setInviteCopied] = useState(false)
+  const [profileCopied, setProfileCopied] = useState(false)
+  // §4 Phase 4 §13: confetti burst state — fires on Withdraw click, auto-clears in 2s
+  const [showConfetti, setShowConfetti] = useState(false)
 
   // === §1 BLOCKING PATCH: shared live views via useLiveEarnings ===
   // Both WL01 and B17 consume this hook for the same video → identical numbers.
@@ -119,10 +123,33 @@ export function WalletView() {
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           {/* === Giant balance display === */}
           <div className="space-y-3 flex-1">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <Wallet className="h-5 w-5 text-lime" />
               <span className="text-sm text-muted-fg">{t('My wallet')}</span>
               <Badge className="text-[10px] bg-white/[0.04] text-muted-fg border border-white/10">WL01</Badge>
+              <span className="text-sm font-medium">{creator.name}</span>
+              {/* §3 Phase 3: Copy Profile Link — uses creator.handle without @ */}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  const url = `perokio.com/creator/${creator.handle.replace(/^@/, '')}`
+                  if (navigator.clipboard) {
+                    navigator.clipboard.writeText(url).catch(() => {})
+                  }
+                  trackProfileShare()
+                  setProfileCopied(true)
+                  toast({
+                    title: `🔗 ${t('Profile link copied')}`,
+                    description: t('Share it in your bio.'),
+                  })
+                  setTimeout(() => setProfileCopied(false), 2000)
+                }}
+                className="h-7 px-2 text-[11px] text-muted-fg hover:text-lime hover:bg-lime/10 gap-1"
+              >
+                {profileCopied ? <Check className="h-3 w-3" /> : <Link2 className="h-3 w-3" />}
+                {profileCopied ? t('Copied') : t('Copy Profile Link')}
+              </Button>
             </div>
 
             <div>
@@ -142,18 +169,54 @@ export function WalletView() {
             </div>
 
             <div className="flex gap-2 pt-2">
-              <Button
-                className="gap-2 bg-lime text-[#0A0F0D] hover:bg-lime/90 glow-lime"
-                onClick={() =>
-                  toast({
-                    title: `💸 ${t('Withdrawal requested')}`,
-                    description: `${formatTND(creator.pendingPayout * USD_TO_TND)} ${t('arriving via Flouci within 24h.')}`,
-                  })
-                }
-              >
-                <ArrowDownToLine className="h-4 w-4" />
-                {t('Withdraw to Flouci')}
-              </Button>
+              {/* §4 Phase 4 §13: confetti burst overlay — anchored to the Withdraw button */}
+              <div className="relative">
+                <Button
+                  className="gap-2 bg-lime text-[#0A0F0D] hover:bg-lime/90 glow-lime"
+                  onClick={() => {
+                    setShowConfetti(true)
+                    setTimeout(() => setShowConfetti(false), 2000)
+                    toast({
+                      title: `💸 ${t('Withdrawal requested')}`,
+                      description: `${formatTND(creator.pendingPayout * USD_TO_TND)} ${t('arriving via Flouci within 24h.')}`,
+                    })
+                  }}
+                >
+                  <ArrowDownToLine className="h-4 w-4" />
+                  {t('Withdraw to Flouci')}
+                </Button>
+
+                {/* Confetti particles — 20 divs, random colors + trajectories via framer-motion */}
+                {showConfetti && (
+                  <div className="absolute left-1/2 top-1/2 pointer-events-none z-50" aria-hidden>
+                    {Array.from({ length: 20 }).map((_, i) => {
+                      const colors = ['#D8EF70', '#ED7A42', '#6FD3C7', '#B6A6FF']
+                      const color = colors[i % colors.length]
+                      const angle = (i / 20) * Math.PI * 2 + (Math.random() - 0.5) * 0.5
+                      const distance = 80 + Math.random() * 100
+                      const x = Math.cos(angle) * distance
+                      const y = Math.sin(angle) * distance - 40 // bias upward
+                      const rot = Math.random() * 720 - 360
+                      return (
+                        <motion.div
+                          key={i}
+                          initial={{ opacity: 1, x: 0, y: 0, scale: 1, rotate: 0 }}
+                          animate={{ opacity: 0, x, y, scale: 0.5, rotate: rot }}
+                          transition={{ duration: 1.6 + Math.random() * 0.4, ease: 'easeOut' }}
+                          className="absolute"
+                          style={{
+                            width: 8,
+                            height: 8,
+                            background: color,
+                            borderRadius: '2px',
+                            boxShadow: `0 0 6px ${color}66`,
+                          }}
+                        />
+                      )
+                    })}
+                  </div>
+                )}
+              </div>
               <Button variant="outline" className="gap-2 glass hover:bg-white/5 border-white/10">
                 <Zap className="h-4 w-4 text-orange" />
                 {t('Auto-withdraw')}
@@ -229,11 +292,18 @@ export function WalletView() {
       </div>
 
       {/* === KPIs === */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
         <KpiCard label={t('Total earned')} value={formatUSD(creator.totalEarned)} delta={`+${stats.monthlyGrowthPct}% ${t('this month')}`} deltaType="up" />
         <KpiCard label={t('Completed videos')} value={String(creator.completedVideos)} delta={`+${stats.monthlyNewVideos} ${t('this month')}`} deltaType="neutral" />
         <KpiCard label={t('Avg rating')} value={`★ ${creator.rating}`} delta={`${t('Reliability')} ${creator.reliabilityScore}/100`} deltaType="neutral" />
         <KpiCard label={t('Followers')} value={formatCompact(creator.followers)} delta={creator.platform} deltaType="up" />
+        {/* Phase 1.2: Link Clicks — sum of clicks across all the creator's videos */}
+        <KpiCard
+          label={t('Link Clicks')}
+          value={formatCompact(VIDEOS.filter((v) => v.creatorId === 'cr_amira').reduce((s, v) => s + v.clicks, 0))}
+          delta={`${t('across all videos')}`}
+          deltaType="up"
+        />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

@@ -25,9 +25,10 @@ import { springSnappy, easeEditorial } from '@/lib/perokio/motion'
 import { useReducedMotion } from '@/lib/perokio/use-reduced-motion'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import {
   Activity, Flame, Eye, ChevronRight, Zap, Lock, Sparkles,
-  CheckCircle2, TrendingUp,
+  CheckCircle2, TrendingUp, ArrowRight,
 } from 'lucide-react'
 
 // ============================================================================
@@ -51,6 +52,7 @@ interface FeedItem {
   factCode: string  // F-XXX
   factId: string  // for the "view →" link
   agoMinutes: number  // 2 = "2h ago"
+  videoId?: string  // set for printed_first_version → "View Video" navigation
 }
 
 // Map action → human-readable verb + icon + color
@@ -129,6 +131,7 @@ function generateInitialFeed(brandName: string): FeedItem[] {
         factCode: v.factCode,
         factId: v.factId,
         agoMinutes: 35 + idx * 22,
+        videoId: v.id,
       })
     })
 
@@ -164,6 +167,7 @@ export function ClaimFeed() {
   usePerokioStore((s) => s.walletTick)
   const setView = usePerokioStore((s) => s.setBrandView)
   const setActiveFact = usePerokioStore((s) => s.setActiveFact)
+  const setActiveVideo = usePerokioStore((s) => s.setActiveVideo)
   const t = useT()
   const reduced = useReducedMotion()
 
@@ -195,6 +199,18 @@ export function ClaimFeed() {
   const handleViewItem = (factId: string) => {
     setActiveFact(factId)
     setView('script')
+  }
+
+  // §2 Phase 2: contextual action buttons based on the feed action
+  // - locked_video → "Review Now" → B12 video review (uses factId)
+  // - printed_first_version → "View Video" → B14 detail (uses videoId)
+  const handleReviewNow = (factId: string) => {
+    setActiveFact(factId)
+    setView('review')
+  }
+  const handleViewVideo = (videoId: string) => {
+    setActiveVideo(videoId)
+    setView('detail')
   }
 
   // Aggregate stats for the header
@@ -294,6 +310,36 @@ export function ClaimFeed() {
                   >
                     View <ChevronRight className="h-3 w-3" />
                   </button>
+
+                  {/* §2 Phase 2: contextual CTA — Review Now (locked) or View Video (printed) */}
+                  {item.action === 'locked_video' && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleReviewNow(item.factId)
+                      }}
+                      className="h-7 px-2 text-[11px] text-lime hover:text-lime hover:bg-lime/10 shrink-0 gap-1"
+                    >
+                      Review Now
+                      <ArrowRight className="h-3 w-3" />
+                    </Button>
+                  )}
+                  {item.action === 'printed_first_version' && item.videoId && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleViewVideo(item.videoId!)
+                      }}
+                      className="h-7 px-2 text-[11px] text-lime hover:text-lime hover:bg-lime/10 shrink-0 gap-1"
+                    >
+                      View Video
+                      <ArrowRight className="h-3 w-3" />
+                    </Button>
+                  )}
                 </motion.div>
               )
             })}

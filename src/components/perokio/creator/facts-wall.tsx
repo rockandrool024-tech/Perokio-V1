@@ -34,6 +34,8 @@ export function FactsWall() {
   // §2: Auto-advance state — tracks which Hot Drop card was claimed
   // so we can animate it out and slide the next one in.
   const [claimedHotDropId, setClaimedHotDropId] = useState<string | null>(null)
+  // §4 Phase 4 §14: swipe-to-dismiss — swiped-left cards fade out without claiming
+  const [dismissedHotDropIds, setDismissedHotDropIds] = useState<Set<string>>(new Set())
 
   const creatorId = 'cr_amira'
   const creator = CREATORS[0]
@@ -111,6 +113,8 @@ export function FactsWall() {
           {hotDrops.map((f, idx) => {
             // §2: Auto-advance — claimed card animates out (slide + fade)
             const isClaimed = claimedHotDropId === f.id
+            // §4 Phase 4 §14: dismissed card (swiped left) fades out
+            const isDismissed = dismissedHotDropIds.has(f.id)
             return (
             <motion.button
               key={f.id}
@@ -118,12 +122,27 @@ export function FactsWall() {
               animate={
                 isClaimed
                   ? { opacity: 0, x: -100, scale: 0.8 } // slide out left
-                  : { opacity: 1, x: 0 }
+                  : isDismissed
+                    ? { opacity: 0, scale: 0.6 }       // fade out (dismiss)
+                    : { opacity: 1, x: 0 }
               }
-              transition={isClaimed ? { duration: 0.5, ease: 'easeOut' } : { delay: idx * 0.07 }}
-              whileHover={isClaimed ? undefined : { scale: 1.03, y: -2 }}
+              transition={isClaimed || isDismissed ? { duration: 0.5, ease: 'easeOut' } : { delay: idx * 0.07 }}
+              whileHover={isClaimed || isDismissed ? undefined : { scale: 1.03, y: -2 }}
               onClick={() => handleClaim(f.id)}
-              className="snap-start flex-shrink-0 w-64 text-start rounded-2xl overflow-hidden relative group"
+              // §4 Phase 4 §14: swipe-to-dismiss / swipe-to-claim drag gestures
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.5}
+              onDragEnd={(_e, info) => {
+                if (info.offset.x < -100) {
+                  // swipe left → dismiss (fade out)
+                  setDismissedHotDropIds((prev) => new Set(prev).add(f.id))
+                } else if (info.offset.x > 100) {
+                  // swipe right → claim (uses existing handleClaim logic)
+                  handleClaim(f.id)
+                }
+              }}
+              className="snap-start flex-shrink-0 w-64 text-start rounded-2xl overflow-hidden relative group cursor-grab active:cursor-grabbing"
               style={{ background: HOT_DROPS_GRADIENTS[idx % HOT_DROPS_GRADIENTS.length] }}
             >
               {/* Shimmer animation overlay */}
@@ -169,6 +188,10 @@ export function FactsWall() {
             )
           })}
         </div>
+        {/* §4 Phase 4 §14: swipe hint text below the carousel */}
+        <p className="mt-2 text-[11px] text-muted-fg text-center font-mono" data-mono>
+          ← Swipe to dismiss · Swipe to claim →
+        </p>
       </div>
 
       {/* === Creator strip === */}

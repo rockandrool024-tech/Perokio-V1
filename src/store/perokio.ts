@@ -114,6 +114,9 @@ export const usePerokioStore = create<PerokioState>((set) => ({
         viewCap: 10000,
         earningsBase: fact.baseFee,
         earningsCpm: 0,
+        clicks: 0,
+        shortlink: '',
+        successScore: 0,
         reviewDeadline: 12,
         approved: false,
       }

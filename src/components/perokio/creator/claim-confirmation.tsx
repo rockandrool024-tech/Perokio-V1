@@ -19,17 +19,20 @@ import { ParrotEye } from '@/components/perokio/shared/parrot-logo'
 import { TimerBar } from '@/components/perokio/shared/timer-bar'
 import { AnimatedCTA } from '@/components/perokio/shared/animated-cta'
 import { usePerokioStore, useActiveFact } from '@/store/perokio'
+import { MAX_CPM_PAYOUT } from '@/lib/perokio/data'
 import { useT, usePick } from '@/lib/perokio/i18n'
 import { useReducedMotion } from '@/lib/perokio/use-reduced-motion'
 import { easeEditorial } from '@/lib/perokio/motion'
-import { ArrowRight, ArrowLeft, Sparkles, Clock, Flame } from 'lucide-react'
+import { ArrowRight, ArrowLeft, Sparkles, Clock, Flame, BookOpen } from 'lucide-react'
 
 export function ClaimConfirmation() {
   const fact = useActiveFact()
   const setCreatorView = usePerokioStore((s) => s.setCreatorView)
+  const setActiveFact = usePerokioStore((s) => s.setActiveFact)
   const t = useT()
   const pick = usePick()
   const reduced = useReducedMotion()
+  const baseFee = fact?.baseFee ?? 0
 
   return (
     <div
@@ -143,6 +146,10 @@ export function ClaimConfirmation() {
           <p className="mt-3 text-[11px] text-muted-fg leading-snug">
             {t('The fact auto-returns to the Wall if you miss it')}
           </p>
+          {/* §2 Phase 2: micro-copy — payout preview derived from baseFee + max CPM */}
+          <p className="mt-2 text-[11px] text-lime/90 leading-snug font-medium">
+            You will earn an estimated ${baseFee} base + ${MAX_CPM_PAYOUT} CPM potential for this fact.
+          </p>
         </motion.div>
 
         {/* === CTAs === */}
@@ -158,6 +165,18 @@ export function ClaimConfirmation() {
             className="min-w-[220px]"
           >
             Go to editor <ArrowRight className="h-4 w-4" />
+          </AnimatedCTA>
+          <AnimatedCTA
+            variant="ghost"
+            onClick={() => {
+              if (fact) {
+                setActiveFact(fact.id)
+                setCreatorView('factdetail')
+              }
+            }}
+          >
+            <BookOpen className="h-4 w-4" />
+            View Fact Sources
           </AnimatedCTA>
           <AnimatedCTA
             variant="ghost"

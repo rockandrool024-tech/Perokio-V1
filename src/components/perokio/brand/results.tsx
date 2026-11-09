@@ -233,10 +233,24 @@ export function Results() {
               <CheckCircle2 className="h-3 w-3" />
               Printed
             </Badge>
+            {activeVideo.successScore > 0 && (
+              <Badge
+                className={
+                  activeVideo.successScore >= 90
+                    ? 'text-[10px] bg-lime/15 text-lime border border-lime/25 gap-0.5'
+                    : activeVideo.successScore >= 70
+                      ? 'text-[10px] bg-orange/15 text-orange border border-orange/25 gap-0.5'
+                      : 'text-[10px] bg-white/[0.04] text-muted-fg border border-white/10 gap-0.5'
+                }
+                data-mono
+              >
+                ★ {activeVideo.successScore}/100
+              </Badge>
+            )}
           </div>
 
           {/* === KEY METRICS — same numbers as WL01 === */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
             <Metric
               label="Views"
               value={formatCompact(liveViews)}
@@ -266,6 +280,15 @@ export function Results() {
               accent="orange"
               icon={BarChart3}
             />
+            {activeVideo.clicks > 0 && (
+              <Metric
+                label="Clicks"
+                value={formatCompact(activeVideo.clicks)}
+                sub={`CTR: ${activeVideo.views > 0 ? ((activeVideo.clicks / activeVideo.views) * 100).toFixed(1) : '0.0'}%`}
+                accent="orange"
+                icon={Zap}
+              />
+            )}
           </div>
 
           {/* Underperformance warning (links to B16 modal) */}

@@ -198,6 +198,20 @@ export function VideoReviewDetail() {
               <CheckCircle2 className="h-3 w-3" />
               Printed
             </Badge>
+            {activeVideo.successScore > 0 && (
+              <Badge
+                className={
+                  activeVideo.successScore >= 90
+                    ? 'text-[10px] bg-lime/15 text-lime border border-lime/25 gap-0.5'
+                    : activeVideo.successScore >= 70
+                      ? 'text-[10px] bg-orange/15 text-orange border border-orange/25 gap-0.5'
+                      : 'text-[10px] bg-white/[0.04] text-muted-fg border border-white/10 gap-0.5'
+                }
+                data-mono
+              >
+                ★ {activeVideo.successScore}/100
+              </Badge>
+            )}
           </div>
 
           {/* Fact reference */}
@@ -223,11 +237,20 @@ export function VideoReviewDetail() {
           )}
 
           {/* Key metrics row */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
             <Metric label="Total views" value={formatCompact(activeVideo.views)} sub={`of ${formatCompact(activeVideo.viewCap)} cap`} accent="lime" icon={Eye} />
             <Metric label="Earned" value={formatUSD(activeVideo.earningsBase + activeVideo.earningsCpm)} sub={`$${activeVideo.earningsBase} + $${activeVideo.earningsCpm.toFixed(0)}`} accent="lime" icon={DollarSign} />
             <Metric label="Effective CPM" value={`$${videoCpm.toFixed(2)}`} sub={`${cpmDelta >= 0 ? '+' : ''}${cpmDelta.toFixed(0)}% vs avg`} accent={cpmDelta >= 0 ? 'lime' : 'orange'} icon={TrendingUp} />
             <Metric label="Engagement" value={`${((activeVideo.views / (creator?.followers || 1)) * 100).toFixed(1)}%`} sub="views / followers" accent="orange" icon={Activity} />
+            {activeVideo.clicks > 0 && (
+              <Metric
+                label="Clicks"
+                value={formatCompact(activeVideo.clicks)}
+                sub={`CTR: ${activeVideo.views > 0 ? ((activeVideo.clicks / activeVideo.views) * 100).toFixed(1) : '0.0'}%`}
+                accent="orange"
+                icon={ExternalLink}
+              />
+            )}
           </div>
         </div>
       </motion.div>

@@ -19,10 +19,11 @@
 import { useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { usePerokioStore } from '@/store/perokio'
-import { BRANDS, FACTS, STAGE_LABELS, FACT_STATUS_LABELS } from '@/lib/perokio/data'
+import { BRANDS, FACTS, VIDEOS, STAGE_LABELS, FACT_STATUS_LABELS } from '@/lib/perokio/data'
 import { useT, usePick } from '@/lib/perokio/i18n'
 import { formatCompact } from '@/lib/perokio/format'
 import { FactCard } from '@/components/perokio/shared/fact-card'
+import { ParrotLogo } from '@/components/perokio/shared/parrot-logo'
 import { easeEditorial } from '@/lib/perokio/motion'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
@@ -244,18 +245,39 @@ export function FactLibrary() {
         </div>
 
         {rest.length === 0 ? (
-          <div className="glass rounded-2xl border-dashed border-white/10 p-8 text-center">
-            <Library className="h-8 w-8 text-muted-fg mx-auto mb-2" />
-            <p className="text-sm text-muted-fg">
-              {brandFacts.length === 0
-                ? 'No facts yet. Create your first Fact Bundle to populate the library.'
-                : 'No facts match your filters. Try clearing them.'}
-            </p>
-            {brandFacts.length === 0 && (
-              <Button onClick={handleNewFact} variant="outline" className="mt-4 gap-2">
-                <Plus className="h-4 w-4" />
-                Create first fact
-              </Button>
+          <div className="glass rounded-2xl border-dashed border-white/10 p-10 text-center">
+            {brandFacts.length === 0 ? (
+              // Phase 4 §15: branded empty state — ParrotLogo + browse-trends CTA
+              <>
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={easeEditorial}
+                  className="flex justify-center mb-4"
+                >
+                  <ParrotLogo size={64} />
+                </motion.div>
+                <h3 className="font-serif text-xl font-semibold mb-1">Your shelf is empty.</h3>
+                <p className="text-sm text-muted-fg mb-5">
+                  Pick a trend from A04 to draft your first fact.
+                </p>
+                <Button
+                  onClick={() => {
+                    setRole('admin')
+                    setAdminView('trends')
+                  }}
+                  className="gap-2 bg-lime text-[#0A0F0D] hover:bg-lime/90"
+                >
+                  Browse Trends →
+                </Button>
+              </>
+            ) : (
+              <>
+                <Library className="h-8 w-8 text-muted-fg mx-auto mb-2" />
+                <p className="text-sm text-muted-fg">
+                  No facts match your filters. Try clearing them.
+                </p>
+              </>
             )}
           </div>
         ) : (
@@ -311,6 +333,14 @@ function FeaturedHeroCard({
   const totalLines = fact.scriptLines.length
   const cpmSpent = Math.round(fact.totalViews / 1000) * 3
 
+  // Phase 1.2: Avg. Success + total clicks across all videos for this fact
+  const factVideos = VIDEOS.filter((v) => v.factId === fact.id)
+  const scoredVideos = factVideos.filter((v) => v.successScore > 0)
+  const avgSuccess = scoredVideos.length > 0
+    ? Math.round(scoredVideos.reduce((s, v) => s + v.successScore, 0) / scoredVideos.length)
+    : null
+  const totalClicks = factVideos.reduce((s, v) => s + v.clicks, 0)
+
   return (
     <button
       onClick={onClick}
@@ -357,10 +387,22 @@ function FeaturedHeroCard({
         <div className="space-y-2">
           <div className="grid grid-cols-2 gap-2">
             <StatCell label="Status" value={t(FACT_STATUS_LABELS[fact.status])} accent="lime" />
-            {/* Issue 3 fix: standardized rating display — star icon + numeric value (matches FactCard) */}
-            <StatCell label="Rating" value={`★ ${fact.rating.toFixed(1)}`} accent="lime" />
+            {/* Phase 1.2: Avg. Success — computed from fact's videos, falls back to rating */}
+            <StatCell
+              label="Avg. Success"
+              value={avgSuccess !== null ? `${avgSuccess}/100` : `★ ${fact.rating.toFixed(1)}`}
+              accent="lime"
+            />
             <StatCell label="Views" value={formatCompact(fact.totalViews)} accent="orange" />
             <StatCell label="CPM spent" value={`$${cpmSpent}`} accent="lime" />
+            {/* Phase 1.2: total clicks across all videos for this fact */}
+            {totalClicks > 0 && (
+              <StatCell
+                label="Clicks"
+                value={formatCompact(totalClicks)}
+                accent="orange"
+              />
+            )}
           </div>
           {/* Issue 4 fix: explicit label 'claimed' so N/M format isn't ambiguous
               with the 'lines locked' counter above. */}

@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { usePerokioStore, useActiveFact } from '@/store/perokio'
@@ -7,7 +8,7 @@ import { FACTS } from '@/lib/perokio/data'
 import { useT, usePick } from '@/lib/perokio/i18n'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
   Shield, ShieldCheck, Lock, Link2, ExternalLink, CheckCircle2, AlertTriangle,
   FileText, Sparkles,
@@ -22,6 +23,8 @@ export function ScriptReview() {
   const { toast } = useToast()
   const t = useT()
   const pick = usePick()
+  // §4 Phase 4 §12: stamp overlay state — shown for 1.5s before the toast
+  const [showStamp, setShowStamp] = useState(false)
 
   const brandFacts = FACTS.filter((f) => f.brandId === brandId)
   const fact = useActiveFact() || brandFacts[0] || FACTS[0]
@@ -48,10 +51,15 @@ export function ScriptReview() {
       })
       return
     }
-    toast({
-      title: `✅ ${t('Script approved')}`,
-      description: `${fact.code} ${t('published to the Facts Wall, waiting for creators to claim it.')}`,
-    })
+    // §4 Phase 4 §12: rubber-stamp animation first, THEN the success toast
+    setShowStamp(true)
+    setTimeout(() => {
+      setShowStamp(false)
+      toast({
+        title: `✅ ${t('Script approved')}`,
+        description: `${fact.code} ${t('published to the Facts Wall, waiting for creators to claim it.')}`,
+      })
+    }, 1500)
   }
 
   return (
@@ -300,7 +308,7 @@ export function ScriptReview() {
           </div>
 
           {/* Publish control */}
-          <div className="glass rounded-2xl p-5">
+          <div className="glass rounded-2xl p-5 relative overflow-visible">
             <span className="font-serif text-base font-semibold">{t('Publish control')}</span>
             <div className="mt-3 space-y-3">
               <div
@@ -356,6 +364,89 @@ export function ScriptReview() {
                 <Row label={t('Max creators')} value={String(fact.maxCreators)} />
               </div>
             </div>
+
+            {/* §4 Phase 4 §12: rubber-stamp overlay — scales in with spring + slight rotation */}
+            <AnimatePresence>
+              {showStamp && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 1.6, rotate: -25 }}
+                  animate={{ opacity: 1, scale: 1, rotate: -12 }}
+                  exit={{ opacity: 0, scale: 1.4, rotate: -25 }}
+                  transition={{ type: 'spring', stiffness: 280, damping: 14 }}
+                  className="absolute inset-0 flex items-center justify-center pointer-events-none z-20"
+                >
+                  <div className="relative">
+                    <svg viewBox="0 0 200 200" width="180" height="180">
+                      {/* Outer ring */}
+                      <circle
+                        cx="100"
+                        cy="100"
+                        r="86"
+                        fill="none"
+                        stroke="#D8EF70"
+                        strokeWidth="3"
+                        strokeDasharray="4 3"
+                        opacity="0.9"
+                      />
+                      {/* Inner circle */}
+                      <circle
+                        cx="100"
+                        cy="100"
+                        r="74"
+                        fill="none"
+                        stroke="#D8EF70"
+                        strokeWidth="2"
+                        opacity="0.7"
+                      />
+                      {/* Curved text — "Verified by Perokio Studio" — top arc */}
+                      <defs>
+                        <path
+                          id="topArc"
+                          d="M 30 100 A 70 70 0 0 1 170 100"
+                          fill="none"
+                        />
+                        <path
+                          id="botArc"
+                          d="M 30 100 A 70 70 0 0 0 170 100"
+                          fill="none"
+                        />
+                      </defs>
+                      <text
+                        fill="#D8EF70"
+                        fontSize="14"
+                        fontWeight="bold"
+                        letterSpacing="2"
+                        fontFamily="monospace"
+                      >
+                        <textPath href="#topArc" startOffset="50%" textAnchor="middle">
+                          VERIFIED BY PEROKIO STUDIO
+                        </textPath>
+                      </text>
+                      <text
+                        fill="#D8EF70"
+                        fontSize="11"
+                        letterSpacing="3"
+                        fontFamily="monospace"
+                        opacity="0.85"
+                      >
+                        <textPath href="#botArc" startOffset="50%" textAnchor="middle">
+                          MOAT ENGINE · B11
+                        </textPath>
+                      </text>
+                      {/* Center check icon */}
+                      <path
+                        d="M 82 100 L 95 113 L 122 86"
+                        fill="none"
+                        stroke="#D8EF70"
+                        strokeWidth="5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </div>

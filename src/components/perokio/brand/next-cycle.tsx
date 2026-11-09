@@ -33,7 +33,7 @@ import { AnimatedCTA } from '@/components/perokio/shared/animated-cta'
 import { useToast } from '@/hooks/use-toast'
 import {
   Sparkles, TrendingUp, Flame, ChevronRight, ArrowRight,
-  Calendar, Target, DollarSign, Zap, RefreshCw,
+  Calendar, Target, DollarSign, Zap, RefreshCw, Eye,
 } from 'lucide-react'
 
 // Map trend category → suggested base fee + projected CPM
@@ -66,6 +66,15 @@ export function NextCycle() {
       setRole('admin')
       setAdminView('authoring')
     }, 400)
+  }
+
+  // §2 Phase 2: "View Trend Details" ghost button — shows a toast
+  // with the trend's velocity + volume data instead of navigating away.
+  const handleViewTrendDetails = (trend: typeof TRENDS[number]) => {
+    toast({
+      title: `📊 ${trend.keyword}`,
+      description: `Velocity: +${trend.velocity}/h · Volume: ${formatCompact(trend.volume)} mentions · ${trend.ageHours}h old on ${trend.platform}.`,
+    })
   }
 
   // Mock "next month" theme — derived from the highest-velocity trends
@@ -222,15 +231,26 @@ export function NextCycle() {
                         ${suggestedBaseFee} base + ${projectedCpm} CPM
                       </div>
                     </div>
-                    <AnimatedCTA
-                      onClick={() => handleCreateFromTrend(trend.keyword)}
-                      variant="ghost"
-                      className="!px-4 !py-2 !text-xs shrink-0"
-                    >
-                      <Sparkles className="h-3.5 w-3.5" />
-                      Create fact
-                      <ArrowRight className="h-3 w-3" />
-                    </AnimatedCTA>
+                    <div className="flex flex-col gap-1.5 shrink-0">
+                      <AnimatedCTA
+                        onClick={() => handleCreateFromTrend(trend.keyword)}
+                        variant="ghost"
+                        className="!px-4 !py-2 !text-xs"
+                      >
+                        <Sparkles className="h-3.5 w-3.5" />
+                        Create fact
+                        <ArrowRight className="h-3 w-3" />
+                      </AnimatedCTA>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleViewTrendDetails(trend)}
+                        className="h-7 px-3 text-[11px] text-muted-fg hover:text-lime hover:bg-lime/10 gap-1"
+                      >
+                        <Eye className="h-3 w-3" />
+                        View Trend Details
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </motion.div>

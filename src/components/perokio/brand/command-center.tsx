@@ -29,6 +29,7 @@ export function CommandCenter() {
   const liveViews = usePerokioLiveViews(brand.totalViews)
   const setView = usePerokioStore((s) => s.setBrandView)
   const setActiveFact = usePerokioStore((s) => s.setActiveFact)
+  const setActiveVideo = usePerokioStore((s) => s.setActiveVideo)
   const t = useT()
   const pick = usePick()
 
@@ -318,6 +319,33 @@ export function CommandCenter() {
                 <span>·</span>
                 <span className="text-lime">★ {f.rating}</span>
               </div>
+
+              {/* §2 Phase 2: small ghost CTAs to navigate to B11 + B10 */}
+              <div className="mt-3 flex items-center gap-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setActiveFact(f.id)
+                    setView('script')
+                  }}
+                  className="h-7 px-2 text-[11px] text-muted-fg hover:text-lime hover:bg-lime/10 gap-1"
+                >
+                  Edit Fact
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setView('library')
+                  }}
+                  className="h-7 px-2 text-[11px] text-muted-fg hover:text-lime hover:bg-lime/10 gap-1"
+                >
+                  View Details
+                </Button>
+              </div>
             </motion.button>
           ))}
         </div>
@@ -332,13 +360,30 @@ export function CommandCenter() {
           </div>
         </div>
         <div className="space-y-2 max-h-72 overflow-y-auto scrollbar-thin">
-          {recentVideos.map((v) => (
+          {recentVideos.map((v) => {
+            const ctr = v.views > 0 ? (v.clicks / v.views) * 100 : 0
+            const grade =
+              v.successScore >= 90 ? 'A' : v.successScore >= 70 ? 'B' : 'C'
+            const gradeColor =
+              v.successScore >= 90
+                ? 'bg-lime/10 text-lime border border-lime/20'
+                : v.successScore >= 70
+                  ? 'bg-orange/15 text-orange border border-orange/25'
+                  : 'bg-white/[0.04] text-muted-fg border border-white/10'
+            return (
             <div key={v.id} className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/[0.04] transition-colors">
               <div className="h-10 w-10 rounded-md flex items-center justify-center text-xl glass">
                 {v.thumbnail}
               </div>
               <div className="flex-1 min-w-0">
-                <div className="text-sm font-medium truncate">{v.factClaim}</div>
+                <div className="text-sm font-medium truncate flex items-center gap-2">
+                  <span className="truncate">{v.factClaim}</span>
+                  {v.successScore > 0 && (
+                    <Badge className={`text-[10px] shrink-0 ${gradeColor}`} data-mono>
+                      Grade {grade}
+                    </Badge>
+                  )}
+                </div>
                 <div className="text-xs text-muted-fg flex items-center gap-2">
                   <span>{v.creatorName}</span>
                   <span>·</span>
@@ -353,8 +398,31 @@ export function CommandCenter() {
                 </div>
                 <div className="text-[10px] text-muted-fg">{t('Base+CPM')}</div>
               </div>
+              {v.clicks > 0 && (
+                <div className="text-end min-w-[60px]">
+                  <div className="text-sm font-mono font-semibold text-orange" data-mono>
+                    {formatCompact(v.clicks)}
+                  </div>
+                  <div className="text-[10px] text-muted-fg font-mono" data-mono>
+                    {ctr.toFixed(1)}% CTR
+                  </div>
+                </div>
+              )}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  setActiveVideo(v.id)
+                  setView('detail')
+                }}
+                className="text-xs text-lime hover:text-lime hover:bg-lime/10 shrink-0 gap-1"
+              >
+                {t('View Analytics')}
+                <ArrowUpRight className="h-3 w-3" />
+              </Button>
             </div>
-          ))}
+            )
+          })}
         </div>
       </div>
     </div>

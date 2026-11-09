@@ -3,14 +3,15 @@
 import { Badge } from '@/components/ui/badge'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
+import { Button } from '@/components/ui/button'
 import { AnimatedCTA } from '@/components/perokio/shared/animated-cta'
 import { TimerBar } from '@/components/perokio/shared/timer-bar'
 import { usePerokioStore } from '@/store/perokio'
 import { BRANDS, VIDEOS, FACTS, MAX_CPM_PAYOUT } from '@/lib/perokio/data'
 import { useT, usePick } from '@/lib/perokio/i18n'
 import { formatCompact } from '@/lib/perokio/live'
-import { CheckCircle2, X, Play, Eye, MessageSquare, ShieldCheck } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { CheckCircle2, X, Play, Eye, MessageSquare, ShieldCheck, Calendar, ArrowLeft } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
 import { cn } from '@/lib/utils'
@@ -44,6 +45,7 @@ export function VideoReview() {
   const [feedback, setFeedback] = useState('')
   const [showSuccess, setShowSuccess] = useState(false)
   const [showReject, setShowReject] = useState(false)
+  const [showApprovalModal, setShowApprovalModal] = useState(false)
 
   const brand = BRANDS.find((b) => b.id === brandId) || BRANDS[0]
   const pendingVideos = VIDEOS.filter((v) => v.brandName === brand.name && v.stage === 'locked_pending')
@@ -70,6 +72,7 @@ export function VideoReview() {
   const handleApprove = () => {
     approveVideo(activeVideo.id)
     setShowSuccess(true)
+    setShowApprovalModal(true)
     toast({
       title: `✅ ${t('Video approved')}`,
       description: `${activeVideo.factCode} ${t('queued for publishing via Postiz.')} (${activeVideo.platform})`,
@@ -300,6 +303,81 @@ export function VideoReview() {
           </div>
         </div>
       </div>
+
+      {/* === §3 Phase 3: Full-screen approval modal — replaces toast-only flow === */}
+      <AnimatePresence>
+        {showApprovalModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+            onClick={() => setShowApprovalModal(false)}
+          >
+            <motion.div
+              initial={reduced ? { opacity: 0 } : { scale: 0.95, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={reduced ? { opacity: 0 } : { scale: 0.95, opacity: 0, y: 20 }}
+              transition={springSnappy}
+              className="glass-strong rounded-2xl p-6 max-w-md w-full text-center"
+              onClick={(e) => e.stopPropagation()}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="approval-title"
+            >
+              {/* Header icon */}
+              <div className="flex justify-center mb-4">
+                <motion.div
+                  initial={reduced ? false : { scale: 0.4, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ ...springSnappy, delay: 0.1 }}
+                  className="h-16 w-16 rounded-full bg-lime/15 border border-lime/30 flex items-center justify-center"
+                >
+                  <CheckCircle2 className="h-8 w-8 text-lime" />
+                </motion.div>
+              </div>
+
+              <h3 id="approval-title" className="font-serif text-2xl font-semibold mb-1">
+                {t('Video Approved')}
+              </h3>
+              <p className="text-sm text-muted-fg mb-5">
+                Auto-publishing in 1 hour via Postiz.
+              </p>
+
+              {/* Video thumbnail (emoji) */}
+              <div className="mx-auto mb-5 h-24 w-24 rounded-2xl glass flex items-center justify-center text-5xl">
+                {activeVideo.thumbnail}
+              </div>
+
+              {/* Two CTAs */}
+              <div className="flex flex-col sm:flex-row gap-2">
+                <Button
+                  onClick={() => {
+                    setShowApprovalModal(false)
+                    setView('queue')
+                  }}
+                  className="gap-2 bg-lime text-[#0A0F0D] hover:bg-lime/90 flex-1"
+                >
+                  <Calendar className="h-4 w-4" />
+                  View Schedule
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setShowApprovalModal(false)
+                    setView('command')
+                  }}
+                  className="gap-2 glass border-white/10 hover:bg-white/5 flex-1"
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                  Back to Dashboard
+                </Button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

@@ -20,8 +20,10 @@ import { BRANDS, VIDEOS, FACTS, CREATORS } from '@/lib/perokio/data'
 import { useT, usePick } from '@/lib/perokio/i18n'
 import { formatCompact } from '@/lib/perokio/format'
 import { easeEditorial } from '@/lib/perokio/motion'
+import { useToast } from '@/hooks/use-toast'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import {
   Calendar, Clock, ChevronRight, Zap, Video, Eye,
   GripVertical, AlertCircle,
@@ -78,6 +80,8 @@ export function PostingQueue() {
   usePerokioStore((s) => s.walletTick)
   const setActiveVideo = usePerokioStore((s) => s.setActiveVideo)
   const setView = usePerokioStore((s) => s.setBrandView)
+  const publishVideo = usePerokioStore((s) => s.publishVideo)
+  const { toast } = useToast()
   const t = useT()
   const pick = usePick()
   const [weekFilter, setWeekFilter] = useState<WeekFilter>('this')
@@ -178,26 +182,46 @@ export function PostingQueue() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
             {readyToPost.map((post) => (
-              <button
+              <div
                 key={post.videoId}
-                onClick={() => {
-                  setActiveVideo(post.videoId)
-                  setView('detail')
-                }}
-                className="flex items-center gap-3 p-3 rounded-xl glass hover:bg-white/[0.05] transition-colors text-start"
+                className="flex items-center gap-3 p-3 rounded-xl glass hover:bg-white/[0.05] transition-colors"
               >
-                <span className="text-2xl">{post.creatorAvatar}</span>
-                <div className="flex-1 min-w-0">
-                  <div className="text-sm font-medium truncate">{post.factCode}</div>
-                  <div className="text-[10px] text-muted-fg font-mono flex items-center gap-1" data-mono>
-                    <Clock className="h-3 w-3" />
-                    {String(post.hour).padStart(2, '0')}:00 · {post.creatorName}
+                <button
+                  onClick={() => {
+                    setActiveVideo(post.videoId)
+                    setView('detail')
+                  }}
+                  className="flex items-center gap-3 flex-1 min-w-0 text-start"
+                >
+                  <span className="text-2xl shrink-0">{post.creatorAvatar}</span>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-medium truncate">{post.factCode}</div>
+                    <div className="text-[10px] text-muted-fg font-mono flex items-center gap-1" data-mono>
+                      <Clock className="h-3 w-3" />
+                      {String(post.hour).padStart(2, '0')}:00 · {post.creatorName}
+                    </div>
                   </div>
-                </div>
-                <Badge className="text-[10px] bg-white/[0.04] text-muted-fg border border-white/10" data-mono>
-                  {PLATFORM_LABELS[post.platform]}
-                </Badge>
-              </button>
+                  <Badge className="text-[10px] bg-white/[0.04] text-muted-fg border border-white/10 shrink-0" data-mono>
+                    {PLATFORM_LABELS[post.platform]}
+                  </Badge>
+                </button>
+                {/* §3 Phase 3: Force Publish Now — bypasses the schedule */}
+                <Button
+                  size="sm"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    publishVideo(post.videoId)
+                    toast({
+                      title: '⚡ Bypassing schedule',
+                      description: 'Publishing now...',
+                    })
+                  }}
+                  className="gap-1 bg-orange text-white hover:bg-orange/90 shrink-0 h-8 px-2 text-[11px]"
+                >
+                  <Zap className="h-3 w-3" />
+                  Force Publish Now
+                </Button>
+              </div>
             ))}
           </div>
         )}
