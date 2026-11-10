@@ -5,6 +5,8 @@ import { FactsModule } from './facts/facts.module';
 import { ScriptsModule } from './scripts/scripts.module';
 import { ClaimsModule } from './claims/claims.module';
 import { ShortLinksModule } from './shortlinks/shortlinks.module';
+import { HarnessModule } from './harness/harness.module';
+import { AdminModule } from './admin/admin.module';
 import { AuditInterceptor } from './common/interceptors/audit.interceptor';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 
@@ -23,6 +25,8 @@ export class PrismaModule {}
     ScriptsModule,
     ClaimsModule,
     ShortLinksModule,
+    HarnessModule,
+    AdminModule,
   ],
   providers: [
     {

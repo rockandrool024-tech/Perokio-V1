@@ -113,6 +113,21 @@ export type LedgerEntry = $Result.DefaultSelection<Prisma.$LedgerEntryPayload>
  * 
  */
 export type DomainEvent = $Result.DefaultSelection<Prisma.$DomainEventPayload>
+/**
+ * Model HarnessConfig
+ * 
+ */
+export type HarnessConfig = $Result.DefaultSelection<Prisma.$HarnessConfigPayload>
+/**
+ * Model GenerationRun
+ * 
+ */
+export type GenerationRun = $Result.DefaultSelection<Prisma.$GenerationRunPayload>
+/**
+ * Model PrintRating
+ * 
+ */
+export type PrintRating = $Result.DefaultSelection<Prisma.$PrintRatingPayload>
 
 /**
  * Enums
@@ -529,6 +544,36 @@ export class PrismaClient<
     * ```
     */
   get domainEvent(): Prisma.DomainEventDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.harnessConfig`: Exposes CRUD operations for the **HarnessConfig** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more HarnessConfigs
+    * const harnessConfigs = await prisma.harnessConfig.findMany()
+    * ```
+    */
+  get harnessConfig(): Prisma.HarnessConfigDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.generationRun`: Exposes CRUD operations for the **GenerationRun** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more GenerationRuns
+    * const generationRuns = await prisma.generationRun.findMany()
+    * ```
+    */
+  get generationRun(): Prisma.GenerationRunDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.printRating`: Exposes CRUD operations for the **PrintRating** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PrintRatings
+    * const printRatings = await prisma.printRating.findMany()
+    * ```
+    */
+  get printRating(): Prisma.PrintRatingDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -989,7 +1034,10 @@ export namespace Prisma {
     ClickEvent: 'ClickEvent',
     LedgerAccount: 'LedgerAccount',
     LedgerEntry: 'LedgerEntry',
-    DomainEvent: 'DomainEvent'
+    DomainEvent: 'DomainEvent',
+    HarnessConfig: 'HarnessConfig',
+    GenerationRun: 'GenerationRun',
+    PrintRating: 'PrintRating'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1008,7 +1056,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "brand" | "creator" | "calendarEntry" | "fact" | "scriptVersion" | "scriptLine" | "source" | "scriptLineSource" | "verificationReceipt" | "claim" | "video" | "policyCheck" | "publishJob" | "viewSnapshot" | "shortLink" | "clickEvent" | "ledgerAccount" | "ledgerEntry" | "domainEvent"
+      modelProps: "user" | "brand" | "creator" | "calendarEntry" | "fact" | "scriptVersion" | "scriptLine" | "source" | "scriptLineSource" | "verificationReceipt" | "claim" | "video" | "policyCheck" | "publishJob" | "viewSnapshot" | "shortLink" | "clickEvent" | "ledgerAccount" | "ledgerEntry" | "domainEvent" | "harnessConfig" | "generationRun" | "printRating"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2492,6 +2540,228 @@ export namespace Prisma {
           }
         }
       }
+      HarnessConfig: {
+        payload: Prisma.$HarnessConfigPayload<ExtArgs>
+        fields: Prisma.HarnessConfigFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.HarnessConfigFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HarnessConfigPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.HarnessConfigFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HarnessConfigPayload>
+          }
+          findFirst: {
+            args: Prisma.HarnessConfigFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HarnessConfigPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.HarnessConfigFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HarnessConfigPayload>
+          }
+          findMany: {
+            args: Prisma.HarnessConfigFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HarnessConfigPayload>[]
+          }
+          create: {
+            args: Prisma.HarnessConfigCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HarnessConfigPayload>
+          }
+          createMany: {
+            args: Prisma.HarnessConfigCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.HarnessConfigCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HarnessConfigPayload>[]
+          }
+          delete: {
+            args: Prisma.HarnessConfigDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HarnessConfigPayload>
+          }
+          update: {
+            args: Prisma.HarnessConfigUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HarnessConfigPayload>
+          }
+          deleteMany: {
+            args: Prisma.HarnessConfigDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.HarnessConfigUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.HarnessConfigUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HarnessConfigPayload>[]
+          }
+          upsert: {
+            args: Prisma.HarnessConfigUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HarnessConfigPayload>
+          }
+          aggregate: {
+            args: Prisma.HarnessConfigAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateHarnessConfig>
+          }
+          groupBy: {
+            args: Prisma.HarnessConfigGroupByArgs<ExtArgs>
+            result: $Utils.Optional<HarnessConfigGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.HarnessConfigCountArgs<ExtArgs>
+            result: $Utils.Optional<HarnessConfigCountAggregateOutputType> | number
+          }
+        }
+      }
+      GenerationRun: {
+        payload: Prisma.$GenerationRunPayload<ExtArgs>
+        fields: Prisma.GenerationRunFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.GenerationRunFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GenerationRunPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.GenerationRunFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GenerationRunPayload>
+          }
+          findFirst: {
+            args: Prisma.GenerationRunFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GenerationRunPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.GenerationRunFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GenerationRunPayload>
+          }
+          findMany: {
+            args: Prisma.GenerationRunFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GenerationRunPayload>[]
+          }
+          create: {
+            args: Prisma.GenerationRunCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GenerationRunPayload>
+          }
+          createMany: {
+            args: Prisma.GenerationRunCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.GenerationRunCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GenerationRunPayload>[]
+          }
+          delete: {
+            args: Prisma.GenerationRunDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GenerationRunPayload>
+          }
+          update: {
+            args: Prisma.GenerationRunUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GenerationRunPayload>
+          }
+          deleteMany: {
+            args: Prisma.GenerationRunDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.GenerationRunUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.GenerationRunUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GenerationRunPayload>[]
+          }
+          upsert: {
+            args: Prisma.GenerationRunUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GenerationRunPayload>
+          }
+          aggregate: {
+            args: Prisma.GenerationRunAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateGenerationRun>
+          }
+          groupBy: {
+            args: Prisma.GenerationRunGroupByArgs<ExtArgs>
+            result: $Utils.Optional<GenerationRunGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.GenerationRunCountArgs<ExtArgs>
+            result: $Utils.Optional<GenerationRunCountAggregateOutputType> | number
+          }
+        }
+      }
+      PrintRating: {
+        payload: Prisma.$PrintRatingPayload<ExtArgs>
+        fields: Prisma.PrintRatingFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PrintRatingFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrintRatingPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PrintRatingFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrintRatingPayload>
+          }
+          findFirst: {
+            args: Prisma.PrintRatingFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrintRatingPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PrintRatingFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrintRatingPayload>
+          }
+          findMany: {
+            args: Prisma.PrintRatingFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrintRatingPayload>[]
+          }
+          create: {
+            args: Prisma.PrintRatingCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrintRatingPayload>
+          }
+          createMany: {
+            args: Prisma.PrintRatingCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PrintRatingCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrintRatingPayload>[]
+          }
+          delete: {
+            args: Prisma.PrintRatingDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrintRatingPayload>
+          }
+          update: {
+            args: Prisma.PrintRatingUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrintRatingPayload>
+          }
+          deleteMany: {
+            args: Prisma.PrintRatingDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PrintRatingUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PrintRatingUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrintRatingPayload>[]
+          }
+          upsert: {
+            args: Prisma.PrintRatingUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrintRatingPayload>
+          }
+          aggregate: {
+            args: Prisma.PrintRatingAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePrintRating>
+          }
+          groupBy: {
+            args: Prisma.PrintRatingGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PrintRatingGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PrintRatingCountArgs<ExtArgs>
+            result: $Utils.Optional<PrintRatingCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2608,6 +2878,9 @@ export namespace Prisma {
     ledgerAccount?: LedgerAccountOmit
     ledgerEntry?: LedgerEntryOmit
     domainEvent?: DomainEventOmit
+    harnessConfig?: HarnessConfigOmit
+    generationRun?: GenerationRunOmit
+    printRating?: PrintRatingOmit
   }
 
   /* Types for Logging */
@@ -2846,11 +3119,13 @@ export namespace Prisma {
   export type FactCountOutputType = {
     scriptVersions: number
     claims: number
+    generationRuns: number
   }
 
   export type FactCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     scriptVersions?: boolean | FactCountOutputTypeCountScriptVersionsArgs
     claims?: boolean | FactCountOutputTypeCountClaimsArgs
+    generationRuns?: boolean | FactCountOutputTypeCountGenerationRunsArgs
   }
 
   // Custom InputTypes
@@ -2876,6 +3151,13 @@ export namespace Prisma {
    */
   export type FactCountOutputTypeCountClaimsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ClaimWhereInput
+  }
+
+  /**
+   * FactCountOutputType without action
+   */
+  export type FactCountOutputTypeCountGenerationRunsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GenerationRunWhereInput
   }
 
 
@@ -3129,6 +3411,37 @@ export namespace Prisma {
    */
   export type LedgerAccountCountOutputTypeCountEntriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: LedgerEntryWhereInput
+  }
+
+
+  /**
+   * Count Type HarnessConfigCountOutputType
+   */
+
+  export type HarnessConfigCountOutputType = {
+    runs: number
+  }
+
+  export type HarnessConfigCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    runs?: boolean | HarnessConfigCountOutputTypeCountRunsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * HarnessConfigCountOutputType without action
+   */
+  export type HarnessConfigCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HarnessConfigCountOutputType
+     */
+    select?: HarnessConfigCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * HarnessConfigCountOutputType without action
+   */
+  export type HarnessConfigCountOutputTypeCountRunsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GenerationRunWhereInput
   }
 
 
@@ -8067,6 +8380,7 @@ export namespace Prisma {
     brand?: boolean | BrandDefaultArgs<ExtArgs>
     scriptVersions?: boolean | Fact$scriptVersionsArgs<ExtArgs>
     claims?: boolean | Fact$claimsArgs<ExtArgs>
+    generationRuns?: boolean | Fact$generationRunsArgs<ExtArgs>
     _count?: boolean | FactCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["fact"]>
 
@@ -8119,6 +8433,7 @@ export namespace Prisma {
     brand?: boolean | BrandDefaultArgs<ExtArgs>
     scriptVersions?: boolean | Fact$scriptVersionsArgs<ExtArgs>
     claims?: boolean | Fact$claimsArgs<ExtArgs>
+    generationRuns?: boolean | Fact$generationRunsArgs<ExtArgs>
     _count?: boolean | FactCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type FactIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8134,6 +8449,7 @@ export namespace Prisma {
       brand: Prisma.$BrandPayload<ExtArgs>
       scriptVersions: Prisma.$ScriptVersionPayload<ExtArgs>[]
       claims: Prisma.$ClaimPayload<ExtArgs>[]
+      generationRuns: Prisma.$GenerationRunPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -8544,6 +8860,7 @@ export namespace Prisma {
     brand<T extends BrandDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BrandDefaultArgs<ExtArgs>>): Prisma__BrandClient<$Result.GetResult<Prisma.$BrandPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     scriptVersions<T extends Fact$scriptVersionsArgs<ExtArgs> = {}>(args?: Subset<T, Fact$scriptVersionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScriptVersionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     claims<T extends Fact$claimsArgs<ExtArgs> = {}>(args?: Subset<T, Fact$claimsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClaimPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    generationRuns<T extends Fact$generationRunsArgs<ExtArgs> = {}>(args?: Subset<T, Fact$generationRunsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GenerationRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9025,6 +9342,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ClaimScalarFieldEnum | ClaimScalarFieldEnum[]
+  }
+
+  /**
+   * Fact.generationRuns
+   */
+  export type Fact$generationRunsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GenerationRun
+     */
+    select?: GenerationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GenerationRun
+     */
+    omit?: GenerationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GenerationRunInclude<ExtArgs> | null
+    where?: GenerationRunWhereInput
+    orderBy?: GenerationRunOrderByWithRelationInput | GenerationRunOrderByWithRelationInput[]
+    cursor?: GenerationRunWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GenerationRunScalarFieldEnum | GenerationRunScalarFieldEnum[]
   }
 
   /**
@@ -16048,6 +16389,7 @@ export namespace Prisma {
     publishJobs?: boolean | Video$publishJobsArgs<ExtArgs>
     viewSnapshots?: boolean | Video$viewSnapshotsArgs<ExtArgs>
     shortLinks?: boolean | Video$shortLinksArgs<ExtArgs>
+    printRating?: boolean | Video$printRatingArgs<ExtArgs>
     _count?: boolean | VideoCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["video"]>
 
@@ -16108,6 +16450,7 @@ export namespace Prisma {
     publishJobs?: boolean | Video$publishJobsArgs<ExtArgs>
     viewSnapshots?: boolean | Video$viewSnapshotsArgs<ExtArgs>
     shortLinks?: boolean | Video$shortLinksArgs<ExtArgs>
+    printRating?: boolean | Video$printRatingArgs<ExtArgs>
     _count?: boolean | VideoCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type VideoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -16125,6 +16468,7 @@ export namespace Prisma {
       publishJobs: Prisma.$PublishJobPayload<ExtArgs>[]
       viewSnapshots: Prisma.$ViewSnapshotPayload<ExtArgs>[]
       shortLinks: Prisma.$ShortLinkPayload<ExtArgs>[]
+      printRating: Prisma.$PrintRatingPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -16539,6 +16883,7 @@ export namespace Prisma {
     publishJobs<T extends Video$publishJobsArgs<ExtArgs> = {}>(args?: Subset<T, Video$publishJobsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PublishJobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     viewSnapshots<T extends Video$viewSnapshotsArgs<ExtArgs> = {}>(args?: Subset<T, Video$viewSnapshotsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ViewSnapshotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     shortLinks<T extends Video$shortLinksArgs<ExtArgs> = {}>(args?: Subset<T, Video$shortLinksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ShortLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    printRating<T extends Video$printRatingArgs<ExtArgs> = {}>(args?: Subset<T, Video$printRatingArgs<ExtArgs>>): Prisma__PrintRatingClient<$Result.GetResult<Prisma.$PrintRatingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -17070,6 +17415,25 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ShortLinkScalarFieldEnum | ShortLinkScalarFieldEnum[]
+  }
+
+  /**
+   * Video.printRating
+   */
+  export type Video$printRatingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrintRating
+     */
+    select?: PrintRatingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PrintRating
+     */
+    omit?: PrintRatingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrintRatingInclude<ExtArgs> | null
+    where?: PrintRatingWhereInput
   }
 
   /**
@@ -26003,6 +26367,3502 @@ export namespace Prisma {
 
 
   /**
+   * Model HarnessConfig
+   */
+
+  export type AggregateHarnessConfig = {
+    _count: HarnessConfigCountAggregateOutputType | null
+    _avg: HarnessConfigAvgAggregateOutputType | null
+    _sum: HarnessConfigSumAggregateOutputType | null
+    _min: HarnessConfigMinAggregateOutputType | null
+    _max: HarnessConfigMaxAggregateOutputType | null
+  }
+
+  export type HarnessConfigAvgAggregateOutputType = {
+    version: number | null
+    budgetCap: number | null
+  }
+
+  export type HarnessConfigSumAggregateOutputType = {
+    version: number | null
+    budgetCap: number | null
+  }
+
+  export type HarnessConfigMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    version: number | null
+    isActive: boolean | null
+    budgetCap: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type HarnessConfigMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    version: number | null
+    isActive: boolean | null
+    budgetCap: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type HarnessConfigCountAggregateOutputType = {
+    id: number
+    name: number
+    version: number
+    isActive: number
+    modelMap: number
+    budgetCap: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type HarnessConfigAvgAggregateInputType = {
+    version?: true
+    budgetCap?: true
+  }
+
+  export type HarnessConfigSumAggregateInputType = {
+    version?: true
+    budgetCap?: true
+  }
+
+  export type HarnessConfigMinAggregateInputType = {
+    id?: true
+    name?: true
+    version?: true
+    isActive?: true
+    budgetCap?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type HarnessConfigMaxAggregateInputType = {
+    id?: true
+    name?: true
+    version?: true
+    isActive?: true
+    budgetCap?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type HarnessConfigCountAggregateInputType = {
+    id?: true
+    name?: true
+    version?: true
+    isActive?: true
+    modelMap?: true
+    budgetCap?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type HarnessConfigAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which HarnessConfig to aggregate.
+     */
+    where?: HarnessConfigWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HarnessConfigs to fetch.
+     */
+    orderBy?: HarnessConfigOrderByWithRelationInput | HarnessConfigOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: HarnessConfigWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HarnessConfigs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HarnessConfigs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned HarnessConfigs
+    **/
+    _count?: true | HarnessConfigCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: HarnessConfigAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: HarnessConfigSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: HarnessConfigMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: HarnessConfigMaxAggregateInputType
+  }
+
+  export type GetHarnessConfigAggregateType<T extends HarnessConfigAggregateArgs> = {
+        [P in keyof T & keyof AggregateHarnessConfig]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateHarnessConfig[P]>
+      : GetScalarType<T[P], AggregateHarnessConfig[P]>
+  }
+
+
+
+
+  export type HarnessConfigGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HarnessConfigWhereInput
+    orderBy?: HarnessConfigOrderByWithAggregationInput | HarnessConfigOrderByWithAggregationInput[]
+    by: HarnessConfigScalarFieldEnum[] | HarnessConfigScalarFieldEnum
+    having?: HarnessConfigScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: HarnessConfigCountAggregateInputType | true
+    _avg?: HarnessConfigAvgAggregateInputType
+    _sum?: HarnessConfigSumAggregateInputType
+    _min?: HarnessConfigMinAggregateInputType
+    _max?: HarnessConfigMaxAggregateInputType
+  }
+
+  export type HarnessConfigGroupByOutputType = {
+    id: string
+    name: string
+    version: number
+    isActive: boolean
+    modelMap: JsonValue
+    budgetCap: number
+    createdAt: Date
+    updatedAt: Date
+    _count: HarnessConfigCountAggregateOutputType | null
+    _avg: HarnessConfigAvgAggregateOutputType | null
+    _sum: HarnessConfigSumAggregateOutputType | null
+    _min: HarnessConfigMinAggregateOutputType | null
+    _max: HarnessConfigMaxAggregateOutputType | null
+  }
+
+  type GetHarnessConfigGroupByPayload<T extends HarnessConfigGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<HarnessConfigGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof HarnessConfigGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], HarnessConfigGroupByOutputType[P]>
+            : GetScalarType<T[P], HarnessConfigGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type HarnessConfigSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    version?: boolean
+    isActive?: boolean
+    modelMap?: boolean
+    budgetCap?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    runs?: boolean | HarnessConfig$runsArgs<ExtArgs>
+    _count?: boolean | HarnessConfigCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["harnessConfig"]>
+
+  export type HarnessConfigSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    version?: boolean
+    isActive?: boolean
+    modelMap?: boolean
+    budgetCap?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["harnessConfig"]>
+
+  export type HarnessConfigSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    version?: boolean
+    isActive?: boolean
+    modelMap?: boolean
+    budgetCap?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["harnessConfig"]>
+
+  export type HarnessConfigSelectScalar = {
+    id?: boolean
+    name?: boolean
+    version?: boolean
+    isActive?: boolean
+    modelMap?: boolean
+    budgetCap?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type HarnessConfigOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "version" | "isActive" | "modelMap" | "budgetCap" | "createdAt" | "updatedAt", ExtArgs["result"]["harnessConfig"]>
+  export type HarnessConfigInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    runs?: boolean | HarnessConfig$runsArgs<ExtArgs>
+    _count?: boolean | HarnessConfigCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type HarnessConfigIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type HarnessConfigIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $HarnessConfigPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "HarnessConfig"
+    objects: {
+      runs: Prisma.$GenerationRunPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      version: number
+      isActive: boolean
+      modelMap: Prisma.JsonValue
+      budgetCap: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["harnessConfig"]>
+    composites: {}
+  }
+
+  type HarnessConfigGetPayload<S extends boolean | null | undefined | HarnessConfigDefaultArgs> = $Result.GetResult<Prisma.$HarnessConfigPayload, S>
+
+  type HarnessConfigCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<HarnessConfigFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: HarnessConfigCountAggregateInputType | true
+    }
+
+  export interface HarnessConfigDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['HarnessConfig'], meta: { name: 'HarnessConfig' } }
+    /**
+     * Find zero or one HarnessConfig that matches the filter.
+     * @param {HarnessConfigFindUniqueArgs} args - Arguments to find a HarnessConfig
+     * @example
+     * // Get one HarnessConfig
+     * const harnessConfig = await prisma.harnessConfig.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends HarnessConfigFindUniqueArgs>(args: SelectSubset<T, HarnessConfigFindUniqueArgs<ExtArgs>>): Prisma__HarnessConfigClient<$Result.GetResult<Prisma.$HarnessConfigPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one HarnessConfig that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {HarnessConfigFindUniqueOrThrowArgs} args - Arguments to find a HarnessConfig
+     * @example
+     * // Get one HarnessConfig
+     * const harnessConfig = await prisma.harnessConfig.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends HarnessConfigFindUniqueOrThrowArgs>(args: SelectSubset<T, HarnessConfigFindUniqueOrThrowArgs<ExtArgs>>): Prisma__HarnessConfigClient<$Result.GetResult<Prisma.$HarnessConfigPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first HarnessConfig that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HarnessConfigFindFirstArgs} args - Arguments to find a HarnessConfig
+     * @example
+     * // Get one HarnessConfig
+     * const harnessConfig = await prisma.harnessConfig.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends HarnessConfigFindFirstArgs>(args?: SelectSubset<T, HarnessConfigFindFirstArgs<ExtArgs>>): Prisma__HarnessConfigClient<$Result.GetResult<Prisma.$HarnessConfigPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first HarnessConfig that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HarnessConfigFindFirstOrThrowArgs} args - Arguments to find a HarnessConfig
+     * @example
+     * // Get one HarnessConfig
+     * const harnessConfig = await prisma.harnessConfig.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends HarnessConfigFindFirstOrThrowArgs>(args?: SelectSubset<T, HarnessConfigFindFirstOrThrowArgs<ExtArgs>>): Prisma__HarnessConfigClient<$Result.GetResult<Prisma.$HarnessConfigPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more HarnessConfigs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HarnessConfigFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all HarnessConfigs
+     * const harnessConfigs = await prisma.harnessConfig.findMany()
+     * 
+     * // Get first 10 HarnessConfigs
+     * const harnessConfigs = await prisma.harnessConfig.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const harnessConfigWithIdOnly = await prisma.harnessConfig.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends HarnessConfigFindManyArgs>(args?: SelectSubset<T, HarnessConfigFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HarnessConfigPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a HarnessConfig.
+     * @param {HarnessConfigCreateArgs} args - Arguments to create a HarnessConfig.
+     * @example
+     * // Create one HarnessConfig
+     * const HarnessConfig = await prisma.harnessConfig.create({
+     *   data: {
+     *     // ... data to create a HarnessConfig
+     *   }
+     * })
+     * 
+     */
+    create<T extends HarnessConfigCreateArgs>(args: SelectSubset<T, HarnessConfigCreateArgs<ExtArgs>>): Prisma__HarnessConfigClient<$Result.GetResult<Prisma.$HarnessConfigPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many HarnessConfigs.
+     * @param {HarnessConfigCreateManyArgs} args - Arguments to create many HarnessConfigs.
+     * @example
+     * // Create many HarnessConfigs
+     * const harnessConfig = await prisma.harnessConfig.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends HarnessConfigCreateManyArgs>(args?: SelectSubset<T, HarnessConfigCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many HarnessConfigs and returns the data saved in the database.
+     * @param {HarnessConfigCreateManyAndReturnArgs} args - Arguments to create many HarnessConfigs.
+     * @example
+     * // Create many HarnessConfigs
+     * const harnessConfig = await prisma.harnessConfig.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many HarnessConfigs and only return the `id`
+     * const harnessConfigWithIdOnly = await prisma.harnessConfig.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends HarnessConfigCreateManyAndReturnArgs>(args?: SelectSubset<T, HarnessConfigCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HarnessConfigPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a HarnessConfig.
+     * @param {HarnessConfigDeleteArgs} args - Arguments to delete one HarnessConfig.
+     * @example
+     * // Delete one HarnessConfig
+     * const HarnessConfig = await prisma.harnessConfig.delete({
+     *   where: {
+     *     // ... filter to delete one HarnessConfig
+     *   }
+     * })
+     * 
+     */
+    delete<T extends HarnessConfigDeleteArgs>(args: SelectSubset<T, HarnessConfigDeleteArgs<ExtArgs>>): Prisma__HarnessConfigClient<$Result.GetResult<Prisma.$HarnessConfigPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one HarnessConfig.
+     * @param {HarnessConfigUpdateArgs} args - Arguments to update one HarnessConfig.
+     * @example
+     * // Update one HarnessConfig
+     * const harnessConfig = await prisma.harnessConfig.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends HarnessConfigUpdateArgs>(args: SelectSubset<T, HarnessConfigUpdateArgs<ExtArgs>>): Prisma__HarnessConfigClient<$Result.GetResult<Prisma.$HarnessConfigPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more HarnessConfigs.
+     * @param {HarnessConfigDeleteManyArgs} args - Arguments to filter HarnessConfigs to delete.
+     * @example
+     * // Delete a few HarnessConfigs
+     * const { count } = await prisma.harnessConfig.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends HarnessConfigDeleteManyArgs>(args?: SelectSubset<T, HarnessConfigDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more HarnessConfigs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HarnessConfigUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many HarnessConfigs
+     * const harnessConfig = await prisma.harnessConfig.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends HarnessConfigUpdateManyArgs>(args: SelectSubset<T, HarnessConfigUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more HarnessConfigs and returns the data updated in the database.
+     * @param {HarnessConfigUpdateManyAndReturnArgs} args - Arguments to update many HarnessConfigs.
+     * @example
+     * // Update many HarnessConfigs
+     * const harnessConfig = await prisma.harnessConfig.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more HarnessConfigs and only return the `id`
+     * const harnessConfigWithIdOnly = await prisma.harnessConfig.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends HarnessConfigUpdateManyAndReturnArgs>(args: SelectSubset<T, HarnessConfigUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HarnessConfigPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one HarnessConfig.
+     * @param {HarnessConfigUpsertArgs} args - Arguments to update or create a HarnessConfig.
+     * @example
+     * // Update or create a HarnessConfig
+     * const harnessConfig = await prisma.harnessConfig.upsert({
+     *   create: {
+     *     // ... data to create a HarnessConfig
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the HarnessConfig we want to update
+     *   }
+     * })
+     */
+    upsert<T extends HarnessConfigUpsertArgs>(args: SelectSubset<T, HarnessConfigUpsertArgs<ExtArgs>>): Prisma__HarnessConfigClient<$Result.GetResult<Prisma.$HarnessConfigPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of HarnessConfigs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HarnessConfigCountArgs} args - Arguments to filter HarnessConfigs to count.
+     * @example
+     * // Count the number of HarnessConfigs
+     * const count = await prisma.harnessConfig.count({
+     *   where: {
+     *     // ... the filter for the HarnessConfigs we want to count
+     *   }
+     * })
+    **/
+    count<T extends HarnessConfigCountArgs>(
+      args?: Subset<T, HarnessConfigCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], HarnessConfigCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a HarnessConfig.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HarnessConfigAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends HarnessConfigAggregateArgs>(args: Subset<T, HarnessConfigAggregateArgs>): Prisma.PrismaPromise<GetHarnessConfigAggregateType<T>>
+
+    /**
+     * Group by HarnessConfig.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HarnessConfigGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends HarnessConfigGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: HarnessConfigGroupByArgs['orderBy'] }
+        : { orderBy?: HarnessConfigGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, HarnessConfigGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetHarnessConfigGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the HarnessConfig model
+   */
+  readonly fields: HarnessConfigFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for HarnessConfig.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__HarnessConfigClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    runs<T extends HarnessConfig$runsArgs<ExtArgs> = {}>(args?: Subset<T, HarnessConfig$runsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GenerationRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the HarnessConfig model
+   */
+  interface HarnessConfigFieldRefs {
+    readonly id: FieldRef<"HarnessConfig", 'String'>
+    readonly name: FieldRef<"HarnessConfig", 'String'>
+    readonly version: FieldRef<"HarnessConfig", 'Int'>
+    readonly isActive: FieldRef<"HarnessConfig", 'Boolean'>
+    readonly modelMap: FieldRef<"HarnessConfig", 'Json'>
+    readonly budgetCap: FieldRef<"HarnessConfig", 'Int'>
+    readonly createdAt: FieldRef<"HarnessConfig", 'DateTime'>
+    readonly updatedAt: FieldRef<"HarnessConfig", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * HarnessConfig findUnique
+   */
+  export type HarnessConfigFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HarnessConfig
+     */
+    select?: HarnessConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HarnessConfig
+     */
+    omit?: HarnessConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HarnessConfigInclude<ExtArgs> | null
+    /**
+     * Filter, which HarnessConfig to fetch.
+     */
+    where: HarnessConfigWhereUniqueInput
+  }
+
+  /**
+   * HarnessConfig findUniqueOrThrow
+   */
+  export type HarnessConfigFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HarnessConfig
+     */
+    select?: HarnessConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HarnessConfig
+     */
+    omit?: HarnessConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HarnessConfigInclude<ExtArgs> | null
+    /**
+     * Filter, which HarnessConfig to fetch.
+     */
+    where: HarnessConfigWhereUniqueInput
+  }
+
+  /**
+   * HarnessConfig findFirst
+   */
+  export type HarnessConfigFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HarnessConfig
+     */
+    select?: HarnessConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HarnessConfig
+     */
+    omit?: HarnessConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HarnessConfigInclude<ExtArgs> | null
+    /**
+     * Filter, which HarnessConfig to fetch.
+     */
+    where?: HarnessConfigWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HarnessConfigs to fetch.
+     */
+    orderBy?: HarnessConfigOrderByWithRelationInput | HarnessConfigOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for HarnessConfigs.
+     */
+    cursor?: HarnessConfigWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HarnessConfigs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HarnessConfigs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HarnessConfigs.
+     */
+    distinct?: HarnessConfigScalarFieldEnum | HarnessConfigScalarFieldEnum[]
+  }
+
+  /**
+   * HarnessConfig findFirstOrThrow
+   */
+  export type HarnessConfigFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HarnessConfig
+     */
+    select?: HarnessConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HarnessConfig
+     */
+    omit?: HarnessConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HarnessConfigInclude<ExtArgs> | null
+    /**
+     * Filter, which HarnessConfig to fetch.
+     */
+    where?: HarnessConfigWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HarnessConfigs to fetch.
+     */
+    orderBy?: HarnessConfigOrderByWithRelationInput | HarnessConfigOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for HarnessConfigs.
+     */
+    cursor?: HarnessConfigWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HarnessConfigs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HarnessConfigs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HarnessConfigs.
+     */
+    distinct?: HarnessConfigScalarFieldEnum | HarnessConfigScalarFieldEnum[]
+  }
+
+  /**
+   * HarnessConfig findMany
+   */
+  export type HarnessConfigFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HarnessConfig
+     */
+    select?: HarnessConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HarnessConfig
+     */
+    omit?: HarnessConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HarnessConfigInclude<ExtArgs> | null
+    /**
+     * Filter, which HarnessConfigs to fetch.
+     */
+    where?: HarnessConfigWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HarnessConfigs to fetch.
+     */
+    orderBy?: HarnessConfigOrderByWithRelationInput | HarnessConfigOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing HarnessConfigs.
+     */
+    cursor?: HarnessConfigWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HarnessConfigs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HarnessConfigs.
+     */
+    skip?: number
+    distinct?: HarnessConfigScalarFieldEnum | HarnessConfigScalarFieldEnum[]
+  }
+
+  /**
+   * HarnessConfig create
+   */
+  export type HarnessConfigCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HarnessConfig
+     */
+    select?: HarnessConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HarnessConfig
+     */
+    omit?: HarnessConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HarnessConfigInclude<ExtArgs> | null
+    /**
+     * The data needed to create a HarnessConfig.
+     */
+    data: XOR<HarnessConfigCreateInput, HarnessConfigUncheckedCreateInput>
+  }
+
+  /**
+   * HarnessConfig createMany
+   */
+  export type HarnessConfigCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many HarnessConfigs.
+     */
+    data: HarnessConfigCreateManyInput | HarnessConfigCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * HarnessConfig createManyAndReturn
+   */
+  export type HarnessConfigCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HarnessConfig
+     */
+    select?: HarnessConfigSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the HarnessConfig
+     */
+    omit?: HarnessConfigOmit<ExtArgs> | null
+    /**
+     * The data used to create many HarnessConfigs.
+     */
+    data: HarnessConfigCreateManyInput | HarnessConfigCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * HarnessConfig update
+   */
+  export type HarnessConfigUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HarnessConfig
+     */
+    select?: HarnessConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HarnessConfig
+     */
+    omit?: HarnessConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HarnessConfigInclude<ExtArgs> | null
+    /**
+     * The data needed to update a HarnessConfig.
+     */
+    data: XOR<HarnessConfigUpdateInput, HarnessConfigUncheckedUpdateInput>
+    /**
+     * Choose, which HarnessConfig to update.
+     */
+    where: HarnessConfigWhereUniqueInput
+  }
+
+  /**
+   * HarnessConfig updateMany
+   */
+  export type HarnessConfigUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update HarnessConfigs.
+     */
+    data: XOR<HarnessConfigUpdateManyMutationInput, HarnessConfigUncheckedUpdateManyInput>
+    /**
+     * Filter which HarnessConfigs to update
+     */
+    where?: HarnessConfigWhereInput
+    /**
+     * Limit how many HarnessConfigs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * HarnessConfig updateManyAndReturn
+   */
+  export type HarnessConfigUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HarnessConfig
+     */
+    select?: HarnessConfigSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the HarnessConfig
+     */
+    omit?: HarnessConfigOmit<ExtArgs> | null
+    /**
+     * The data used to update HarnessConfigs.
+     */
+    data: XOR<HarnessConfigUpdateManyMutationInput, HarnessConfigUncheckedUpdateManyInput>
+    /**
+     * Filter which HarnessConfigs to update
+     */
+    where?: HarnessConfigWhereInput
+    /**
+     * Limit how many HarnessConfigs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * HarnessConfig upsert
+   */
+  export type HarnessConfigUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HarnessConfig
+     */
+    select?: HarnessConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HarnessConfig
+     */
+    omit?: HarnessConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HarnessConfigInclude<ExtArgs> | null
+    /**
+     * The filter to search for the HarnessConfig to update in case it exists.
+     */
+    where: HarnessConfigWhereUniqueInput
+    /**
+     * In case the HarnessConfig found by the `where` argument doesn't exist, create a new HarnessConfig with this data.
+     */
+    create: XOR<HarnessConfigCreateInput, HarnessConfigUncheckedCreateInput>
+    /**
+     * In case the HarnessConfig was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<HarnessConfigUpdateInput, HarnessConfigUncheckedUpdateInput>
+  }
+
+  /**
+   * HarnessConfig delete
+   */
+  export type HarnessConfigDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HarnessConfig
+     */
+    select?: HarnessConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HarnessConfig
+     */
+    omit?: HarnessConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HarnessConfigInclude<ExtArgs> | null
+    /**
+     * Filter which HarnessConfig to delete.
+     */
+    where: HarnessConfigWhereUniqueInput
+  }
+
+  /**
+   * HarnessConfig deleteMany
+   */
+  export type HarnessConfigDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which HarnessConfigs to delete
+     */
+    where?: HarnessConfigWhereInput
+    /**
+     * Limit how many HarnessConfigs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * HarnessConfig.runs
+   */
+  export type HarnessConfig$runsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GenerationRun
+     */
+    select?: GenerationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GenerationRun
+     */
+    omit?: GenerationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GenerationRunInclude<ExtArgs> | null
+    where?: GenerationRunWhereInput
+    orderBy?: GenerationRunOrderByWithRelationInput | GenerationRunOrderByWithRelationInput[]
+    cursor?: GenerationRunWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GenerationRunScalarFieldEnum | GenerationRunScalarFieldEnum[]
+  }
+
+  /**
+   * HarnessConfig without action
+   */
+  export type HarnessConfigDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HarnessConfig
+     */
+    select?: HarnessConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HarnessConfig
+     */
+    omit?: HarnessConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HarnessConfigInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model GenerationRun
+   */
+
+  export type AggregateGenerationRun = {
+    _count: GenerationRunCountAggregateOutputType | null
+    _avg: GenerationRunAvgAggregateOutputType | null
+    _sum: GenerationRunSumAggregateOutputType | null
+    _min: GenerationRunMinAggregateOutputType | null
+    _max: GenerationRunMaxAggregateOutputType | null
+  }
+
+  export type GenerationRunAvgAggregateOutputType = {
+    costUsd: number | null
+    tokensUsed: number | null
+  }
+
+  export type GenerationRunSumAggregateOutputType = {
+    costUsd: number | null
+    tokensUsed: number | null
+  }
+
+  export type GenerationRunMinAggregateOutputType = {
+    id: string | null
+    factId: string | null
+    configId: string | null
+    status: string | null
+    isEval: boolean | null
+    costUsd: number | null
+    tokensUsed: number | null
+    evalPassed: boolean | null
+    startedAt: Date | null
+    endedAt: Date | null
+  }
+
+  export type GenerationRunMaxAggregateOutputType = {
+    id: string | null
+    factId: string | null
+    configId: string | null
+    status: string | null
+    isEval: boolean | null
+    costUsd: number | null
+    tokensUsed: number | null
+    evalPassed: boolean | null
+    startedAt: Date | null
+    endedAt: Date | null
+  }
+
+  export type GenerationRunCountAggregateOutputType = {
+    id: number
+    factId: number
+    configId: number
+    status: number
+    isEval: number
+    costUsd: number
+    tokensUsed: number
+    evalPassed: number
+    startedAt: number
+    endedAt: number
+    _all: number
+  }
+
+
+  export type GenerationRunAvgAggregateInputType = {
+    costUsd?: true
+    tokensUsed?: true
+  }
+
+  export type GenerationRunSumAggregateInputType = {
+    costUsd?: true
+    tokensUsed?: true
+  }
+
+  export type GenerationRunMinAggregateInputType = {
+    id?: true
+    factId?: true
+    configId?: true
+    status?: true
+    isEval?: true
+    costUsd?: true
+    tokensUsed?: true
+    evalPassed?: true
+    startedAt?: true
+    endedAt?: true
+  }
+
+  export type GenerationRunMaxAggregateInputType = {
+    id?: true
+    factId?: true
+    configId?: true
+    status?: true
+    isEval?: true
+    costUsd?: true
+    tokensUsed?: true
+    evalPassed?: true
+    startedAt?: true
+    endedAt?: true
+  }
+
+  export type GenerationRunCountAggregateInputType = {
+    id?: true
+    factId?: true
+    configId?: true
+    status?: true
+    isEval?: true
+    costUsd?: true
+    tokensUsed?: true
+    evalPassed?: true
+    startedAt?: true
+    endedAt?: true
+    _all?: true
+  }
+
+  export type GenerationRunAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GenerationRun to aggregate.
+     */
+    where?: GenerationRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GenerationRuns to fetch.
+     */
+    orderBy?: GenerationRunOrderByWithRelationInput | GenerationRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: GenerationRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GenerationRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GenerationRuns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned GenerationRuns
+    **/
+    _count?: true | GenerationRunCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: GenerationRunAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: GenerationRunSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: GenerationRunMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: GenerationRunMaxAggregateInputType
+  }
+
+  export type GetGenerationRunAggregateType<T extends GenerationRunAggregateArgs> = {
+        [P in keyof T & keyof AggregateGenerationRun]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateGenerationRun[P]>
+      : GetScalarType<T[P], AggregateGenerationRun[P]>
+  }
+
+
+
+
+  export type GenerationRunGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GenerationRunWhereInput
+    orderBy?: GenerationRunOrderByWithAggregationInput | GenerationRunOrderByWithAggregationInput[]
+    by: GenerationRunScalarFieldEnum[] | GenerationRunScalarFieldEnum
+    having?: GenerationRunScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: GenerationRunCountAggregateInputType | true
+    _avg?: GenerationRunAvgAggregateInputType
+    _sum?: GenerationRunSumAggregateInputType
+    _min?: GenerationRunMinAggregateInputType
+    _max?: GenerationRunMaxAggregateInputType
+  }
+
+  export type GenerationRunGroupByOutputType = {
+    id: string
+    factId: string | null
+    configId: string
+    status: string
+    isEval: boolean
+    costUsd: number
+    tokensUsed: number
+    evalPassed: boolean | null
+    startedAt: Date
+    endedAt: Date | null
+    _count: GenerationRunCountAggregateOutputType | null
+    _avg: GenerationRunAvgAggregateOutputType | null
+    _sum: GenerationRunSumAggregateOutputType | null
+    _min: GenerationRunMinAggregateOutputType | null
+    _max: GenerationRunMaxAggregateOutputType | null
+  }
+
+  type GetGenerationRunGroupByPayload<T extends GenerationRunGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<GenerationRunGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof GenerationRunGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], GenerationRunGroupByOutputType[P]>
+            : GetScalarType<T[P], GenerationRunGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type GenerationRunSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    factId?: boolean
+    configId?: boolean
+    status?: boolean
+    isEval?: boolean
+    costUsd?: boolean
+    tokensUsed?: boolean
+    evalPassed?: boolean
+    startedAt?: boolean
+    endedAt?: boolean
+    fact?: boolean | GenerationRun$factArgs<ExtArgs>
+    config?: boolean | HarnessConfigDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["generationRun"]>
+
+  export type GenerationRunSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    factId?: boolean
+    configId?: boolean
+    status?: boolean
+    isEval?: boolean
+    costUsd?: boolean
+    tokensUsed?: boolean
+    evalPassed?: boolean
+    startedAt?: boolean
+    endedAt?: boolean
+    fact?: boolean | GenerationRun$factArgs<ExtArgs>
+    config?: boolean | HarnessConfigDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["generationRun"]>
+
+  export type GenerationRunSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    factId?: boolean
+    configId?: boolean
+    status?: boolean
+    isEval?: boolean
+    costUsd?: boolean
+    tokensUsed?: boolean
+    evalPassed?: boolean
+    startedAt?: boolean
+    endedAt?: boolean
+    fact?: boolean | GenerationRun$factArgs<ExtArgs>
+    config?: boolean | HarnessConfigDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["generationRun"]>
+
+  export type GenerationRunSelectScalar = {
+    id?: boolean
+    factId?: boolean
+    configId?: boolean
+    status?: boolean
+    isEval?: boolean
+    costUsd?: boolean
+    tokensUsed?: boolean
+    evalPassed?: boolean
+    startedAt?: boolean
+    endedAt?: boolean
+  }
+
+  export type GenerationRunOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "factId" | "configId" | "status" | "isEval" | "costUsd" | "tokensUsed" | "evalPassed" | "startedAt" | "endedAt", ExtArgs["result"]["generationRun"]>
+  export type GenerationRunInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    fact?: boolean | GenerationRun$factArgs<ExtArgs>
+    config?: boolean | HarnessConfigDefaultArgs<ExtArgs>
+  }
+  export type GenerationRunIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    fact?: boolean | GenerationRun$factArgs<ExtArgs>
+    config?: boolean | HarnessConfigDefaultArgs<ExtArgs>
+  }
+  export type GenerationRunIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    fact?: boolean | GenerationRun$factArgs<ExtArgs>
+    config?: boolean | HarnessConfigDefaultArgs<ExtArgs>
+  }
+
+  export type $GenerationRunPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "GenerationRun"
+    objects: {
+      fact: Prisma.$FactPayload<ExtArgs> | null
+      config: Prisma.$HarnessConfigPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      factId: string | null
+      configId: string
+      status: string
+      isEval: boolean
+      costUsd: number
+      tokensUsed: number
+      evalPassed: boolean | null
+      startedAt: Date
+      endedAt: Date | null
+    }, ExtArgs["result"]["generationRun"]>
+    composites: {}
+  }
+
+  type GenerationRunGetPayload<S extends boolean | null | undefined | GenerationRunDefaultArgs> = $Result.GetResult<Prisma.$GenerationRunPayload, S>
+
+  type GenerationRunCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<GenerationRunFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: GenerationRunCountAggregateInputType | true
+    }
+
+  export interface GenerationRunDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['GenerationRun'], meta: { name: 'GenerationRun' } }
+    /**
+     * Find zero or one GenerationRun that matches the filter.
+     * @param {GenerationRunFindUniqueArgs} args - Arguments to find a GenerationRun
+     * @example
+     * // Get one GenerationRun
+     * const generationRun = await prisma.generationRun.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends GenerationRunFindUniqueArgs>(args: SelectSubset<T, GenerationRunFindUniqueArgs<ExtArgs>>): Prisma__GenerationRunClient<$Result.GetResult<Prisma.$GenerationRunPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one GenerationRun that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {GenerationRunFindUniqueOrThrowArgs} args - Arguments to find a GenerationRun
+     * @example
+     * // Get one GenerationRun
+     * const generationRun = await prisma.generationRun.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends GenerationRunFindUniqueOrThrowArgs>(args: SelectSubset<T, GenerationRunFindUniqueOrThrowArgs<ExtArgs>>): Prisma__GenerationRunClient<$Result.GetResult<Prisma.$GenerationRunPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GenerationRun that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GenerationRunFindFirstArgs} args - Arguments to find a GenerationRun
+     * @example
+     * // Get one GenerationRun
+     * const generationRun = await prisma.generationRun.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends GenerationRunFindFirstArgs>(args?: SelectSubset<T, GenerationRunFindFirstArgs<ExtArgs>>): Prisma__GenerationRunClient<$Result.GetResult<Prisma.$GenerationRunPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GenerationRun that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GenerationRunFindFirstOrThrowArgs} args - Arguments to find a GenerationRun
+     * @example
+     * // Get one GenerationRun
+     * const generationRun = await prisma.generationRun.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends GenerationRunFindFirstOrThrowArgs>(args?: SelectSubset<T, GenerationRunFindFirstOrThrowArgs<ExtArgs>>): Prisma__GenerationRunClient<$Result.GetResult<Prisma.$GenerationRunPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more GenerationRuns that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GenerationRunFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all GenerationRuns
+     * const generationRuns = await prisma.generationRun.findMany()
+     * 
+     * // Get first 10 GenerationRuns
+     * const generationRuns = await prisma.generationRun.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const generationRunWithIdOnly = await prisma.generationRun.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends GenerationRunFindManyArgs>(args?: SelectSubset<T, GenerationRunFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GenerationRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a GenerationRun.
+     * @param {GenerationRunCreateArgs} args - Arguments to create a GenerationRun.
+     * @example
+     * // Create one GenerationRun
+     * const GenerationRun = await prisma.generationRun.create({
+     *   data: {
+     *     // ... data to create a GenerationRun
+     *   }
+     * })
+     * 
+     */
+    create<T extends GenerationRunCreateArgs>(args: SelectSubset<T, GenerationRunCreateArgs<ExtArgs>>): Prisma__GenerationRunClient<$Result.GetResult<Prisma.$GenerationRunPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many GenerationRuns.
+     * @param {GenerationRunCreateManyArgs} args - Arguments to create many GenerationRuns.
+     * @example
+     * // Create many GenerationRuns
+     * const generationRun = await prisma.generationRun.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends GenerationRunCreateManyArgs>(args?: SelectSubset<T, GenerationRunCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many GenerationRuns and returns the data saved in the database.
+     * @param {GenerationRunCreateManyAndReturnArgs} args - Arguments to create many GenerationRuns.
+     * @example
+     * // Create many GenerationRuns
+     * const generationRun = await prisma.generationRun.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many GenerationRuns and only return the `id`
+     * const generationRunWithIdOnly = await prisma.generationRun.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends GenerationRunCreateManyAndReturnArgs>(args?: SelectSubset<T, GenerationRunCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GenerationRunPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a GenerationRun.
+     * @param {GenerationRunDeleteArgs} args - Arguments to delete one GenerationRun.
+     * @example
+     * // Delete one GenerationRun
+     * const GenerationRun = await prisma.generationRun.delete({
+     *   where: {
+     *     // ... filter to delete one GenerationRun
+     *   }
+     * })
+     * 
+     */
+    delete<T extends GenerationRunDeleteArgs>(args: SelectSubset<T, GenerationRunDeleteArgs<ExtArgs>>): Prisma__GenerationRunClient<$Result.GetResult<Prisma.$GenerationRunPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one GenerationRun.
+     * @param {GenerationRunUpdateArgs} args - Arguments to update one GenerationRun.
+     * @example
+     * // Update one GenerationRun
+     * const generationRun = await prisma.generationRun.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends GenerationRunUpdateArgs>(args: SelectSubset<T, GenerationRunUpdateArgs<ExtArgs>>): Prisma__GenerationRunClient<$Result.GetResult<Prisma.$GenerationRunPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more GenerationRuns.
+     * @param {GenerationRunDeleteManyArgs} args - Arguments to filter GenerationRuns to delete.
+     * @example
+     * // Delete a few GenerationRuns
+     * const { count } = await prisma.generationRun.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends GenerationRunDeleteManyArgs>(args?: SelectSubset<T, GenerationRunDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GenerationRuns.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GenerationRunUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many GenerationRuns
+     * const generationRun = await prisma.generationRun.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends GenerationRunUpdateManyArgs>(args: SelectSubset<T, GenerationRunUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GenerationRuns and returns the data updated in the database.
+     * @param {GenerationRunUpdateManyAndReturnArgs} args - Arguments to update many GenerationRuns.
+     * @example
+     * // Update many GenerationRuns
+     * const generationRun = await prisma.generationRun.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more GenerationRuns and only return the `id`
+     * const generationRunWithIdOnly = await prisma.generationRun.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends GenerationRunUpdateManyAndReturnArgs>(args: SelectSubset<T, GenerationRunUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GenerationRunPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one GenerationRun.
+     * @param {GenerationRunUpsertArgs} args - Arguments to update or create a GenerationRun.
+     * @example
+     * // Update or create a GenerationRun
+     * const generationRun = await prisma.generationRun.upsert({
+     *   create: {
+     *     // ... data to create a GenerationRun
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the GenerationRun we want to update
+     *   }
+     * })
+     */
+    upsert<T extends GenerationRunUpsertArgs>(args: SelectSubset<T, GenerationRunUpsertArgs<ExtArgs>>): Prisma__GenerationRunClient<$Result.GetResult<Prisma.$GenerationRunPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of GenerationRuns.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GenerationRunCountArgs} args - Arguments to filter GenerationRuns to count.
+     * @example
+     * // Count the number of GenerationRuns
+     * const count = await prisma.generationRun.count({
+     *   where: {
+     *     // ... the filter for the GenerationRuns we want to count
+     *   }
+     * })
+    **/
+    count<T extends GenerationRunCountArgs>(
+      args?: Subset<T, GenerationRunCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], GenerationRunCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a GenerationRun.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GenerationRunAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends GenerationRunAggregateArgs>(args: Subset<T, GenerationRunAggregateArgs>): Prisma.PrismaPromise<GetGenerationRunAggregateType<T>>
+
+    /**
+     * Group by GenerationRun.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GenerationRunGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends GenerationRunGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: GenerationRunGroupByArgs['orderBy'] }
+        : { orderBy?: GenerationRunGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, GenerationRunGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetGenerationRunGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the GenerationRun model
+   */
+  readonly fields: GenerationRunFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for GenerationRun.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__GenerationRunClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    fact<T extends GenerationRun$factArgs<ExtArgs> = {}>(args?: Subset<T, GenerationRun$factArgs<ExtArgs>>): Prisma__FactClient<$Result.GetResult<Prisma.$FactPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    config<T extends HarnessConfigDefaultArgs<ExtArgs> = {}>(args?: Subset<T, HarnessConfigDefaultArgs<ExtArgs>>): Prisma__HarnessConfigClient<$Result.GetResult<Prisma.$HarnessConfigPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the GenerationRun model
+   */
+  interface GenerationRunFieldRefs {
+    readonly id: FieldRef<"GenerationRun", 'String'>
+    readonly factId: FieldRef<"GenerationRun", 'String'>
+    readonly configId: FieldRef<"GenerationRun", 'String'>
+    readonly status: FieldRef<"GenerationRun", 'String'>
+    readonly isEval: FieldRef<"GenerationRun", 'Boolean'>
+    readonly costUsd: FieldRef<"GenerationRun", 'Float'>
+    readonly tokensUsed: FieldRef<"GenerationRun", 'Int'>
+    readonly evalPassed: FieldRef<"GenerationRun", 'Boolean'>
+    readonly startedAt: FieldRef<"GenerationRun", 'DateTime'>
+    readonly endedAt: FieldRef<"GenerationRun", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * GenerationRun findUnique
+   */
+  export type GenerationRunFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GenerationRun
+     */
+    select?: GenerationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GenerationRun
+     */
+    omit?: GenerationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GenerationRunInclude<ExtArgs> | null
+    /**
+     * Filter, which GenerationRun to fetch.
+     */
+    where: GenerationRunWhereUniqueInput
+  }
+
+  /**
+   * GenerationRun findUniqueOrThrow
+   */
+  export type GenerationRunFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GenerationRun
+     */
+    select?: GenerationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GenerationRun
+     */
+    omit?: GenerationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GenerationRunInclude<ExtArgs> | null
+    /**
+     * Filter, which GenerationRun to fetch.
+     */
+    where: GenerationRunWhereUniqueInput
+  }
+
+  /**
+   * GenerationRun findFirst
+   */
+  export type GenerationRunFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GenerationRun
+     */
+    select?: GenerationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GenerationRun
+     */
+    omit?: GenerationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GenerationRunInclude<ExtArgs> | null
+    /**
+     * Filter, which GenerationRun to fetch.
+     */
+    where?: GenerationRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GenerationRuns to fetch.
+     */
+    orderBy?: GenerationRunOrderByWithRelationInput | GenerationRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GenerationRuns.
+     */
+    cursor?: GenerationRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GenerationRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GenerationRuns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GenerationRuns.
+     */
+    distinct?: GenerationRunScalarFieldEnum | GenerationRunScalarFieldEnum[]
+  }
+
+  /**
+   * GenerationRun findFirstOrThrow
+   */
+  export type GenerationRunFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GenerationRun
+     */
+    select?: GenerationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GenerationRun
+     */
+    omit?: GenerationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GenerationRunInclude<ExtArgs> | null
+    /**
+     * Filter, which GenerationRun to fetch.
+     */
+    where?: GenerationRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GenerationRuns to fetch.
+     */
+    orderBy?: GenerationRunOrderByWithRelationInput | GenerationRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GenerationRuns.
+     */
+    cursor?: GenerationRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GenerationRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GenerationRuns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GenerationRuns.
+     */
+    distinct?: GenerationRunScalarFieldEnum | GenerationRunScalarFieldEnum[]
+  }
+
+  /**
+   * GenerationRun findMany
+   */
+  export type GenerationRunFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GenerationRun
+     */
+    select?: GenerationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GenerationRun
+     */
+    omit?: GenerationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GenerationRunInclude<ExtArgs> | null
+    /**
+     * Filter, which GenerationRuns to fetch.
+     */
+    where?: GenerationRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GenerationRuns to fetch.
+     */
+    orderBy?: GenerationRunOrderByWithRelationInput | GenerationRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing GenerationRuns.
+     */
+    cursor?: GenerationRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GenerationRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GenerationRuns.
+     */
+    skip?: number
+    distinct?: GenerationRunScalarFieldEnum | GenerationRunScalarFieldEnum[]
+  }
+
+  /**
+   * GenerationRun create
+   */
+  export type GenerationRunCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GenerationRun
+     */
+    select?: GenerationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GenerationRun
+     */
+    omit?: GenerationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GenerationRunInclude<ExtArgs> | null
+    /**
+     * The data needed to create a GenerationRun.
+     */
+    data: XOR<GenerationRunCreateInput, GenerationRunUncheckedCreateInput>
+  }
+
+  /**
+   * GenerationRun createMany
+   */
+  export type GenerationRunCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many GenerationRuns.
+     */
+    data: GenerationRunCreateManyInput | GenerationRunCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * GenerationRun createManyAndReturn
+   */
+  export type GenerationRunCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GenerationRun
+     */
+    select?: GenerationRunSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GenerationRun
+     */
+    omit?: GenerationRunOmit<ExtArgs> | null
+    /**
+     * The data used to create many GenerationRuns.
+     */
+    data: GenerationRunCreateManyInput | GenerationRunCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GenerationRunIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GenerationRun update
+   */
+  export type GenerationRunUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GenerationRun
+     */
+    select?: GenerationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GenerationRun
+     */
+    omit?: GenerationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GenerationRunInclude<ExtArgs> | null
+    /**
+     * The data needed to update a GenerationRun.
+     */
+    data: XOR<GenerationRunUpdateInput, GenerationRunUncheckedUpdateInput>
+    /**
+     * Choose, which GenerationRun to update.
+     */
+    where: GenerationRunWhereUniqueInput
+  }
+
+  /**
+   * GenerationRun updateMany
+   */
+  export type GenerationRunUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update GenerationRuns.
+     */
+    data: XOR<GenerationRunUpdateManyMutationInput, GenerationRunUncheckedUpdateManyInput>
+    /**
+     * Filter which GenerationRuns to update
+     */
+    where?: GenerationRunWhereInput
+    /**
+     * Limit how many GenerationRuns to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * GenerationRun updateManyAndReturn
+   */
+  export type GenerationRunUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GenerationRun
+     */
+    select?: GenerationRunSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GenerationRun
+     */
+    omit?: GenerationRunOmit<ExtArgs> | null
+    /**
+     * The data used to update GenerationRuns.
+     */
+    data: XOR<GenerationRunUpdateManyMutationInput, GenerationRunUncheckedUpdateManyInput>
+    /**
+     * Filter which GenerationRuns to update
+     */
+    where?: GenerationRunWhereInput
+    /**
+     * Limit how many GenerationRuns to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GenerationRunIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GenerationRun upsert
+   */
+  export type GenerationRunUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GenerationRun
+     */
+    select?: GenerationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GenerationRun
+     */
+    omit?: GenerationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GenerationRunInclude<ExtArgs> | null
+    /**
+     * The filter to search for the GenerationRun to update in case it exists.
+     */
+    where: GenerationRunWhereUniqueInput
+    /**
+     * In case the GenerationRun found by the `where` argument doesn't exist, create a new GenerationRun with this data.
+     */
+    create: XOR<GenerationRunCreateInput, GenerationRunUncheckedCreateInput>
+    /**
+     * In case the GenerationRun was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<GenerationRunUpdateInput, GenerationRunUncheckedUpdateInput>
+  }
+
+  /**
+   * GenerationRun delete
+   */
+  export type GenerationRunDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GenerationRun
+     */
+    select?: GenerationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GenerationRun
+     */
+    omit?: GenerationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GenerationRunInclude<ExtArgs> | null
+    /**
+     * Filter which GenerationRun to delete.
+     */
+    where: GenerationRunWhereUniqueInput
+  }
+
+  /**
+   * GenerationRun deleteMany
+   */
+  export type GenerationRunDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GenerationRuns to delete
+     */
+    where?: GenerationRunWhereInput
+    /**
+     * Limit how many GenerationRuns to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * GenerationRun.fact
+   */
+  export type GenerationRun$factArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Fact
+     */
+    select?: FactSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Fact
+     */
+    omit?: FactOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FactInclude<ExtArgs> | null
+    where?: FactWhereInput
+  }
+
+  /**
+   * GenerationRun without action
+   */
+  export type GenerationRunDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GenerationRun
+     */
+    select?: GenerationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GenerationRun
+     */
+    omit?: GenerationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GenerationRunInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model PrintRating
+   */
+
+  export type AggregatePrintRating = {
+    _count: PrintRatingCountAggregateOutputType | null
+    _avg: PrintRatingAvgAggregateOutputType | null
+    _sum: PrintRatingSumAggregateOutputType | null
+    _min: PrintRatingMinAggregateOutputType | null
+    _max: PrintRatingMaxAggregateOutputType | null
+  }
+
+  export type PrintRatingAvgAggregateOutputType = {
+    craftScore: number | null
+    hookScore: number | null
+    overallScore: number | null
+  }
+
+  export type PrintRatingSumAggregateOutputType = {
+    craftScore: number | null
+    hookScore: number | null
+    overallScore: number | null
+  }
+
+  export type PrintRatingMinAggregateOutputType = {
+    id: string | null
+    videoId: string | null
+    reviewerId: string | null
+    brandSafety: boolean | null
+    scriptMatch: boolean | null
+    craftScore: number | null
+    hookScore: number | null
+    overallScore: number | null
+    notes: string | null
+    createdAt: Date | null
+  }
+
+  export type PrintRatingMaxAggregateOutputType = {
+    id: string | null
+    videoId: string | null
+    reviewerId: string | null
+    brandSafety: boolean | null
+    scriptMatch: boolean | null
+    craftScore: number | null
+    hookScore: number | null
+    overallScore: number | null
+    notes: string | null
+    createdAt: Date | null
+  }
+
+  export type PrintRatingCountAggregateOutputType = {
+    id: number
+    videoId: number
+    reviewerId: number
+    brandSafety: number
+    scriptMatch: number
+    craftScore: number
+    hookScore: number
+    overallScore: number
+    notes: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type PrintRatingAvgAggregateInputType = {
+    craftScore?: true
+    hookScore?: true
+    overallScore?: true
+  }
+
+  export type PrintRatingSumAggregateInputType = {
+    craftScore?: true
+    hookScore?: true
+    overallScore?: true
+  }
+
+  export type PrintRatingMinAggregateInputType = {
+    id?: true
+    videoId?: true
+    reviewerId?: true
+    brandSafety?: true
+    scriptMatch?: true
+    craftScore?: true
+    hookScore?: true
+    overallScore?: true
+    notes?: true
+    createdAt?: true
+  }
+
+  export type PrintRatingMaxAggregateInputType = {
+    id?: true
+    videoId?: true
+    reviewerId?: true
+    brandSafety?: true
+    scriptMatch?: true
+    craftScore?: true
+    hookScore?: true
+    overallScore?: true
+    notes?: true
+    createdAt?: true
+  }
+
+  export type PrintRatingCountAggregateInputType = {
+    id?: true
+    videoId?: true
+    reviewerId?: true
+    brandSafety?: true
+    scriptMatch?: true
+    craftScore?: true
+    hookScore?: true
+    overallScore?: true
+    notes?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type PrintRatingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PrintRating to aggregate.
+     */
+    where?: PrintRatingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PrintRatings to fetch.
+     */
+    orderBy?: PrintRatingOrderByWithRelationInput | PrintRatingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PrintRatingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PrintRatings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PrintRatings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PrintRatings
+    **/
+    _count?: true | PrintRatingCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PrintRatingAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PrintRatingSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PrintRatingMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PrintRatingMaxAggregateInputType
+  }
+
+  export type GetPrintRatingAggregateType<T extends PrintRatingAggregateArgs> = {
+        [P in keyof T & keyof AggregatePrintRating]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePrintRating[P]>
+      : GetScalarType<T[P], AggregatePrintRating[P]>
+  }
+
+
+
+
+  export type PrintRatingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PrintRatingWhereInput
+    orderBy?: PrintRatingOrderByWithAggregationInput | PrintRatingOrderByWithAggregationInput[]
+    by: PrintRatingScalarFieldEnum[] | PrintRatingScalarFieldEnum
+    having?: PrintRatingScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PrintRatingCountAggregateInputType | true
+    _avg?: PrintRatingAvgAggregateInputType
+    _sum?: PrintRatingSumAggregateInputType
+    _min?: PrintRatingMinAggregateInputType
+    _max?: PrintRatingMaxAggregateInputType
+  }
+
+  export type PrintRatingGroupByOutputType = {
+    id: string
+    videoId: string
+    reviewerId: string
+    brandSafety: boolean
+    scriptMatch: boolean
+    craftScore: number
+    hookScore: number
+    overallScore: number
+    notes: string | null
+    createdAt: Date
+    _count: PrintRatingCountAggregateOutputType | null
+    _avg: PrintRatingAvgAggregateOutputType | null
+    _sum: PrintRatingSumAggregateOutputType | null
+    _min: PrintRatingMinAggregateOutputType | null
+    _max: PrintRatingMaxAggregateOutputType | null
+  }
+
+  type GetPrintRatingGroupByPayload<T extends PrintRatingGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PrintRatingGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PrintRatingGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PrintRatingGroupByOutputType[P]>
+            : GetScalarType<T[P], PrintRatingGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PrintRatingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    videoId?: boolean
+    reviewerId?: boolean
+    brandSafety?: boolean
+    scriptMatch?: boolean
+    craftScore?: boolean
+    hookScore?: boolean
+    overallScore?: boolean
+    notes?: boolean
+    createdAt?: boolean
+    video?: boolean | VideoDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["printRating"]>
+
+  export type PrintRatingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    videoId?: boolean
+    reviewerId?: boolean
+    brandSafety?: boolean
+    scriptMatch?: boolean
+    craftScore?: boolean
+    hookScore?: boolean
+    overallScore?: boolean
+    notes?: boolean
+    createdAt?: boolean
+    video?: boolean | VideoDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["printRating"]>
+
+  export type PrintRatingSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    videoId?: boolean
+    reviewerId?: boolean
+    brandSafety?: boolean
+    scriptMatch?: boolean
+    craftScore?: boolean
+    hookScore?: boolean
+    overallScore?: boolean
+    notes?: boolean
+    createdAt?: boolean
+    video?: boolean | VideoDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["printRating"]>
+
+  export type PrintRatingSelectScalar = {
+    id?: boolean
+    videoId?: boolean
+    reviewerId?: boolean
+    brandSafety?: boolean
+    scriptMatch?: boolean
+    craftScore?: boolean
+    hookScore?: boolean
+    overallScore?: boolean
+    notes?: boolean
+    createdAt?: boolean
+  }
+
+  export type PrintRatingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "videoId" | "reviewerId" | "brandSafety" | "scriptMatch" | "craftScore" | "hookScore" | "overallScore" | "notes" | "createdAt", ExtArgs["result"]["printRating"]>
+  export type PrintRatingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    video?: boolean | VideoDefaultArgs<ExtArgs>
+  }
+  export type PrintRatingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    video?: boolean | VideoDefaultArgs<ExtArgs>
+  }
+  export type PrintRatingIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    video?: boolean | VideoDefaultArgs<ExtArgs>
+  }
+
+  export type $PrintRatingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PrintRating"
+    objects: {
+      video: Prisma.$VideoPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      videoId: string
+      reviewerId: string
+      brandSafety: boolean
+      scriptMatch: boolean
+      craftScore: number
+      hookScore: number
+      overallScore: number
+      notes: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["printRating"]>
+    composites: {}
+  }
+
+  type PrintRatingGetPayload<S extends boolean | null | undefined | PrintRatingDefaultArgs> = $Result.GetResult<Prisma.$PrintRatingPayload, S>
+
+  type PrintRatingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PrintRatingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PrintRatingCountAggregateInputType | true
+    }
+
+  export interface PrintRatingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PrintRating'], meta: { name: 'PrintRating' } }
+    /**
+     * Find zero or one PrintRating that matches the filter.
+     * @param {PrintRatingFindUniqueArgs} args - Arguments to find a PrintRating
+     * @example
+     * // Get one PrintRating
+     * const printRating = await prisma.printRating.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PrintRatingFindUniqueArgs>(args: SelectSubset<T, PrintRatingFindUniqueArgs<ExtArgs>>): Prisma__PrintRatingClient<$Result.GetResult<Prisma.$PrintRatingPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PrintRating that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PrintRatingFindUniqueOrThrowArgs} args - Arguments to find a PrintRating
+     * @example
+     * // Get one PrintRating
+     * const printRating = await prisma.printRating.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PrintRatingFindUniqueOrThrowArgs>(args: SelectSubset<T, PrintRatingFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PrintRatingClient<$Result.GetResult<Prisma.$PrintRatingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PrintRating that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PrintRatingFindFirstArgs} args - Arguments to find a PrintRating
+     * @example
+     * // Get one PrintRating
+     * const printRating = await prisma.printRating.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PrintRatingFindFirstArgs>(args?: SelectSubset<T, PrintRatingFindFirstArgs<ExtArgs>>): Prisma__PrintRatingClient<$Result.GetResult<Prisma.$PrintRatingPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PrintRating that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PrintRatingFindFirstOrThrowArgs} args - Arguments to find a PrintRating
+     * @example
+     * // Get one PrintRating
+     * const printRating = await prisma.printRating.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PrintRatingFindFirstOrThrowArgs>(args?: SelectSubset<T, PrintRatingFindFirstOrThrowArgs<ExtArgs>>): Prisma__PrintRatingClient<$Result.GetResult<Prisma.$PrintRatingPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PrintRatings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PrintRatingFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PrintRatings
+     * const printRatings = await prisma.printRating.findMany()
+     * 
+     * // Get first 10 PrintRatings
+     * const printRatings = await prisma.printRating.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const printRatingWithIdOnly = await prisma.printRating.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PrintRatingFindManyArgs>(args?: SelectSubset<T, PrintRatingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PrintRatingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PrintRating.
+     * @param {PrintRatingCreateArgs} args - Arguments to create a PrintRating.
+     * @example
+     * // Create one PrintRating
+     * const PrintRating = await prisma.printRating.create({
+     *   data: {
+     *     // ... data to create a PrintRating
+     *   }
+     * })
+     * 
+     */
+    create<T extends PrintRatingCreateArgs>(args: SelectSubset<T, PrintRatingCreateArgs<ExtArgs>>): Prisma__PrintRatingClient<$Result.GetResult<Prisma.$PrintRatingPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PrintRatings.
+     * @param {PrintRatingCreateManyArgs} args - Arguments to create many PrintRatings.
+     * @example
+     * // Create many PrintRatings
+     * const printRating = await prisma.printRating.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PrintRatingCreateManyArgs>(args?: SelectSubset<T, PrintRatingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PrintRatings and returns the data saved in the database.
+     * @param {PrintRatingCreateManyAndReturnArgs} args - Arguments to create many PrintRatings.
+     * @example
+     * // Create many PrintRatings
+     * const printRating = await prisma.printRating.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PrintRatings and only return the `id`
+     * const printRatingWithIdOnly = await prisma.printRating.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PrintRatingCreateManyAndReturnArgs>(args?: SelectSubset<T, PrintRatingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PrintRatingPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a PrintRating.
+     * @param {PrintRatingDeleteArgs} args - Arguments to delete one PrintRating.
+     * @example
+     * // Delete one PrintRating
+     * const PrintRating = await prisma.printRating.delete({
+     *   where: {
+     *     // ... filter to delete one PrintRating
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PrintRatingDeleteArgs>(args: SelectSubset<T, PrintRatingDeleteArgs<ExtArgs>>): Prisma__PrintRatingClient<$Result.GetResult<Prisma.$PrintRatingPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PrintRating.
+     * @param {PrintRatingUpdateArgs} args - Arguments to update one PrintRating.
+     * @example
+     * // Update one PrintRating
+     * const printRating = await prisma.printRating.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PrintRatingUpdateArgs>(args: SelectSubset<T, PrintRatingUpdateArgs<ExtArgs>>): Prisma__PrintRatingClient<$Result.GetResult<Prisma.$PrintRatingPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PrintRatings.
+     * @param {PrintRatingDeleteManyArgs} args - Arguments to filter PrintRatings to delete.
+     * @example
+     * // Delete a few PrintRatings
+     * const { count } = await prisma.printRating.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PrintRatingDeleteManyArgs>(args?: SelectSubset<T, PrintRatingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PrintRatings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PrintRatingUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PrintRatings
+     * const printRating = await prisma.printRating.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PrintRatingUpdateManyArgs>(args: SelectSubset<T, PrintRatingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PrintRatings and returns the data updated in the database.
+     * @param {PrintRatingUpdateManyAndReturnArgs} args - Arguments to update many PrintRatings.
+     * @example
+     * // Update many PrintRatings
+     * const printRating = await prisma.printRating.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more PrintRatings and only return the `id`
+     * const printRatingWithIdOnly = await prisma.printRating.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PrintRatingUpdateManyAndReturnArgs>(args: SelectSubset<T, PrintRatingUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PrintRatingPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one PrintRating.
+     * @param {PrintRatingUpsertArgs} args - Arguments to update or create a PrintRating.
+     * @example
+     * // Update or create a PrintRating
+     * const printRating = await prisma.printRating.upsert({
+     *   create: {
+     *     // ... data to create a PrintRating
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PrintRating we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PrintRatingUpsertArgs>(args: SelectSubset<T, PrintRatingUpsertArgs<ExtArgs>>): Prisma__PrintRatingClient<$Result.GetResult<Prisma.$PrintRatingPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of PrintRatings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PrintRatingCountArgs} args - Arguments to filter PrintRatings to count.
+     * @example
+     * // Count the number of PrintRatings
+     * const count = await prisma.printRating.count({
+     *   where: {
+     *     // ... the filter for the PrintRatings we want to count
+     *   }
+     * })
+    **/
+    count<T extends PrintRatingCountArgs>(
+      args?: Subset<T, PrintRatingCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PrintRatingCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PrintRating.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PrintRatingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PrintRatingAggregateArgs>(args: Subset<T, PrintRatingAggregateArgs>): Prisma.PrismaPromise<GetPrintRatingAggregateType<T>>
+
+    /**
+     * Group by PrintRating.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PrintRatingGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PrintRatingGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PrintRatingGroupByArgs['orderBy'] }
+        : { orderBy?: PrintRatingGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PrintRatingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPrintRatingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PrintRating model
+   */
+  readonly fields: PrintRatingFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PrintRating.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PrintRatingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    video<T extends VideoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VideoDefaultArgs<ExtArgs>>): Prisma__VideoClient<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PrintRating model
+   */
+  interface PrintRatingFieldRefs {
+    readonly id: FieldRef<"PrintRating", 'String'>
+    readonly videoId: FieldRef<"PrintRating", 'String'>
+    readonly reviewerId: FieldRef<"PrintRating", 'String'>
+    readonly brandSafety: FieldRef<"PrintRating", 'Boolean'>
+    readonly scriptMatch: FieldRef<"PrintRating", 'Boolean'>
+    readonly craftScore: FieldRef<"PrintRating", 'Int'>
+    readonly hookScore: FieldRef<"PrintRating", 'Int'>
+    readonly overallScore: FieldRef<"PrintRating", 'Float'>
+    readonly notes: FieldRef<"PrintRating", 'String'>
+    readonly createdAt: FieldRef<"PrintRating", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PrintRating findUnique
+   */
+  export type PrintRatingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrintRating
+     */
+    select?: PrintRatingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PrintRating
+     */
+    omit?: PrintRatingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrintRatingInclude<ExtArgs> | null
+    /**
+     * Filter, which PrintRating to fetch.
+     */
+    where: PrintRatingWhereUniqueInput
+  }
+
+  /**
+   * PrintRating findUniqueOrThrow
+   */
+  export type PrintRatingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrintRating
+     */
+    select?: PrintRatingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PrintRating
+     */
+    omit?: PrintRatingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrintRatingInclude<ExtArgs> | null
+    /**
+     * Filter, which PrintRating to fetch.
+     */
+    where: PrintRatingWhereUniqueInput
+  }
+
+  /**
+   * PrintRating findFirst
+   */
+  export type PrintRatingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrintRating
+     */
+    select?: PrintRatingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PrintRating
+     */
+    omit?: PrintRatingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrintRatingInclude<ExtArgs> | null
+    /**
+     * Filter, which PrintRating to fetch.
+     */
+    where?: PrintRatingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PrintRatings to fetch.
+     */
+    orderBy?: PrintRatingOrderByWithRelationInput | PrintRatingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PrintRatings.
+     */
+    cursor?: PrintRatingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PrintRatings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PrintRatings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PrintRatings.
+     */
+    distinct?: PrintRatingScalarFieldEnum | PrintRatingScalarFieldEnum[]
+  }
+
+  /**
+   * PrintRating findFirstOrThrow
+   */
+  export type PrintRatingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrintRating
+     */
+    select?: PrintRatingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PrintRating
+     */
+    omit?: PrintRatingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrintRatingInclude<ExtArgs> | null
+    /**
+     * Filter, which PrintRating to fetch.
+     */
+    where?: PrintRatingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PrintRatings to fetch.
+     */
+    orderBy?: PrintRatingOrderByWithRelationInput | PrintRatingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PrintRatings.
+     */
+    cursor?: PrintRatingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PrintRatings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PrintRatings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PrintRatings.
+     */
+    distinct?: PrintRatingScalarFieldEnum | PrintRatingScalarFieldEnum[]
+  }
+
+  /**
+   * PrintRating findMany
+   */
+  export type PrintRatingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrintRating
+     */
+    select?: PrintRatingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PrintRating
+     */
+    omit?: PrintRatingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrintRatingInclude<ExtArgs> | null
+    /**
+     * Filter, which PrintRatings to fetch.
+     */
+    where?: PrintRatingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PrintRatings to fetch.
+     */
+    orderBy?: PrintRatingOrderByWithRelationInput | PrintRatingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PrintRatings.
+     */
+    cursor?: PrintRatingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PrintRatings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PrintRatings.
+     */
+    skip?: number
+    distinct?: PrintRatingScalarFieldEnum | PrintRatingScalarFieldEnum[]
+  }
+
+  /**
+   * PrintRating create
+   */
+  export type PrintRatingCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrintRating
+     */
+    select?: PrintRatingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PrintRating
+     */
+    omit?: PrintRatingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrintRatingInclude<ExtArgs> | null
+    /**
+     * The data needed to create a PrintRating.
+     */
+    data: XOR<PrintRatingCreateInput, PrintRatingUncheckedCreateInput>
+  }
+
+  /**
+   * PrintRating createMany
+   */
+  export type PrintRatingCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PrintRatings.
+     */
+    data: PrintRatingCreateManyInput | PrintRatingCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PrintRating createManyAndReturn
+   */
+  export type PrintRatingCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrintRating
+     */
+    select?: PrintRatingSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PrintRating
+     */
+    omit?: PrintRatingOmit<ExtArgs> | null
+    /**
+     * The data used to create many PrintRatings.
+     */
+    data: PrintRatingCreateManyInput | PrintRatingCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrintRatingIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PrintRating update
+   */
+  export type PrintRatingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrintRating
+     */
+    select?: PrintRatingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PrintRating
+     */
+    omit?: PrintRatingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrintRatingInclude<ExtArgs> | null
+    /**
+     * The data needed to update a PrintRating.
+     */
+    data: XOR<PrintRatingUpdateInput, PrintRatingUncheckedUpdateInput>
+    /**
+     * Choose, which PrintRating to update.
+     */
+    where: PrintRatingWhereUniqueInput
+  }
+
+  /**
+   * PrintRating updateMany
+   */
+  export type PrintRatingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PrintRatings.
+     */
+    data: XOR<PrintRatingUpdateManyMutationInput, PrintRatingUncheckedUpdateManyInput>
+    /**
+     * Filter which PrintRatings to update
+     */
+    where?: PrintRatingWhereInput
+    /**
+     * Limit how many PrintRatings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PrintRating updateManyAndReturn
+   */
+  export type PrintRatingUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrintRating
+     */
+    select?: PrintRatingSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PrintRating
+     */
+    omit?: PrintRatingOmit<ExtArgs> | null
+    /**
+     * The data used to update PrintRatings.
+     */
+    data: XOR<PrintRatingUpdateManyMutationInput, PrintRatingUncheckedUpdateManyInput>
+    /**
+     * Filter which PrintRatings to update
+     */
+    where?: PrintRatingWhereInput
+    /**
+     * Limit how many PrintRatings to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrintRatingIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PrintRating upsert
+   */
+  export type PrintRatingUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrintRating
+     */
+    select?: PrintRatingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PrintRating
+     */
+    omit?: PrintRatingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrintRatingInclude<ExtArgs> | null
+    /**
+     * The filter to search for the PrintRating to update in case it exists.
+     */
+    where: PrintRatingWhereUniqueInput
+    /**
+     * In case the PrintRating found by the `where` argument doesn't exist, create a new PrintRating with this data.
+     */
+    create: XOR<PrintRatingCreateInput, PrintRatingUncheckedCreateInput>
+    /**
+     * In case the PrintRating was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PrintRatingUpdateInput, PrintRatingUncheckedUpdateInput>
+  }
+
+  /**
+   * PrintRating delete
+   */
+  export type PrintRatingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrintRating
+     */
+    select?: PrintRatingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PrintRating
+     */
+    omit?: PrintRatingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrintRatingInclude<ExtArgs> | null
+    /**
+     * Filter which PrintRating to delete.
+     */
+    where: PrintRatingWhereUniqueInput
+  }
+
+  /**
+   * PrintRating deleteMany
+   */
+  export type PrintRatingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PrintRatings to delete
+     */
+    where?: PrintRatingWhereInput
+    /**
+     * Limit how many PrintRatings to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PrintRating without action
+   */
+  export type PrintRatingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrintRating
+     */
+    select?: PrintRatingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PrintRating
+     */
+    omit?: PrintRatingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrintRatingInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -26286,6 +30146,52 @@ export namespace Prisma {
   };
 
   export type DomainEventScalarFieldEnum = (typeof DomainEventScalarFieldEnum)[keyof typeof DomainEventScalarFieldEnum]
+
+
+  export const HarnessConfigScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    version: 'version',
+    isActive: 'isActive',
+    modelMap: 'modelMap',
+    budgetCap: 'budgetCap',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type HarnessConfigScalarFieldEnum = (typeof HarnessConfigScalarFieldEnum)[keyof typeof HarnessConfigScalarFieldEnum]
+
+
+  export const GenerationRunScalarFieldEnum: {
+    id: 'id',
+    factId: 'factId',
+    configId: 'configId',
+    status: 'status',
+    isEval: 'isEval',
+    costUsd: 'costUsd',
+    tokensUsed: 'tokensUsed',
+    evalPassed: 'evalPassed',
+    startedAt: 'startedAt',
+    endedAt: 'endedAt'
+  };
+
+  export type GenerationRunScalarFieldEnum = (typeof GenerationRunScalarFieldEnum)[keyof typeof GenerationRunScalarFieldEnum]
+
+
+  export const PrintRatingScalarFieldEnum: {
+    id: 'id',
+    videoId: 'videoId',
+    reviewerId: 'reviewerId',
+    brandSafety: 'brandSafety',
+    scriptMatch: 'scriptMatch',
+    craftScore: 'craftScore',
+    hookScore: 'hookScore',
+    overallScore: 'overallScore',
+    notes: 'notes',
+    createdAt: 'createdAt'
+  };
+
+  export type PrintRatingScalarFieldEnum = (typeof PrintRatingScalarFieldEnum)[keyof typeof PrintRatingScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -26821,6 +30727,7 @@ export namespace Prisma {
     brand?: XOR<BrandScalarRelationFilter, BrandWhereInput>
     scriptVersions?: ScriptVersionListRelationFilter
     claims?: ClaimListRelationFilter
+    generationRuns?: GenerationRunListRelationFilter
   }
 
   export type FactOrderByWithRelationInput = {
@@ -26838,6 +30745,7 @@ export namespace Prisma {
     brand?: BrandOrderByWithRelationInput
     scriptVersions?: ScriptVersionOrderByRelationAggregateInput
     claims?: ClaimOrderByRelationAggregateInput
+    generationRuns?: GenerationRunOrderByRelationAggregateInput
   }
 
   export type FactWhereUniqueInput = Prisma.AtLeast<{
@@ -26858,6 +30766,7 @@ export namespace Prisma {
     brand?: XOR<BrandScalarRelationFilter, BrandWhereInput>
     scriptVersions?: ScriptVersionListRelationFilter
     claims?: ClaimListRelationFilter
+    generationRuns?: GenerationRunListRelationFilter
   }, "id">
 
   export type FactOrderByWithAggregationInput = {
@@ -27337,6 +31246,7 @@ export namespace Prisma {
     publishJobs?: PublishJobListRelationFilter
     viewSnapshots?: ViewSnapshotListRelationFilter
     shortLinks?: ShortLinkListRelationFilter
+    printRating?: XOR<PrintRatingNullableScalarRelationFilter, PrintRatingWhereInput> | null
   }
 
   export type VideoOrderByWithRelationInput = {
@@ -27358,6 +31268,7 @@ export namespace Prisma {
     publishJobs?: PublishJobOrderByRelationAggregateInput
     viewSnapshots?: ViewSnapshotOrderByRelationAggregateInput
     shortLinks?: ShortLinkOrderByRelationAggregateInput
+    printRating?: PrintRatingOrderByWithRelationInput
   }
 
   export type VideoWhereUniqueInput = Prisma.AtLeast<{
@@ -27382,6 +31293,7 @@ export namespace Prisma {
     publishJobs?: PublishJobListRelationFilter
     viewSnapshots?: ViewSnapshotListRelationFilter
     shortLinks?: ShortLinkListRelationFilter
+    printRating?: XOR<PrintRatingNullableScalarRelationFilter, PrintRatingWhereInput> | null
   }, "id">
 
   export type VideoOrderByWithAggregationInput = {
@@ -27961,6 +31873,245 @@ export namespace Prisma {
     timestamp?: DateTimeWithAggregatesFilter<"DomainEvent"> | Date | string
   }
 
+  export type HarnessConfigWhereInput = {
+    AND?: HarnessConfigWhereInput | HarnessConfigWhereInput[]
+    OR?: HarnessConfigWhereInput[]
+    NOT?: HarnessConfigWhereInput | HarnessConfigWhereInput[]
+    id?: StringFilter<"HarnessConfig"> | string
+    name?: StringFilter<"HarnessConfig"> | string
+    version?: IntFilter<"HarnessConfig"> | number
+    isActive?: BoolFilter<"HarnessConfig"> | boolean
+    modelMap?: JsonFilter<"HarnessConfig">
+    budgetCap?: IntFilter<"HarnessConfig"> | number
+    createdAt?: DateTimeFilter<"HarnessConfig"> | Date | string
+    updatedAt?: DateTimeFilter<"HarnessConfig"> | Date | string
+    runs?: GenerationRunListRelationFilter
+  }
+
+  export type HarnessConfigOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    version?: SortOrder
+    isActive?: SortOrder
+    modelMap?: SortOrder
+    budgetCap?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    runs?: GenerationRunOrderByRelationAggregateInput
+  }
+
+  export type HarnessConfigWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    name?: string
+    AND?: HarnessConfigWhereInput | HarnessConfigWhereInput[]
+    OR?: HarnessConfigWhereInput[]
+    NOT?: HarnessConfigWhereInput | HarnessConfigWhereInput[]
+    version?: IntFilter<"HarnessConfig"> | number
+    isActive?: BoolFilter<"HarnessConfig"> | boolean
+    modelMap?: JsonFilter<"HarnessConfig">
+    budgetCap?: IntFilter<"HarnessConfig"> | number
+    createdAt?: DateTimeFilter<"HarnessConfig"> | Date | string
+    updatedAt?: DateTimeFilter<"HarnessConfig"> | Date | string
+    runs?: GenerationRunListRelationFilter
+  }, "id" | "name">
+
+  export type HarnessConfigOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    version?: SortOrder
+    isActive?: SortOrder
+    modelMap?: SortOrder
+    budgetCap?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: HarnessConfigCountOrderByAggregateInput
+    _avg?: HarnessConfigAvgOrderByAggregateInput
+    _max?: HarnessConfigMaxOrderByAggregateInput
+    _min?: HarnessConfigMinOrderByAggregateInput
+    _sum?: HarnessConfigSumOrderByAggregateInput
+  }
+
+  export type HarnessConfigScalarWhereWithAggregatesInput = {
+    AND?: HarnessConfigScalarWhereWithAggregatesInput | HarnessConfigScalarWhereWithAggregatesInput[]
+    OR?: HarnessConfigScalarWhereWithAggregatesInput[]
+    NOT?: HarnessConfigScalarWhereWithAggregatesInput | HarnessConfigScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"HarnessConfig"> | string
+    name?: StringWithAggregatesFilter<"HarnessConfig"> | string
+    version?: IntWithAggregatesFilter<"HarnessConfig"> | number
+    isActive?: BoolWithAggregatesFilter<"HarnessConfig"> | boolean
+    modelMap?: JsonWithAggregatesFilter<"HarnessConfig">
+    budgetCap?: IntWithAggregatesFilter<"HarnessConfig"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"HarnessConfig"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"HarnessConfig"> | Date | string
+  }
+
+  export type GenerationRunWhereInput = {
+    AND?: GenerationRunWhereInput | GenerationRunWhereInput[]
+    OR?: GenerationRunWhereInput[]
+    NOT?: GenerationRunWhereInput | GenerationRunWhereInput[]
+    id?: StringFilter<"GenerationRun"> | string
+    factId?: StringNullableFilter<"GenerationRun"> | string | null
+    configId?: StringFilter<"GenerationRun"> | string
+    status?: StringFilter<"GenerationRun"> | string
+    isEval?: BoolFilter<"GenerationRun"> | boolean
+    costUsd?: FloatFilter<"GenerationRun"> | number
+    tokensUsed?: IntFilter<"GenerationRun"> | number
+    evalPassed?: BoolNullableFilter<"GenerationRun"> | boolean | null
+    startedAt?: DateTimeFilter<"GenerationRun"> | Date | string
+    endedAt?: DateTimeNullableFilter<"GenerationRun"> | Date | string | null
+    fact?: XOR<FactNullableScalarRelationFilter, FactWhereInput> | null
+    config?: XOR<HarnessConfigScalarRelationFilter, HarnessConfigWhereInput>
+  }
+
+  export type GenerationRunOrderByWithRelationInput = {
+    id?: SortOrder
+    factId?: SortOrderInput | SortOrder
+    configId?: SortOrder
+    status?: SortOrder
+    isEval?: SortOrder
+    costUsd?: SortOrder
+    tokensUsed?: SortOrder
+    evalPassed?: SortOrderInput | SortOrder
+    startedAt?: SortOrder
+    endedAt?: SortOrderInput | SortOrder
+    fact?: FactOrderByWithRelationInput
+    config?: HarnessConfigOrderByWithRelationInput
+  }
+
+  export type GenerationRunWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: GenerationRunWhereInput | GenerationRunWhereInput[]
+    OR?: GenerationRunWhereInput[]
+    NOT?: GenerationRunWhereInput | GenerationRunWhereInput[]
+    factId?: StringNullableFilter<"GenerationRun"> | string | null
+    configId?: StringFilter<"GenerationRun"> | string
+    status?: StringFilter<"GenerationRun"> | string
+    isEval?: BoolFilter<"GenerationRun"> | boolean
+    costUsd?: FloatFilter<"GenerationRun"> | number
+    tokensUsed?: IntFilter<"GenerationRun"> | number
+    evalPassed?: BoolNullableFilter<"GenerationRun"> | boolean | null
+    startedAt?: DateTimeFilter<"GenerationRun"> | Date | string
+    endedAt?: DateTimeNullableFilter<"GenerationRun"> | Date | string | null
+    fact?: XOR<FactNullableScalarRelationFilter, FactWhereInput> | null
+    config?: XOR<HarnessConfigScalarRelationFilter, HarnessConfigWhereInput>
+  }, "id">
+
+  export type GenerationRunOrderByWithAggregationInput = {
+    id?: SortOrder
+    factId?: SortOrderInput | SortOrder
+    configId?: SortOrder
+    status?: SortOrder
+    isEval?: SortOrder
+    costUsd?: SortOrder
+    tokensUsed?: SortOrder
+    evalPassed?: SortOrderInput | SortOrder
+    startedAt?: SortOrder
+    endedAt?: SortOrderInput | SortOrder
+    _count?: GenerationRunCountOrderByAggregateInput
+    _avg?: GenerationRunAvgOrderByAggregateInput
+    _max?: GenerationRunMaxOrderByAggregateInput
+    _min?: GenerationRunMinOrderByAggregateInput
+    _sum?: GenerationRunSumOrderByAggregateInput
+  }
+
+  export type GenerationRunScalarWhereWithAggregatesInput = {
+    AND?: GenerationRunScalarWhereWithAggregatesInput | GenerationRunScalarWhereWithAggregatesInput[]
+    OR?: GenerationRunScalarWhereWithAggregatesInput[]
+    NOT?: GenerationRunScalarWhereWithAggregatesInput | GenerationRunScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"GenerationRun"> | string
+    factId?: StringNullableWithAggregatesFilter<"GenerationRun"> | string | null
+    configId?: StringWithAggregatesFilter<"GenerationRun"> | string
+    status?: StringWithAggregatesFilter<"GenerationRun"> | string
+    isEval?: BoolWithAggregatesFilter<"GenerationRun"> | boolean
+    costUsd?: FloatWithAggregatesFilter<"GenerationRun"> | number
+    tokensUsed?: IntWithAggregatesFilter<"GenerationRun"> | number
+    evalPassed?: BoolNullableWithAggregatesFilter<"GenerationRun"> | boolean | null
+    startedAt?: DateTimeWithAggregatesFilter<"GenerationRun"> | Date | string
+    endedAt?: DateTimeNullableWithAggregatesFilter<"GenerationRun"> | Date | string | null
+  }
+
+  export type PrintRatingWhereInput = {
+    AND?: PrintRatingWhereInput | PrintRatingWhereInput[]
+    OR?: PrintRatingWhereInput[]
+    NOT?: PrintRatingWhereInput | PrintRatingWhereInput[]
+    id?: StringFilter<"PrintRating"> | string
+    videoId?: StringFilter<"PrintRating"> | string
+    reviewerId?: StringFilter<"PrintRating"> | string
+    brandSafety?: BoolFilter<"PrintRating"> | boolean
+    scriptMatch?: BoolFilter<"PrintRating"> | boolean
+    craftScore?: IntFilter<"PrintRating"> | number
+    hookScore?: IntFilter<"PrintRating"> | number
+    overallScore?: FloatFilter<"PrintRating"> | number
+    notes?: StringNullableFilter<"PrintRating"> | string | null
+    createdAt?: DateTimeFilter<"PrintRating"> | Date | string
+    video?: XOR<VideoScalarRelationFilter, VideoWhereInput>
+  }
+
+  export type PrintRatingOrderByWithRelationInput = {
+    id?: SortOrder
+    videoId?: SortOrder
+    reviewerId?: SortOrder
+    brandSafety?: SortOrder
+    scriptMatch?: SortOrder
+    craftScore?: SortOrder
+    hookScore?: SortOrder
+    overallScore?: SortOrder
+    notes?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    video?: VideoOrderByWithRelationInput
+  }
+
+  export type PrintRatingWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    videoId?: string
+    AND?: PrintRatingWhereInput | PrintRatingWhereInput[]
+    OR?: PrintRatingWhereInput[]
+    NOT?: PrintRatingWhereInput | PrintRatingWhereInput[]
+    reviewerId?: StringFilter<"PrintRating"> | string
+    brandSafety?: BoolFilter<"PrintRating"> | boolean
+    scriptMatch?: BoolFilter<"PrintRating"> | boolean
+    craftScore?: IntFilter<"PrintRating"> | number
+    hookScore?: IntFilter<"PrintRating"> | number
+    overallScore?: FloatFilter<"PrintRating"> | number
+    notes?: StringNullableFilter<"PrintRating"> | string | null
+    createdAt?: DateTimeFilter<"PrintRating"> | Date | string
+    video?: XOR<VideoScalarRelationFilter, VideoWhereInput>
+  }, "id" | "videoId">
+
+  export type PrintRatingOrderByWithAggregationInput = {
+    id?: SortOrder
+    videoId?: SortOrder
+    reviewerId?: SortOrder
+    brandSafety?: SortOrder
+    scriptMatch?: SortOrder
+    craftScore?: SortOrder
+    hookScore?: SortOrder
+    overallScore?: SortOrder
+    notes?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: PrintRatingCountOrderByAggregateInput
+    _avg?: PrintRatingAvgOrderByAggregateInput
+    _max?: PrintRatingMaxOrderByAggregateInput
+    _min?: PrintRatingMinOrderByAggregateInput
+    _sum?: PrintRatingSumOrderByAggregateInput
+  }
+
+  export type PrintRatingScalarWhereWithAggregatesInput = {
+    AND?: PrintRatingScalarWhereWithAggregatesInput | PrintRatingScalarWhereWithAggregatesInput[]
+    OR?: PrintRatingScalarWhereWithAggregatesInput[]
+    NOT?: PrintRatingScalarWhereWithAggregatesInput | PrintRatingScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PrintRating"> | string
+    videoId?: StringWithAggregatesFilter<"PrintRating"> | string
+    reviewerId?: StringWithAggregatesFilter<"PrintRating"> | string
+    brandSafety?: BoolWithAggregatesFilter<"PrintRating"> | boolean
+    scriptMatch?: BoolWithAggregatesFilter<"PrintRating"> | boolean
+    craftScore?: IntWithAggregatesFilter<"PrintRating"> | number
+    hookScore?: IntWithAggregatesFilter<"PrintRating"> | number
+    overallScore?: FloatWithAggregatesFilter<"PrintRating"> | number
+    notes?: StringNullableWithAggregatesFilter<"PrintRating"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"PrintRating"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     email: string
@@ -28303,6 +32454,7 @@ export namespace Prisma {
     brand: BrandCreateNestedOneWithoutFactsInput
     scriptVersions?: ScriptVersionCreateNestedManyWithoutFactInput
     claims?: ClaimCreateNestedManyWithoutFactInput
+    generationRuns?: GenerationRunCreateNestedManyWithoutFactInput
   }
 
   export type FactUncheckedCreateInput = {
@@ -28319,6 +32471,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     scriptVersions?: ScriptVersionUncheckedCreateNestedManyWithoutFactInput
     claims?: ClaimUncheckedCreateNestedManyWithoutFactInput
+    generationRuns?: GenerationRunUncheckedCreateNestedManyWithoutFactInput
   }
 
   export type FactUpdateInput = {
@@ -28335,6 +32488,7 @@ export namespace Prisma {
     brand?: BrandUpdateOneRequiredWithoutFactsNestedInput
     scriptVersions?: ScriptVersionUpdateManyWithoutFactNestedInput
     claims?: ClaimUpdateManyWithoutFactNestedInput
+    generationRuns?: GenerationRunUpdateManyWithoutFactNestedInput
   }
 
   export type FactUncheckedUpdateInput = {
@@ -28351,6 +32505,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     scriptVersions?: ScriptVersionUncheckedUpdateManyWithoutFactNestedInput
     claims?: ClaimUncheckedUpdateManyWithoutFactNestedInput
+    generationRuns?: GenerationRunUncheckedUpdateManyWithoutFactNestedInput
   }
 
   export type FactCreateManyInput = {
@@ -28852,6 +33007,7 @@ export namespace Prisma {
     publishJobs?: PublishJobCreateNestedManyWithoutVideoInput
     viewSnapshots?: ViewSnapshotCreateNestedManyWithoutVideoInput
     shortLinks?: ShortLinkCreateNestedManyWithoutVideoInput
+    printRating?: PrintRatingCreateNestedOneWithoutVideoInput
   }
 
   export type VideoUncheckedCreateInput = {
@@ -28872,6 +33028,7 @@ export namespace Prisma {
     publishJobs?: PublishJobUncheckedCreateNestedManyWithoutVideoInput
     viewSnapshots?: ViewSnapshotUncheckedCreateNestedManyWithoutVideoInput
     shortLinks?: ShortLinkUncheckedCreateNestedManyWithoutVideoInput
+    printRating?: PrintRatingUncheckedCreateNestedOneWithoutVideoInput
   }
 
   export type VideoUpdateInput = {
@@ -28892,6 +33049,7 @@ export namespace Prisma {
     publishJobs?: PublishJobUpdateManyWithoutVideoNestedInput
     viewSnapshots?: ViewSnapshotUpdateManyWithoutVideoNestedInput
     shortLinks?: ShortLinkUpdateManyWithoutVideoNestedInput
+    printRating?: PrintRatingUpdateOneWithoutVideoNestedInput
   }
 
   export type VideoUncheckedUpdateInput = {
@@ -28912,6 +33070,7 @@ export namespace Prisma {
     publishJobs?: PublishJobUncheckedUpdateManyWithoutVideoNestedInput
     viewSnapshots?: ViewSnapshotUncheckedUpdateManyWithoutVideoNestedInput
     shortLinks?: ShortLinkUncheckedUpdateManyWithoutVideoNestedInput
+    printRating?: PrintRatingUncheckedUpdateOneWithoutVideoNestedInput
   }
 
   export type VideoCreateManyInput = {
@@ -29519,6 +33678,266 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type HarnessConfigCreateInput = {
+    id?: string
+    name: string
+    version?: number
+    isActive?: boolean
+    modelMap: JsonNullValueInput | InputJsonValue
+    budgetCap: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    runs?: GenerationRunCreateNestedManyWithoutConfigInput
+  }
+
+  export type HarnessConfigUncheckedCreateInput = {
+    id?: string
+    name: string
+    version?: number
+    isActive?: boolean
+    modelMap: JsonNullValueInput | InputJsonValue
+    budgetCap: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    runs?: GenerationRunUncheckedCreateNestedManyWithoutConfigInput
+  }
+
+  export type HarnessConfigUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    modelMap?: JsonNullValueInput | InputJsonValue
+    budgetCap?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    runs?: GenerationRunUpdateManyWithoutConfigNestedInput
+  }
+
+  export type HarnessConfigUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    modelMap?: JsonNullValueInput | InputJsonValue
+    budgetCap?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    runs?: GenerationRunUncheckedUpdateManyWithoutConfigNestedInput
+  }
+
+  export type HarnessConfigCreateManyInput = {
+    id?: string
+    name: string
+    version?: number
+    isActive?: boolean
+    modelMap: JsonNullValueInput | InputJsonValue
+    budgetCap: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HarnessConfigUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    modelMap?: JsonNullValueInput | InputJsonValue
+    budgetCap?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HarnessConfigUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    modelMap?: JsonNullValueInput | InputJsonValue
+    budgetCap?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GenerationRunCreateInput = {
+    id?: string
+    status?: string
+    isEval?: boolean
+    costUsd?: number
+    tokensUsed?: number
+    evalPassed?: boolean | null
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+    fact?: FactCreateNestedOneWithoutGenerationRunsInput
+    config: HarnessConfigCreateNestedOneWithoutRunsInput
+  }
+
+  export type GenerationRunUncheckedCreateInput = {
+    id?: string
+    factId?: string | null
+    configId: string
+    status?: string
+    isEval?: boolean
+    costUsd?: number
+    tokensUsed?: number
+    evalPassed?: boolean | null
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+  }
+
+  export type GenerationRunUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    isEval?: BoolFieldUpdateOperationsInput | boolean
+    costUsd?: FloatFieldUpdateOperationsInput | number
+    tokensUsed?: IntFieldUpdateOperationsInput | number
+    evalPassed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fact?: FactUpdateOneWithoutGenerationRunsNestedInput
+    config?: HarnessConfigUpdateOneRequiredWithoutRunsNestedInput
+  }
+
+  export type GenerationRunUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    factId?: NullableStringFieldUpdateOperationsInput | string | null
+    configId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    isEval?: BoolFieldUpdateOperationsInput | boolean
+    costUsd?: FloatFieldUpdateOperationsInput | number
+    tokensUsed?: IntFieldUpdateOperationsInput | number
+    evalPassed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type GenerationRunCreateManyInput = {
+    id?: string
+    factId?: string | null
+    configId: string
+    status?: string
+    isEval?: boolean
+    costUsd?: number
+    tokensUsed?: number
+    evalPassed?: boolean | null
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+  }
+
+  export type GenerationRunUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    isEval?: BoolFieldUpdateOperationsInput | boolean
+    costUsd?: FloatFieldUpdateOperationsInput | number
+    tokensUsed?: IntFieldUpdateOperationsInput | number
+    evalPassed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type GenerationRunUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    factId?: NullableStringFieldUpdateOperationsInput | string | null
+    configId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    isEval?: BoolFieldUpdateOperationsInput | boolean
+    costUsd?: FloatFieldUpdateOperationsInput | number
+    tokensUsed?: IntFieldUpdateOperationsInput | number
+    evalPassed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type PrintRatingCreateInput = {
+    id?: string
+    reviewerId: string
+    brandSafety: boolean
+    scriptMatch: boolean
+    craftScore: number
+    hookScore: number
+    overallScore: number
+    notes?: string | null
+    createdAt?: Date | string
+    video: VideoCreateNestedOneWithoutPrintRatingInput
+  }
+
+  export type PrintRatingUncheckedCreateInput = {
+    id?: string
+    videoId: string
+    reviewerId: string
+    brandSafety: boolean
+    scriptMatch: boolean
+    craftScore: number
+    hookScore: number
+    overallScore: number
+    notes?: string | null
+    createdAt?: Date | string
+  }
+
+  export type PrintRatingUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reviewerId?: StringFieldUpdateOperationsInput | string
+    brandSafety?: BoolFieldUpdateOperationsInput | boolean
+    scriptMatch?: BoolFieldUpdateOperationsInput | boolean
+    craftScore?: IntFieldUpdateOperationsInput | number
+    hookScore?: IntFieldUpdateOperationsInput | number
+    overallScore?: FloatFieldUpdateOperationsInput | number
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    video?: VideoUpdateOneRequiredWithoutPrintRatingNestedInput
+  }
+
+  export type PrintRatingUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    videoId?: StringFieldUpdateOperationsInput | string
+    reviewerId?: StringFieldUpdateOperationsInput | string
+    brandSafety?: BoolFieldUpdateOperationsInput | boolean
+    scriptMatch?: BoolFieldUpdateOperationsInput | boolean
+    craftScore?: IntFieldUpdateOperationsInput | number
+    hookScore?: IntFieldUpdateOperationsInput | number
+    overallScore?: FloatFieldUpdateOperationsInput | number
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PrintRatingCreateManyInput = {
+    id?: string
+    videoId: string
+    reviewerId: string
+    brandSafety: boolean
+    scriptMatch: boolean
+    craftScore: number
+    hookScore: number
+    overallScore: number
+    notes?: string | null
+    createdAt?: Date | string
+  }
+
+  export type PrintRatingUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reviewerId?: StringFieldUpdateOperationsInput | string
+    brandSafety?: BoolFieldUpdateOperationsInput | boolean
+    scriptMatch?: BoolFieldUpdateOperationsInput | boolean
+    craftScore?: IntFieldUpdateOperationsInput | number
+    hookScore?: IntFieldUpdateOperationsInput | number
+    overallScore?: FloatFieldUpdateOperationsInput | number
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PrintRatingUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    videoId?: StringFieldUpdateOperationsInput | string
+    reviewerId?: StringFieldUpdateOperationsInput | string
+    brandSafety?: BoolFieldUpdateOperationsInput | boolean
+    scriptMatch?: BoolFieldUpdateOperationsInput | boolean
+    craftScore?: IntFieldUpdateOperationsInput | number
+    hookScore?: IntFieldUpdateOperationsInput | number
+    overallScore?: FloatFieldUpdateOperationsInput | number
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -29962,7 +34381,17 @@ export namespace Prisma {
     none?: ScriptVersionWhereInput
   }
 
+  export type GenerationRunListRelationFilter = {
+    every?: GenerationRunWhereInput
+    some?: GenerationRunWhereInput
+    none?: GenerationRunWhereInput
+  }
+
   export type ScriptVersionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type GenerationRunOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -30377,6 +34806,11 @@ export namespace Prisma {
     every?: ViewSnapshotWhereInput
     some?: ViewSnapshotWhereInput
     none?: ViewSnapshotWhereInput
+  }
+
+  export type PrintRatingNullableScalarRelationFilter = {
+    is?: PrintRatingWhereInput | null
+    isNot?: PrintRatingWhereInput | null
   }
 
   export type PolicyCheckOrderByRelationAggregateInput = {
@@ -30881,6 +35315,197 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedJsonFilter<$PrismaModel>
     _max?: NestedJsonFilter<$PrismaModel>
+  }
+
+  export type HarnessConfigCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    version?: SortOrder
+    isActive?: SortOrder
+    modelMap?: SortOrder
+    budgetCap?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type HarnessConfigAvgOrderByAggregateInput = {
+    version?: SortOrder
+    budgetCap?: SortOrder
+  }
+
+  export type HarnessConfigMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    version?: SortOrder
+    isActive?: SortOrder
+    budgetCap?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type HarnessConfigMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    version?: SortOrder
+    isActive?: SortOrder
+    budgetCap?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type HarnessConfigSumOrderByAggregateInput = {
+    version?: SortOrder
+    budgetCap?: SortOrder
+  }
+
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type BoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
+  export type FactNullableScalarRelationFilter = {
+    is?: FactWhereInput | null
+    isNot?: FactWhereInput | null
+  }
+
+  export type HarnessConfigScalarRelationFilter = {
+    is?: HarnessConfigWhereInput
+    isNot?: HarnessConfigWhereInput
+  }
+
+  export type GenerationRunCountOrderByAggregateInput = {
+    id?: SortOrder
+    factId?: SortOrder
+    configId?: SortOrder
+    status?: SortOrder
+    isEval?: SortOrder
+    costUsd?: SortOrder
+    tokensUsed?: SortOrder
+    evalPassed?: SortOrder
+    startedAt?: SortOrder
+    endedAt?: SortOrder
+  }
+
+  export type GenerationRunAvgOrderByAggregateInput = {
+    costUsd?: SortOrder
+    tokensUsed?: SortOrder
+  }
+
+  export type GenerationRunMaxOrderByAggregateInput = {
+    id?: SortOrder
+    factId?: SortOrder
+    configId?: SortOrder
+    status?: SortOrder
+    isEval?: SortOrder
+    costUsd?: SortOrder
+    tokensUsed?: SortOrder
+    evalPassed?: SortOrder
+    startedAt?: SortOrder
+    endedAt?: SortOrder
+  }
+
+  export type GenerationRunMinOrderByAggregateInput = {
+    id?: SortOrder
+    factId?: SortOrder
+    configId?: SortOrder
+    status?: SortOrder
+    isEval?: SortOrder
+    costUsd?: SortOrder
+    tokensUsed?: SortOrder
+    evalPassed?: SortOrder
+    startedAt?: SortOrder
+    endedAt?: SortOrder
+  }
+
+  export type GenerationRunSumOrderByAggregateInput = {
+    costUsd?: SortOrder
+    tokensUsed?: SortOrder
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
+  }
+
+  export type PrintRatingCountOrderByAggregateInput = {
+    id?: SortOrder
+    videoId?: SortOrder
+    reviewerId?: SortOrder
+    brandSafety?: SortOrder
+    scriptMatch?: SortOrder
+    craftScore?: SortOrder
+    hookScore?: SortOrder
+    overallScore?: SortOrder
+    notes?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type PrintRatingAvgOrderByAggregateInput = {
+    craftScore?: SortOrder
+    hookScore?: SortOrder
+    overallScore?: SortOrder
+  }
+
+  export type PrintRatingMaxOrderByAggregateInput = {
+    id?: SortOrder
+    videoId?: SortOrder
+    reviewerId?: SortOrder
+    brandSafety?: SortOrder
+    scriptMatch?: SortOrder
+    craftScore?: SortOrder
+    hookScore?: SortOrder
+    overallScore?: SortOrder
+    notes?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type PrintRatingMinOrderByAggregateInput = {
+    id?: SortOrder
+    videoId?: SortOrder
+    reviewerId?: SortOrder
+    brandSafety?: SortOrder
+    scriptMatch?: SortOrder
+    craftScore?: SortOrder
+    hookScore?: SortOrder
+    overallScore?: SortOrder
+    notes?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type PrintRatingSumOrderByAggregateInput = {
+    craftScore?: SortOrder
+    hookScore?: SortOrder
+    overallScore?: SortOrder
   }
 
   export type BrandCreateNestedManyWithoutOwnerInput = {
@@ -31429,6 +36054,13 @@ export namespace Prisma {
     connect?: ClaimWhereUniqueInput | ClaimWhereUniqueInput[]
   }
 
+  export type GenerationRunCreateNestedManyWithoutFactInput = {
+    create?: XOR<GenerationRunCreateWithoutFactInput, GenerationRunUncheckedCreateWithoutFactInput> | GenerationRunCreateWithoutFactInput[] | GenerationRunUncheckedCreateWithoutFactInput[]
+    connectOrCreate?: GenerationRunCreateOrConnectWithoutFactInput | GenerationRunCreateOrConnectWithoutFactInput[]
+    createMany?: GenerationRunCreateManyFactInputEnvelope
+    connect?: GenerationRunWhereUniqueInput | GenerationRunWhereUniqueInput[]
+  }
+
   export type ScriptVersionUncheckedCreateNestedManyWithoutFactInput = {
     create?: XOR<ScriptVersionCreateWithoutFactInput, ScriptVersionUncheckedCreateWithoutFactInput> | ScriptVersionCreateWithoutFactInput[] | ScriptVersionUncheckedCreateWithoutFactInput[]
     connectOrCreate?: ScriptVersionCreateOrConnectWithoutFactInput | ScriptVersionCreateOrConnectWithoutFactInput[]
@@ -31441,6 +36073,13 @@ export namespace Prisma {
     connectOrCreate?: ClaimCreateOrConnectWithoutFactInput | ClaimCreateOrConnectWithoutFactInput[]
     createMany?: ClaimCreateManyFactInputEnvelope
     connect?: ClaimWhereUniqueInput | ClaimWhereUniqueInput[]
+  }
+
+  export type GenerationRunUncheckedCreateNestedManyWithoutFactInput = {
+    create?: XOR<GenerationRunCreateWithoutFactInput, GenerationRunUncheckedCreateWithoutFactInput> | GenerationRunCreateWithoutFactInput[] | GenerationRunUncheckedCreateWithoutFactInput[]
+    connectOrCreate?: GenerationRunCreateOrConnectWithoutFactInput | GenerationRunCreateOrConnectWithoutFactInput[]
+    createMany?: GenerationRunCreateManyFactInputEnvelope
+    connect?: GenerationRunWhereUniqueInput | GenerationRunWhereUniqueInput[]
   }
 
   export type BrandUpdateOneRequiredWithoutFactsNestedInput = {
@@ -31479,6 +36118,20 @@ export namespace Prisma {
     deleteMany?: ClaimScalarWhereInput | ClaimScalarWhereInput[]
   }
 
+  export type GenerationRunUpdateManyWithoutFactNestedInput = {
+    create?: XOR<GenerationRunCreateWithoutFactInput, GenerationRunUncheckedCreateWithoutFactInput> | GenerationRunCreateWithoutFactInput[] | GenerationRunUncheckedCreateWithoutFactInput[]
+    connectOrCreate?: GenerationRunCreateOrConnectWithoutFactInput | GenerationRunCreateOrConnectWithoutFactInput[]
+    upsert?: GenerationRunUpsertWithWhereUniqueWithoutFactInput | GenerationRunUpsertWithWhereUniqueWithoutFactInput[]
+    createMany?: GenerationRunCreateManyFactInputEnvelope
+    set?: GenerationRunWhereUniqueInput | GenerationRunWhereUniqueInput[]
+    disconnect?: GenerationRunWhereUniqueInput | GenerationRunWhereUniqueInput[]
+    delete?: GenerationRunWhereUniqueInput | GenerationRunWhereUniqueInput[]
+    connect?: GenerationRunWhereUniqueInput | GenerationRunWhereUniqueInput[]
+    update?: GenerationRunUpdateWithWhereUniqueWithoutFactInput | GenerationRunUpdateWithWhereUniqueWithoutFactInput[]
+    updateMany?: GenerationRunUpdateManyWithWhereWithoutFactInput | GenerationRunUpdateManyWithWhereWithoutFactInput[]
+    deleteMany?: GenerationRunScalarWhereInput | GenerationRunScalarWhereInput[]
+  }
+
   export type ScriptVersionUncheckedUpdateManyWithoutFactNestedInput = {
     create?: XOR<ScriptVersionCreateWithoutFactInput, ScriptVersionUncheckedCreateWithoutFactInput> | ScriptVersionCreateWithoutFactInput[] | ScriptVersionUncheckedCreateWithoutFactInput[]
     connectOrCreate?: ScriptVersionCreateOrConnectWithoutFactInput | ScriptVersionCreateOrConnectWithoutFactInput[]
@@ -31505,6 +36158,20 @@ export namespace Prisma {
     update?: ClaimUpdateWithWhereUniqueWithoutFactInput | ClaimUpdateWithWhereUniqueWithoutFactInput[]
     updateMany?: ClaimUpdateManyWithWhereWithoutFactInput | ClaimUpdateManyWithWhereWithoutFactInput[]
     deleteMany?: ClaimScalarWhereInput | ClaimScalarWhereInput[]
+  }
+
+  export type GenerationRunUncheckedUpdateManyWithoutFactNestedInput = {
+    create?: XOR<GenerationRunCreateWithoutFactInput, GenerationRunUncheckedCreateWithoutFactInput> | GenerationRunCreateWithoutFactInput[] | GenerationRunUncheckedCreateWithoutFactInput[]
+    connectOrCreate?: GenerationRunCreateOrConnectWithoutFactInput | GenerationRunCreateOrConnectWithoutFactInput[]
+    upsert?: GenerationRunUpsertWithWhereUniqueWithoutFactInput | GenerationRunUpsertWithWhereUniqueWithoutFactInput[]
+    createMany?: GenerationRunCreateManyFactInputEnvelope
+    set?: GenerationRunWhereUniqueInput | GenerationRunWhereUniqueInput[]
+    disconnect?: GenerationRunWhereUniqueInput | GenerationRunWhereUniqueInput[]
+    delete?: GenerationRunWhereUniqueInput | GenerationRunWhereUniqueInput[]
+    connect?: GenerationRunWhereUniqueInput | GenerationRunWhereUniqueInput[]
+    update?: GenerationRunUpdateWithWhereUniqueWithoutFactInput | GenerationRunUpdateWithWhereUniqueWithoutFactInput[]
+    updateMany?: GenerationRunUpdateManyWithWhereWithoutFactInput | GenerationRunUpdateManyWithWhereWithoutFactInput[]
+    deleteMany?: GenerationRunScalarWhereInput | GenerationRunScalarWhereInput[]
   }
 
   export type FactCreateNestedOneWithoutScriptVersionsInput = {
@@ -31857,6 +36524,12 @@ export namespace Prisma {
     connect?: ShortLinkWhereUniqueInput | ShortLinkWhereUniqueInput[]
   }
 
+  export type PrintRatingCreateNestedOneWithoutVideoInput = {
+    create?: XOR<PrintRatingCreateWithoutVideoInput, PrintRatingUncheckedCreateWithoutVideoInput>
+    connectOrCreate?: PrintRatingCreateOrConnectWithoutVideoInput
+    connect?: PrintRatingWhereUniqueInput
+  }
+
   export type PolicyCheckUncheckedCreateNestedManyWithoutVideoInput = {
     create?: XOR<PolicyCheckCreateWithoutVideoInput, PolicyCheckUncheckedCreateWithoutVideoInput> | PolicyCheckCreateWithoutVideoInput[] | PolicyCheckUncheckedCreateWithoutVideoInput[]
     connectOrCreate?: PolicyCheckCreateOrConnectWithoutVideoInput | PolicyCheckCreateOrConnectWithoutVideoInput[]
@@ -31883,6 +36556,12 @@ export namespace Prisma {
     connectOrCreate?: ShortLinkCreateOrConnectWithoutVideoInput | ShortLinkCreateOrConnectWithoutVideoInput[]
     createMany?: ShortLinkCreateManyVideoInputEnvelope
     connect?: ShortLinkWhereUniqueInput | ShortLinkWhereUniqueInput[]
+  }
+
+  export type PrintRatingUncheckedCreateNestedOneWithoutVideoInput = {
+    create?: XOR<PrintRatingCreateWithoutVideoInput, PrintRatingUncheckedCreateWithoutVideoInput>
+    connectOrCreate?: PrintRatingCreateOrConnectWithoutVideoInput
+    connect?: PrintRatingWhereUniqueInput
   }
 
   export type EnumVideoStatusFieldUpdateOperationsInput = {
@@ -31961,6 +36640,16 @@ export namespace Prisma {
     deleteMany?: ShortLinkScalarWhereInput | ShortLinkScalarWhereInput[]
   }
 
+  export type PrintRatingUpdateOneWithoutVideoNestedInput = {
+    create?: XOR<PrintRatingCreateWithoutVideoInput, PrintRatingUncheckedCreateWithoutVideoInput>
+    connectOrCreate?: PrintRatingCreateOrConnectWithoutVideoInput
+    upsert?: PrintRatingUpsertWithoutVideoInput
+    disconnect?: PrintRatingWhereInput | boolean
+    delete?: PrintRatingWhereInput | boolean
+    connect?: PrintRatingWhereUniqueInput
+    update?: XOR<XOR<PrintRatingUpdateToOneWithWhereWithoutVideoInput, PrintRatingUpdateWithoutVideoInput>, PrintRatingUncheckedUpdateWithoutVideoInput>
+  }
+
   export type PolicyCheckUncheckedUpdateManyWithoutVideoNestedInput = {
     create?: XOR<PolicyCheckCreateWithoutVideoInput, PolicyCheckUncheckedCreateWithoutVideoInput> | PolicyCheckCreateWithoutVideoInput[] | PolicyCheckUncheckedCreateWithoutVideoInput[]
     connectOrCreate?: PolicyCheckCreateOrConnectWithoutVideoInput | PolicyCheckCreateOrConnectWithoutVideoInput[]
@@ -32015,6 +36704,16 @@ export namespace Prisma {
     update?: ShortLinkUpdateWithWhereUniqueWithoutVideoInput | ShortLinkUpdateWithWhereUniqueWithoutVideoInput[]
     updateMany?: ShortLinkUpdateManyWithWhereWithoutVideoInput | ShortLinkUpdateManyWithWhereWithoutVideoInput[]
     deleteMany?: ShortLinkScalarWhereInput | ShortLinkScalarWhereInput[]
+  }
+
+  export type PrintRatingUncheckedUpdateOneWithoutVideoNestedInput = {
+    create?: XOR<PrintRatingCreateWithoutVideoInput, PrintRatingUncheckedCreateWithoutVideoInput>
+    connectOrCreate?: PrintRatingCreateOrConnectWithoutVideoInput
+    upsert?: PrintRatingUpsertWithoutVideoInput
+    disconnect?: PrintRatingWhereInput | boolean
+    delete?: PrintRatingWhereInput | boolean
+    connect?: PrintRatingWhereUniqueInput
+    update?: XOR<XOR<PrintRatingUpdateToOneWithWhereWithoutVideoInput, PrintRatingUpdateWithoutVideoInput>, PrintRatingUncheckedUpdateWithoutVideoInput>
   }
 
   export type VideoCreateNestedOneWithoutPolicyChecksInput = {
@@ -32249,6 +36948,104 @@ export namespace Prisma {
     delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutDomainEventsActorInput, UserUpdateWithoutDomainEventsActorInput>, UserUncheckedUpdateWithoutDomainEventsActorInput>
+  }
+
+  export type GenerationRunCreateNestedManyWithoutConfigInput = {
+    create?: XOR<GenerationRunCreateWithoutConfigInput, GenerationRunUncheckedCreateWithoutConfigInput> | GenerationRunCreateWithoutConfigInput[] | GenerationRunUncheckedCreateWithoutConfigInput[]
+    connectOrCreate?: GenerationRunCreateOrConnectWithoutConfigInput | GenerationRunCreateOrConnectWithoutConfigInput[]
+    createMany?: GenerationRunCreateManyConfigInputEnvelope
+    connect?: GenerationRunWhereUniqueInput | GenerationRunWhereUniqueInput[]
+  }
+
+  export type GenerationRunUncheckedCreateNestedManyWithoutConfigInput = {
+    create?: XOR<GenerationRunCreateWithoutConfigInput, GenerationRunUncheckedCreateWithoutConfigInput> | GenerationRunCreateWithoutConfigInput[] | GenerationRunUncheckedCreateWithoutConfigInput[]
+    connectOrCreate?: GenerationRunCreateOrConnectWithoutConfigInput | GenerationRunCreateOrConnectWithoutConfigInput[]
+    createMany?: GenerationRunCreateManyConfigInputEnvelope
+    connect?: GenerationRunWhereUniqueInput | GenerationRunWhereUniqueInput[]
+  }
+
+  export type GenerationRunUpdateManyWithoutConfigNestedInput = {
+    create?: XOR<GenerationRunCreateWithoutConfigInput, GenerationRunUncheckedCreateWithoutConfigInput> | GenerationRunCreateWithoutConfigInput[] | GenerationRunUncheckedCreateWithoutConfigInput[]
+    connectOrCreate?: GenerationRunCreateOrConnectWithoutConfigInput | GenerationRunCreateOrConnectWithoutConfigInput[]
+    upsert?: GenerationRunUpsertWithWhereUniqueWithoutConfigInput | GenerationRunUpsertWithWhereUniqueWithoutConfigInput[]
+    createMany?: GenerationRunCreateManyConfigInputEnvelope
+    set?: GenerationRunWhereUniqueInput | GenerationRunWhereUniqueInput[]
+    disconnect?: GenerationRunWhereUniqueInput | GenerationRunWhereUniqueInput[]
+    delete?: GenerationRunWhereUniqueInput | GenerationRunWhereUniqueInput[]
+    connect?: GenerationRunWhereUniqueInput | GenerationRunWhereUniqueInput[]
+    update?: GenerationRunUpdateWithWhereUniqueWithoutConfigInput | GenerationRunUpdateWithWhereUniqueWithoutConfigInput[]
+    updateMany?: GenerationRunUpdateManyWithWhereWithoutConfigInput | GenerationRunUpdateManyWithWhereWithoutConfigInput[]
+    deleteMany?: GenerationRunScalarWhereInput | GenerationRunScalarWhereInput[]
+  }
+
+  export type GenerationRunUncheckedUpdateManyWithoutConfigNestedInput = {
+    create?: XOR<GenerationRunCreateWithoutConfigInput, GenerationRunUncheckedCreateWithoutConfigInput> | GenerationRunCreateWithoutConfigInput[] | GenerationRunUncheckedCreateWithoutConfigInput[]
+    connectOrCreate?: GenerationRunCreateOrConnectWithoutConfigInput | GenerationRunCreateOrConnectWithoutConfigInput[]
+    upsert?: GenerationRunUpsertWithWhereUniqueWithoutConfigInput | GenerationRunUpsertWithWhereUniqueWithoutConfigInput[]
+    createMany?: GenerationRunCreateManyConfigInputEnvelope
+    set?: GenerationRunWhereUniqueInput | GenerationRunWhereUniqueInput[]
+    disconnect?: GenerationRunWhereUniqueInput | GenerationRunWhereUniqueInput[]
+    delete?: GenerationRunWhereUniqueInput | GenerationRunWhereUniqueInput[]
+    connect?: GenerationRunWhereUniqueInput | GenerationRunWhereUniqueInput[]
+    update?: GenerationRunUpdateWithWhereUniqueWithoutConfigInput | GenerationRunUpdateWithWhereUniqueWithoutConfigInput[]
+    updateMany?: GenerationRunUpdateManyWithWhereWithoutConfigInput | GenerationRunUpdateManyWithWhereWithoutConfigInput[]
+    deleteMany?: GenerationRunScalarWhereInput | GenerationRunScalarWhereInput[]
+  }
+
+  export type FactCreateNestedOneWithoutGenerationRunsInput = {
+    create?: XOR<FactCreateWithoutGenerationRunsInput, FactUncheckedCreateWithoutGenerationRunsInput>
+    connectOrCreate?: FactCreateOrConnectWithoutGenerationRunsInput
+    connect?: FactWhereUniqueInput
+  }
+
+  export type HarnessConfigCreateNestedOneWithoutRunsInput = {
+    create?: XOR<HarnessConfigCreateWithoutRunsInput, HarnessConfigUncheckedCreateWithoutRunsInput>
+    connectOrCreate?: HarnessConfigCreateOrConnectWithoutRunsInput
+    connect?: HarnessConfigWhereUniqueInput
+  }
+
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type NullableBoolFieldUpdateOperationsInput = {
+    set?: boolean | null
+  }
+
+  export type FactUpdateOneWithoutGenerationRunsNestedInput = {
+    create?: XOR<FactCreateWithoutGenerationRunsInput, FactUncheckedCreateWithoutGenerationRunsInput>
+    connectOrCreate?: FactCreateOrConnectWithoutGenerationRunsInput
+    upsert?: FactUpsertWithoutGenerationRunsInput
+    disconnect?: FactWhereInput | boolean
+    delete?: FactWhereInput | boolean
+    connect?: FactWhereUniqueInput
+    update?: XOR<XOR<FactUpdateToOneWithWhereWithoutGenerationRunsInput, FactUpdateWithoutGenerationRunsInput>, FactUncheckedUpdateWithoutGenerationRunsInput>
+  }
+
+  export type HarnessConfigUpdateOneRequiredWithoutRunsNestedInput = {
+    create?: XOR<HarnessConfigCreateWithoutRunsInput, HarnessConfigUncheckedCreateWithoutRunsInput>
+    connectOrCreate?: HarnessConfigCreateOrConnectWithoutRunsInput
+    upsert?: HarnessConfigUpsertWithoutRunsInput
+    connect?: HarnessConfigWhereUniqueInput
+    update?: XOR<XOR<HarnessConfigUpdateToOneWithWhereWithoutRunsInput, HarnessConfigUpdateWithoutRunsInput>, HarnessConfigUncheckedUpdateWithoutRunsInput>
+  }
+
+  export type VideoCreateNestedOneWithoutPrintRatingInput = {
+    create?: XOR<VideoCreateWithoutPrintRatingInput, VideoUncheckedCreateWithoutPrintRatingInput>
+    connectOrCreate?: VideoCreateOrConnectWithoutPrintRatingInput
+    connect?: VideoWhereUniqueInput
+  }
+
+  export type VideoUpdateOneRequiredWithoutPrintRatingNestedInput = {
+    create?: XOR<VideoCreateWithoutPrintRatingInput, VideoUncheckedCreateWithoutPrintRatingInput>
+    connectOrCreate?: VideoCreateOrConnectWithoutPrintRatingInput
+    upsert?: VideoUpsertWithoutPrintRatingInput
+    connect?: VideoWhereUniqueInput
+    update?: XOR<XOR<VideoUpdateToOneWithWhereWithoutPrintRatingInput, VideoUpdateWithoutPrintRatingInput>, VideoUncheckedUpdateWithoutPrintRatingInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -32600,6 +37397,35 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
+  export type NestedBoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
+  }
+
   export type BrandCreateWithoutOwnerInput = {
     id?: string
     name: string
@@ -32930,6 +37756,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     scriptVersions?: ScriptVersionCreateNestedManyWithoutFactInput
     claims?: ClaimCreateNestedManyWithoutFactInput
+    generationRuns?: GenerationRunCreateNestedManyWithoutFactInput
   }
 
   export type FactUncheckedCreateWithoutBrandInput = {
@@ -32945,6 +37772,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     scriptVersions?: ScriptVersionUncheckedCreateNestedManyWithoutFactInput
     claims?: ClaimUncheckedCreateNestedManyWithoutFactInput
+    generationRuns?: GenerationRunUncheckedCreateNestedManyWithoutFactInput
   }
 
   export type FactCreateOrConnectWithoutBrandInput = {
@@ -33545,6 +38373,40 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type GenerationRunCreateWithoutFactInput = {
+    id?: string
+    status?: string
+    isEval?: boolean
+    costUsd?: number
+    tokensUsed?: number
+    evalPassed?: boolean | null
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+    config: HarnessConfigCreateNestedOneWithoutRunsInput
+  }
+
+  export type GenerationRunUncheckedCreateWithoutFactInput = {
+    id?: string
+    configId: string
+    status?: string
+    isEval?: boolean
+    costUsd?: number
+    tokensUsed?: number
+    evalPassed?: boolean | null
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+  }
+
+  export type GenerationRunCreateOrConnectWithoutFactInput = {
+    where: GenerationRunWhereUniqueInput
+    create: XOR<GenerationRunCreateWithoutFactInput, GenerationRunUncheckedCreateWithoutFactInput>
+  }
+
+  export type GenerationRunCreateManyFactInputEnvelope = {
+    data: GenerationRunCreateManyFactInput | GenerationRunCreateManyFactInput[]
+    skipDuplicates?: boolean
+  }
+
   export type BrandUpsertWithoutFactsInput = {
     update: XOR<BrandUpdateWithoutFactsInput, BrandUncheckedUpdateWithoutFactsInput>
     create: XOR<BrandCreateWithoutFactsInput, BrandUncheckedCreateWithoutFactsInput>
@@ -33626,6 +38488,38 @@ export namespace Prisma {
     data: XOR<ClaimUpdateManyMutationInput, ClaimUncheckedUpdateManyWithoutFactInput>
   }
 
+  export type GenerationRunUpsertWithWhereUniqueWithoutFactInput = {
+    where: GenerationRunWhereUniqueInput
+    update: XOR<GenerationRunUpdateWithoutFactInput, GenerationRunUncheckedUpdateWithoutFactInput>
+    create: XOR<GenerationRunCreateWithoutFactInput, GenerationRunUncheckedCreateWithoutFactInput>
+  }
+
+  export type GenerationRunUpdateWithWhereUniqueWithoutFactInput = {
+    where: GenerationRunWhereUniqueInput
+    data: XOR<GenerationRunUpdateWithoutFactInput, GenerationRunUncheckedUpdateWithoutFactInput>
+  }
+
+  export type GenerationRunUpdateManyWithWhereWithoutFactInput = {
+    where: GenerationRunScalarWhereInput
+    data: XOR<GenerationRunUpdateManyMutationInput, GenerationRunUncheckedUpdateManyWithoutFactInput>
+  }
+
+  export type GenerationRunScalarWhereInput = {
+    AND?: GenerationRunScalarWhereInput | GenerationRunScalarWhereInput[]
+    OR?: GenerationRunScalarWhereInput[]
+    NOT?: GenerationRunScalarWhereInput | GenerationRunScalarWhereInput[]
+    id?: StringFilter<"GenerationRun"> | string
+    factId?: StringNullableFilter<"GenerationRun"> | string | null
+    configId?: StringFilter<"GenerationRun"> | string
+    status?: StringFilter<"GenerationRun"> | string
+    isEval?: BoolFilter<"GenerationRun"> | boolean
+    costUsd?: FloatFilter<"GenerationRun"> | number
+    tokensUsed?: IntFilter<"GenerationRun"> | number
+    evalPassed?: BoolNullableFilter<"GenerationRun"> | boolean | null
+    startedAt?: DateTimeFilter<"GenerationRun"> | Date | string
+    endedAt?: DateTimeNullableFilter<"GenerationRun"> | Date | string | null
+  }
+
   export type FactCreateWithoutScriptVersionsInput = {
     id?: string
     tier: string
@@ -33639,6 +38533,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     brand: BrandCreateNestedOneWithoutFactsInput
     claims?: ClaimCreateNestedManyWithoutFactInput
+    generationRuns?: GenerationRunCreateNestedManyWithoutFactInput
   }
 
   export type FactUncheckedCreateWithoutScriptVersionsInput = {
@@ -33654,6 +38549,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     claims?: ClaimUncheckedCreateNestedManyWithoutFactInput
+    generationRuns?: GenerationRunUncheckedCreateNestedManyWithoutFactInput
   }
 
   export type FactCreateOrConnectWithoutScriptVersionsInput = {
@@ -33749,6 +38645,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     brand?: BrandUpdateOneRequiredWithoutFactsNestedInput
     claims?: ClaimUpdateManyWithoutFactNestedInput
+    generationRuns?: GenerationRunUpdateManyWithoutFactNestedInput
   }
 
   export type FactUncheckedUpdateWithoutScriptVersionsInput = {
@@ -33764,6 +38661,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     claims?: ClaimUncheckedUpdateManyWithoutFactNestedInput
+    generationRuns?: GenerationRunUncheckedUpdateManyWithoutFactNestedInput
   }
 
   export type ScriptLineUpsertWithWhereUniqueWithoutScriptVersionInput = {
@@ -34158,6 +39056,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     brand: BrandCreateNestedOneWithoutFactsInput
     scriptVersions?: ScriptVersionCreateNestedManyWithoutFactInput
+    generationRuns?: GenerationRunCreateNestedManyWithoutFactInput
   }
 
   export type FactUncheckedCreateWithoutClaimsInput = {
@@ -34173,6 +39072,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     scriptVersions?: ScriptVersionUncheckedCreateNestedManyWithoutFactInput
+    generationRuns?: GenerationRunUncheckedCreateNestedManyWithoutFactInput
   }
 
   export type FactCreateOrConnectWithoutClaimsInput = {
@@ -34222,6 +39122,7 @@ export namespace Prisma {
     publishJobs?: PublishJobCreateNestedManyWithoutVideoInput
     viewSnapshots?: ViewSnapshotCreateNestedManyWithoutVideoInput
     shortLinks?: ShortLinkCreateNestedManyWithoutVideoInput
+    printRating?: PrintRatingCreateNestedOneWithoutVideoInput
   }
 
   export type VideoUncheckedCreateWithoutClaimInput = {
@@ -34241,6 +39142,7 @@ export namespace Prisma {
     publishJobs?: PublishJobUncheckedCreateNestedManyWithoutVideoInput
     viewSnapshots?: ViewSnapshotUncheckedCreateNestedManyWithoutVideoInput
     shortLinks?: ShortLinkUncheckedCreateNestedManyWithoutVideoInput
+    printRating?: PrintRatingUncheckedCreateNestedOneWithoutVideoInput
   }
 
   export type VideoCreateOrConnectWithoutClaimInput = {
@@ -34277,6 +39179,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     brand?: BrandUpdateOneRequiredWithoutFactsNestedInput
     scriptVersions?: ScriptVersionUpdateManyWithoutFactNestedInput
+    generationRuns?: GenerationRunUpdateManyWithoutFactNestedInput
   }
 
   export type FactUncheckedUpdateWithoutClaimsInput = {
@@ -34292,6 +39195,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     scriptVersions?: ScriptVersionUncheckedUpdateManyWithoutFactNestedInput
+    generationRuns?: GenerationRunUncheckedUpdateManyWithoutFactNestedInput
   }
 
   export type CreatorUpsertWithoutClaimsInput = {
@@ -34505,6 +39409,35 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type PrintRatingCreateWithoutVideoInput = {
+    id?: string
+    reviewerId: string
+    brandSafety: boolean
+    scriptMatch: boolean
+    craftScore: number
+    hookScore: number
+    overallScore: number
+    notes?: string | null
+    createdAt?: Date | string
+  }
+
+  export type PrintRatingUncheckedCreateWithoutVideoInput = {
+    id?: string
+    reviewerId: string
+    brandSafety: boolean
+    scriptMatch: boolean
+    craftScore: number
+    hookScore: number
+    overallScore: number
+    notes?: string | null
+    createdAt?: Date | string
+  }
+
+  export type PrintRatingCreateOrConnectWithoutVideoInput = {
+    where: PrintRatingWhereUniqueInput
+    create: XOR<PrintRatingCreateWithoutVideoInput, PrintRatingUncheckedCreateWithoutVideoInput>
+  }
+
   export type ClaimUpsertWithoutVideosInput = {
     update: XOR<ClaimUpdateWithoutVideosInput, ClaimUncheckedUpdateWithoutVideosInput>
     create: XOR<ClaimCreateWithoutVideosInput, ClaimUncheckedCreateWithoutVideosInput>
@@ -34645,6 +39578,41 @@ export namespace Prisma {
     data: XOR<ShortLinkUpdateManyMutationInput, ShortLinkUncheckedUpdateManyWithoutVideoInput>
   }
 
+  export type PrintRatingUpsertWithoutVideoInput = {
+    update: XOR<PrintRatingUpdateWithoutVideoInput, PrintRatingUncheckedUpdateWithoutVideoInput>
+    create: XOR<PrintRatingCreateWithoutVideoInput, PrintRatingUncheckedCreateWithoutVideoInput>
+    where?: PrintRatingWhereInput
+  }
+
+  export type PrintRatingUpdateToOneWithWhereWithoutVideoInput = {
+    where?: PrintRatingWhereInput
+    data: XOR<PrintRatingUpdateWithoutVideoInput, PrintRatingUncheckedUpdateWithoutVideoInput>
+  }
+
+  export type PrintRatingUpdateWithoutVideoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reviewerId?: StringFieldUpdateOperationsInput | string
+    brandSafety?: BoolFieldUpdateOperationsInput | boolean
+    scriptMatch?: BoolFieldUpdateOperationsInput | boolean
+    craftScore?: IntFieldUpdateOperationsInput | number
+    hookScore?: IntFieldUpdateOperationsInput | number
+    overallScore?: FloatFieldUpdateOperationsInput | number
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PrintRatingUncheckedUpdateWithoutVideoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reviewerId?: StringFieldUpdateOperationsInput | string
+    brandSafety?: BoolFieldUpdateOperationsInput | boolean
+    scriptMatch?: BoolFieldUpdateOperationsInput | boolean
+    craftScore?: IntFieldUpdateOperationsInput | number
+    hookScore?: IntFieldUpdateOperationsInput | number
+    overallScore?: FloatFieldUpdateOperationsInput | number
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type VideoCreateWithoutPolicyChecksInput = {
     id?: string
     stage?: $Enums.VideoStatus
@@ -34662,6 +39630,7 @@ export namespace Prisma {
     publishJobs?: PublishJobCreateNestedManyWithoutVideoInput
     viewSnapshots?: ViewSnapshotCreateNestedManyWithoutVideoInput
     shortLinks?: ShortLinkCreateNestedManyWithoutVideoInput
+    printRating?: PrintRatingCreateNestedOneWithoutVideoInput
   }
 
   export type VideoUncheckedCreateWithoutPolicyChecksInput = {
@@ -34681,6 +39650,7 @@ export namespace Prisma {
     publishJobs?: PublishJobUncheckedCreateNestedManyWithoutVideoInput
     viewSnapshots?: ViewSnapshotUncheckedCreateNestedManyWithoutVideoInput
     shortLinks?: ShortLinkUncheckedCreateNestedManyWithoutVideoInput
+    printRating?: PrintRatingUncheckedCreateNestedOneWithoutVideoInput
   }
 
   export type VideoCreateOrConnectWithoutPolicyChecksInput = {
@@ -34716,6 +39686,7 @@ export namespace Prisma {
     publishJobs?: PublishJobUpdateManyWithoutVideoNestedInput
     viewSnapshots?: ViewSnapshotUpdateManyWithoutVideoNestedInput
     shortLinks?: ShortLinkUpdateManyWithoutVideoNestedInput
+    printRating?: PrintRatingUpdateOneWithoutVideoNestedInput
   }
 
   export type VideoUncheckedUpdateWithoutPolicyChecksInput = {
@@ -34735,6 +39706,7 @@ export namespace Prisma {
     publishJobs?: PublishJobUncheckedUpdateManyWithoutVideoNestedInput
     viewSnapshots?: ViewSnapshotUncheckedUpdateManyWithoutVideoNestedInput
     shortLinks?: ShortLinkUncheckedUpdateManyWithoutVideoNestedInput
+    printRating?: PrintRatingUncheckedUpdateOneWithoutVideoNestedInput
   }
 
   export type VideoCreateWithoutPublishJobsInput = {
@@ -34754,6 +39726,7 @@ export namespace Prisma {
     policyChecks?: PolicyCheckCreateNestedManyWithoutVideoInput
     viewSnapshots?: ViewSnapshotCreateNestedManyWithoutVideoInput
     shortLinks?: ShortLinkCreateNestedManyWithoutVideoInput
+    printRating?: PrintRatingCreateNestedOneWithoutVideoInput
   }
 
   export type VideoUncheckedCreateWithoutPublishJobsInput = {
@@ -34773,6 +39746,7 @@ export namespace Prisma {
     policyChecks?: PolicyCheckUncheckedCreateNestedManyWithoutVideoInput
     viewSnapshots?: ViewSnapshotUncheckedCreateNestedManyWithoutVideoInput
     shortLinks?: ShortLinkUncheckedCreateNestedManyWithoutVideoInput
+    printRating?: PrintRatingUncheckedCreateNestedOneWithoutVideoInput
   }
 
   export type VideoCreateOrConnectWithoutPublishJobsInput = {
@@ -34808,6 +39782,7 @@ export namespace Prisma {
     policyChecks?: PolicyCheckUpdateManyWithoutVideoNestedInput
     viewSnapshots?: ViewSnapshotUpdateManyWithoutVideoNestedInput
     shortLinks?: ShortLinkUpdateManyWithoutVideoNestedInput
+    printRating?: PrintRatingUpdateOneWithoutVideoNestedInput
   }
 
   export type VideoUncheckedUpdateWithoutPublishJobsInput = {
@@ -34827,6 +39802,7 @@ export namespace Prisma {
     policyChecks?: PolicyCheckUncheckedUpdateManyWithoutVideoNestedInput
     viewSnapshots?: ViewSnapshotUncheckedUpdateManyWithoutVideoNestedInput
     shortLinks?: ShortLinkUncheckedUpdateManyWithoutVideoNestedInput
+    printRating?: PrintRatingUncheckedUpdateOneWithoutVideoNestedInput
   }
 
   export type VideoCreateWithoutViewSnapshotsInput = {
@@ -34846,6 +39822,7 @@ export namespace Prisma {
     policyChecks?: PolicyCheckCreateNestedManyWithoutVideoInput
     publishJobs?: PublishJobCreateNestedManyWithoutVideoInput
     shortLinks?: ShortLinkCreateNestedManyWithoutVideoInput
+    printRating?: PrintRatingCreateNestedOneWithoutVideoInput
   }
 
   export type VideoUncheckedCreateWithoutViewSnapshotsInput = {
@@ -34865,6 +39842,7 @@ export namespace Prisma {
     policyChecks?: PolicyCheckUncheckedCreateNestedManyWithoutVideoInput
     publishJobs?: PublishJobUncheckedCreateNestedManyWithoutVideoInput
     shortLinks?: ShortLinkUncheckedCreateNestedManyWithoutVideoInput
+    printRating?: PrintRatingUncheckedCreateNestedOneWithoutVideoInput
   }
 
   export type VideoCreateOrConnectWithoutViewSnapshotsInput = {
@@ -34900,6 +39878,7 @@ export namespace Prisma {
     policyChecks?: PolicyCheckUpdateManyWithoutVideoNestedInput
     publishJobs?: PublishJobUpdateManyWithoutVideoNestedInput
     shortLinks?: ShortLinkUpdateManyWithoutVideoNestedInput
+    printRating?: PrintRatingUpdateOneWithoutVideoNestedInput
   }
 
   export type VideoUncheckedUpdateWithoutViewSnapshotsInput = {
@@ -34919,6 +39898,7 @@ export namespace Prisma {
     policyChecks?: PolicyCheckUncheckedUpdateManyWithoutVideoNestedInput
     publishJobs?: PublishJobUncheckedUpdateManyWithoutVideoNestedInput
     shortLinks?: ShortLinkUncheckedUpdateManyWithoutVideoNestedInput
+    printRating?: PrintRatingUncheckedUpdateOneWithoutVideoNestedInput
   }
 
   export type VideoCreateWithoutShortLinksInput = {
@@ -34938,6 +39918,7 @@ export namespace Prisma {
     policyChecks?: PolicyCheckCreateNestedManyWithoutVideoInput
     publishJobs?: PublishJobCreateNestedManyWithoutVideoInput
     viewSnapshots?: ViewSnapshotCreateNestedManyWithoutVideoInput
+    printRating?: PrintRatingCreateNestedOneWithoutVideoInput
   }
 
   export type VideoUncheckedCreateWithoutShortLinksInput = {
@@ -34957,6 +39938,7 @@ export namespace Prisma {
     policyChecks?: PolicyCheckUncheckedCreateNestedManyWithoutVideoInput
     publishJobs?: PublishJobUncheckedCreateNestedManyWithoutVideoInput
     viewSnapshots?: ViewSnapshotUncheckedCreateNestedManyWithoutVideoInput
+    printRating?: PrintRatingUncheckedCreateNestedOneWithoutVideoInput
   }
 
   export type VideoCreateOrConnectWithoutShortLinksInput = {
@@ -35049,6 +40031,7 @@ export namespace Prisma {
     policyChecks?: PolicyCheckUpdateManyWithoutVideoNestedInput
     publishJobs?: PublishJobUpdateManyWithoutVideoNestedInput
     viewSnapshots?: ViewSnapshotUpdateManyWithoutVideoNestedInput
+    printRating?: PrintRatingUpdateOneWithoutVideoNestedInput
   }
 
   export type VideoUncheckedUpdateWithoutShortLinksInput = {
@@ -35068,6 +40051,7 @@ export namespace Prisma {
     policyChecks?: PolicyCheckUncheckedUpdateManyWithoutVideoNestedInput
     publishJobs?: PublishJobUncheckedUpdateManyWithoutVideoNestedInput
     viewSnapshots?: ViewSnapshotUncheckedUpdateManyWithoutVideoNestedInput
+    printRating?: PrintRatingUncheckedUpdateOneWithoutVideoNestedInput
   }
 
   export type BrandUpsertWithoutShortLinksInput = {
@@ -35495,6 +40479,292 @@ export namespace Prisma {
     creator?: CreatorUncheckedUpdateOneWithoutUserNestedInput
   }
 
+  export type GenerationRunCreateWithoutConfigInput = {
+    id?: string
+    status?: string
+    isEval?: boolean
+    costUsd?: number
+    tokensUsed?: number
+    evalPassed?: boolean | null
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+    fact?: FactCreateNestedOneWithoutGenerationRunsInput
+  }
+
+  export type GenerationRunUncheckedCreateWithoutConfigInput = {
+    id?: string
+    factId?: string | null
+    status?: string
+    isEval?: boolean
+    costUsd?: number
+    tokensUsed?: number
+    evalPassed?: boolean | null
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+  }
+
+  export type GenerationRunCreateOrConnectWithoutConfigInput = {
+    where: GenerationRunWhereUniqueInput
+    create: XOR<GenerationRunCreateWithoutConfigInput, GenerationRunUncheckedCreateWithoutConfigInput>
+  }
+
+  export type GenerationRunCreateManyConfigInputEnvelope = {
+    data: GenerationRunCreateManyConfigInput | GenerationRunCreateManyConfigInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type GenerationRunUpsertWithWhereUniqueWithoutConfigInput = {
+    where: GenerationRunWhereUniqueInput
+    update: XOR<GenerationRunUpdateWithoutConfigInput, GenerationRunUncheckedUpdateWithoutConfigInput>
+    create: XOR<GenerationRunCreateWithoutConfigInput, GenerationRunUncheckedCreateWithoutConfigInput>
+  }
+
+  export type GenerationRunUpdateWithWhereUniqueWithoutConfigInput = {
+    where: GenerationRunWhereUniqueInput
+    data: XOR<GenerationRunUpdateWithoutConfigInput, GenerationRunUncheckedUpdateWithoutConfigInput>
+  }
+
+  export type GenerationRunUpdateManyWithWhereWithoutConfigInput = {
+    where: GenerationRunScalarWhereInput
+    data: XOR<GenerationRunUpdateManyMutationInput, GenerationRunUncheckedUpdateManyWithoutConfigInput>
+  }
+
+  export type FactCreateWithoutGenerationRunsInput = {
+    id?: string
+    tier: string
+    language: string
+    topic?: string | null
+    status?: string
+    cpmBudget: number
+    baseFee: number
+    maxClaims?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    brand: BrandCreateNestedOneWithoutFactsInput
+    scriptVersions?: ScriptVersionCreateNestedManyWithoutFactInput
+    claims?: ClaimCreateNestedManyWithoutFactInput
+  }
+
+  export type FactUncheckedCreateWithoutGenerationRunsInput = {
+    id?: string
+    brandId: string
+    tier: string
+    language: string
+    topic?: string | null
+    status?: string
+    cpmBudget: number
+    baseFee: number
+    maxClaims?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    scriptVersions?: ScriptVersionUncheckedCreateNestedManyWithoutFactInput
+    claims?: ClaimUncheckedCreateNestedManyWithoutFactInput
+  }
+
+  export type FactCreateOrConnectWithoutGenerationRunsInput = {
+    where: FactWhereUniqueInput
+    create: XOR<FactCreateWithoutGenerationRunsInput, FactUncheckedCreateWithoutGenerationRunsInput>
+  }
+
+  export type HarnessConfigCreateWithoutRunsInput = {
+    id?: string
+    name: string
+    version?: number
+    isActive?: boolean
+    modelMap: JsonNullValueInput | InputJsonValue
+    budgetCap: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HarnessConfigUncheckedCreateWithoutRunsInput = {
+    id?: string
+    name: string
+    version?: number
+    isActive?: boolean
+    modelMap: JsonNullValueInput | InputJsonValue
+    budgetCap: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HarnessConfigCreateOrConnectWithoutRunsInput = {
+    where: HarnessConfigWhereUniqueInput
+    create: XOR<HarnessConfigCreateWithoutRunsInput, HarnessConfigUncheckedCreateWithoutRunsInput>
+  }
+
+  export type FactUpsertWithoutGenerationRunsInput = {
+    update: XOR<FactUpdateWithoutGenerationRunsInput, FactUncheckedUpdateWithoutGenerationRunsInput>
+    create: XOR<FactCreateWithoutGenerationRunsInput, FactUncheckedCreateWithoutGenerationRunsInput>
+    where?: FactWhereInput
+  }
+
+  export type FactUpdateToOneWithWhereWithoutGenerationRunsInput = {
+    where?: FactWhereInput
+    data: XOR<FactUpdateWithoutGenerationRunsInput, FactUncheckedUpdateWithoutGenerationRunsInput>
+  }
+
+  export type FactUpdateWithoutGenerationRunsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tier?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    topic?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    cpmBudget?: IntFieldUpdateOperationsInput | number
+    baseFee?: IntFieldUpdateOperationsInput | number
+    maxClaims?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brand?: BrandUpdateOneRequiredWithoutFactsNestedInput
+    scriptVersions?: ScriptVersionUpdateManyWithoutFactNestedInput
+    claims?: ClaimUpdateManyWithoutFactNestedInput
+  }
+
+  export type FactUncheckedUpdateWithoutGenerationRunsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    brandId?: StringFieldUpdateOperationsInput | string
+    tier?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    topic?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    cpmBudget?: IntFieldUpdateOperationsInput | number
+    baseFee?: IntFieldUpdateOperationsInput | number
+    maxClaims?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    scriptVersions?: ScriptVersionUncheckedUpdateManyWithoutFactNestedInput
+    claims?: ClaimUncheckedUpdateManyWithoutFactNestedInput
+  }
+
+  export type HarnessConfigUpsertWithoutRunsInput = {
+    update: XOR<HarnessConfigUpdateWithoutRunsInput, HarnessConfigUncheckedUpdateWithoutRunsInput>
+    create: XOR<HarnessConfigCreateWithoutRunsInput, HarnessConfigUncheckedCreateWithoutRunsInput>
+    where?: HarnessConfigWhereInput
+  }
+
+  export type HarnessConfigUpdateToOneWithWhereWithoutRunsInput = {
+    where?: HarnessConfigWhereInput
+    data: XOR<HarnessConfigUpdateWithoutRunsInput, HarnessConfigUncheckedUpdateWithoutRunsInput>
+  }
+
+  export type HarnessConfigUpdateWithoutRunsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    modelMap?: JsonNullValueInput | InputJsonValue
+    budgetCap?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HarnessConfigUncheckedUpdateWithoutRunsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    modelMap?: JsonNullValueInput | InputJsonValue
+    budgetCap?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoCreateWithoutPrintRatingInput = {
+    id?: string
+    stage?: $Enums.VideoStatus
+    r2Key?: string | null
+    transcript?: string | null
+    durationSec?: number | null
+    platform?: string
+    lockedAt?: Date | string | null
+    reviewDeadline?: Date | string | null
+    publishedAt?: Date | string | null
+    settledAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    claim: ClaimCreateNestedOneWithoutVideosInput
+    policyChecks?: PolicyCheckCreateNestedManyWithoutVideoInput
+    publishJobs?: PublishJobCreateNestedManyWithoutVideoInput
+    viewSnapshots?: ViewSnapshotCreateNestedManyWithoutVideoInput
+    shortLinks?: ShortLinkCreateNestedManyWithoutVideoInput
+  }
+
+  export type VideoUncheckedCreateWithoutPrintRatingInput = {
+    id?: string
+    claimId: string
+    stage?: $Enums.VideoStatus
+    r2Key?: string | null
+    transcript?: string | null
+    durationSec?: number | null
+    platform?: string
+    lockedAt?: Date | string | null
+    reviewDeadline?: Date | string | null
+    publishedAt?: Date | string | null
+    settledAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    policyChecks?: PolicyCheckUncheckedCreateNestedManyWithoutVideoInput
+    publishJobs?: PublishJobUncheckedCreateNestedManyWithoutVideoInput
+    viewSnapshots?: ViewSnapshotUncheckedCreateNestedManyWithoutVideoInput
+    shortLinks?: ShortLinkUncheckedCreateNestedManyWithoutVideoInput
+  }
+
+  export type VideoCreateOrConnectWithoutPrintRatingInput = {
+    where: VideoWhereUniqueInput
+    create: XOR<VideoCreateWithoutPrintRatingInput, VideoUncheckedCreateWithoutPrintRatingInput>
+  }
+
+  export type VideoUpsertWithoutPrintRatingInput = {
+    update: XOR<VideoUpdateWithoutPrintRatingInput, VideoUncheckedUpdateWithoutPrintRatingInput>
+    create: XOR<VideoCreateWithoutPrintRatingInput, VideoUncheckedCreateWithoutPrintRatingInput>
+    where?: VideoWhereInput
+  }
+
+  export type VideoUpdateToOneWithWhereWithoutPrintRatingInput = {
+    where?: VideoWhereInput
+    data: XOR<VideoUpdateWithoutPrintRatingInput, VideoUncheckedUpdateWithoutPrintRatingInput>
+  }
+
+  export type VideoUpdateWithoutPrintRatingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    stage?: EnumVideoStatusFieldUpdateOperationsInput | $Enums.VideoStatus
+    r2Key?: NullableStringFieldUpdateOperationsInput | string | null
+    transcript?: NullableStringFieldUpdateOperationsInput | string | null
+    durationSec?: NullableIntFieldUpdateOperationsInput | number | null
+    platform?: StringFieldUpdateOperationsInput | string
+    lockedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reviewDeadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    settledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    claim?: ClaimUpdateOneRequiredWithoutVideosNestedInput
+    policyChecks?: PolicyCheckUpdateManyWithoutVideoNestedInput
+    publishJobs?: PublishJobUpdateManyWithoutVideoNestedInput
+    viewSnapshots?: ViewSnapshotUpdateManyWithoutVideoNestedInput
+    shortLinks?: ShortLinkUpdateManyWithoutVideoNestedInput
+  }
+
+  export type VideoUncheckedUpdateWithoutPrintRatingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    claimId?: StringFieldUpdateOperationsInput | string
+    stage?: EnumVideoStatusFieldUpdateOperationsInput | $Enums.VideoStatus
+    r2Key?: NullableStringFieldUpdateOperationsInput | string | null
+    transcript?: NullableStringFieldUpdateOperationsInput | string | null
+    durationSec?: NullableIntFieldUpdateOperationsInput | number | null
+    platform?: StringFieldUpdateOperationsInput | string
+    lockedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reviewDeadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    settledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    policyChecks?: PolicyCheckUncheckedUpdateManyWithoutVideoNestedInput
+    publishJobs?: PublishJobUncheckedUpdateManyWithoutVideoNestedInput
+    viewSnapshots?: ViewSnapshotUncheckedUpdateManyWithoutVideoNestedInput
+    shortLinks?: ShortLinkUncheckedUpdateManyWithoutVideoNestedInput
+  }
+
   export type BrandCreateManyOwnerInput = {
     id?: string
     name: string
@@ -35731,6 +41001,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     scriptVersions?: ScriptVersionUpdateManyWithoutFactNestedInput
     claims?: ClaimUpdateManyWithoutFactNestedInput
+    generationRuns?: GenerationRunUpdateManyWithoutFactNestedInput
   }
 
   export type FactUncheckedUpdateWithoutBrandInput = {
@@ -35746,6 +41017,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     scriptVersions?: ScriptVersionUncheckedUpdateManyWithoutFactNestedInput
     claims?: ClaimUncheckedUpdateManyWithoutFactNestedInput
+    generationRuns?: GenerationRunUncheckedUpdateManyWithoutFactNestedInput
   }
 
   export type FactUncheckedUpdateManyWithoutBrandInput = {
@@ -35919,6 +41191,18 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type GenerationRunCreateManyFactInput = {
+    id?: string
+    configId: string
+    status?: string
+    isEval?: boolean
+    costUsd?: number
+    tokensUsed?: number
+    evalPassed?: boolean | null
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+  }
+
   export type ScriptVersionUpdateWithoutFactInput = {
     id?: StringFieldUpdateOperationsInput | string
     version?: IntFieldUpdateOperationsInput | number
@@ -35980,6 +41264,42 @@ export namespace Prisma {
     lockedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GenerationRunUpdateWithoutFactInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    isEval?: BoolFieldUpdateOperationsInput | boolean
+    costUsd?: FloatFieldUpdateOperationsInput | number
+    tokensUsed?: IntFieldUpdateOperationsInput | number
+    evalPassed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    config?: HarnessConfigUpdateOneRequiredWithoutRunsNestedInput
+  }
+
+  export type GenerationRunUncheckedUpdateWithoutFactInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    configId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    isEval?: BoolFieldUpdateOperationsInput | boolean
+    costUsd?: FloatFieldUpdateOperationsInput | number
+    tokensUsed?: IntFieldUpdateOperationsInput | number
+    evalPassed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type GenerationRunUncheckedUpdateManyWithoutFactInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    configId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    isEval?: BoolFieldUpdateOperationsInput | boolean
+    costUsd?: FloatFieldUpdateOperationsInput | number
+    tokensUsed?: IntFieldUpdateOperationsInput | number
+    evalPassed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type ScriptLineCreateManyScriptVersionInput = {
@@ -36148,6 +41468,7 @@ export namespace Prisma {
     publishJobs?: PublishJobUpdateManyWithoutVideoNestedInput
     viewSnapshots?: ViewSnapshotUpdateManyWithoutVideoNestedInput
     shortLinks?: ShortLinkUpdateManyWithoutVideoNestedInput
+    printRating?: PrintRatingUpdateOneWithoutVideoNestedInput
   }
 
   export type VideoUncheckedUpdateWithoutClaimInput = {
@@ -36167,6 +41488,7 @@ export namespace Prisma {
     publishJobs?: PublishJobUncheckedUpdateManyWithoutVideoNestedInput
     viewSnapshots?: ViewSnapshotUncheckedUpdateManyWithoutVideoNestedInput
     shortLinks?: ShortLinkUncheckedUpdateManyWithoutVideoNestedInput
+    printRating?: PrintRatingUncheckedUpdateOneWithoutVideoNestedInput
   }
 
   export type VideoUncheckedUpdateManyWithoutClaimInput = {
@@ -36404,6 +41726,54 @@ export namespace Prisma {
     refId?: StringFieldUpdateOperationsInput | string
     idempotencyKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GenerationRunCreateManyConfigInput = {
+    id?: string
+    factId?: string | null
+    status?: string
+    isEval?: boolean
+    costUsd?: number
+    tokensUsed?: number
+    evalPassed?: boolean | null
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+  }
+
+  export type GenerationRunUpdateWithoutConfigInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    isEval?: BoolFieldUpdateOperationsInput | boolean
+    costUsd?: FloatFieldUpdateOperationsInput | number
+    tokensUsed?: IntFieldUpdateOperationsInput | number
+    evalPassed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fact?: FactUpdateOneWithoutGenerationRunsNestedInput
+  }
+
+  export type GenerationRunUncheckedUpdateWithoutConfigInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    factId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    isEval?: BoolFieldUpdateOperationsInput | boolean
+    costUsd?: FloatFieldUpdateOperationsInput | number
+    tokensUsed?: IntFieldUpdateOperationsInput | number
+    evalPassed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type GenerationRunUncheckedUpdateManyWithoutConfigInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    factId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    isEval?: BoolFieldUpdateOperationsInput | boolean
+    costUsd?: FloatFieldUpdateOperationsInput | number
+    tokensUsed?: IntFieldUpdateOperationsInput | number
+    evalPassed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
 

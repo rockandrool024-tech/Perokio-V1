@@ -148,6 +148,7 @@ model Fact {
 
   scriptVersions ScriptVersion[]
   claims         Claim[]
+  generationRuns GenerationRun[]
 }
 
 model ScriptVersion {
@@ -286,6 +287,7 @@ model Video {
   publishJobs   PublishJob[]
   viewSnapshots ViewSnapshot[]
   shortLinks    ShortLink[]
+  printRating   PrintRating?
 
   @@index([claimId])
   @@index([stage])
@@ -420,4 +422,64 @@ model DomainEvent {
 
   @@index([eventType, timestamp])
   @@index([entityId])
+}
+
+// ============================================================================
+// 9. HARNESS & LLM GENERATION (Cycle B4)
+// The Harness generates ScriptVersions via LLM but CANNOT verify lines.
+// Only a human Admin can set verified=true via POST /lines/:id/verify.
+// ============================================================================
+
+model HarnessConfig {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  version   Int      @default(1)
+  isActive  Boolean  @default(false)
+  modelMap  Json // e.g., { "draft": "claude-3.5-sonnet", "check": "gpt-4o-mini" }
+  budgetCap Int // Max tokens per run
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  runs GenerationRun[]
+}
+
+model GenerationRun {
+  id         String        @id @default(cuid())
+  factId     String?
+  fact       Fact?         @relation(fields: [factId], references: [id])
+  configId   String
+  config     HarnessConfig @relation(fields: [configId], references: [id])
+  status     String        @default("running") // running | completed | failed | eval_passed | eval_failed
+  isEval     Boolean       @default(false) // true = this was an eval run, not a real generation
+  costUsd    Float         @default(0)
+  tokensUsed Int           @default(0)
+  evalPassed Boolean?
+  startedAt  DateTime      @default(now())
+  endedAt    DateTime?
+
+  @@index([configId, startedAt])
+  @@index([factId])
+}
+
+// ============================================================================
+// 10. PRINT RATING & ADMIN OVERRIDES (Cycle B5)
+// Admin video review = two binary gates (brandSafety + scriptMatch) + weighted score.
+// If either gate fails → 400, no PrintRating created.
+// Only if both pass: overallScore = (craft + hook) / 2
+// ============================================================================
+
+model PrintRating {
+  id           String   @id @default(cuid())
+  videoId      String   @unique
+  video        Video    @relation(fields: [videoId], references: [id])
+  reviewerId   String
+  brandSafety  Boolean // MUST be true to pass
+  scriptMatch  Boolean // MUST be true to pass
+  craftScore   Int // 1-5
+  hookScore    Int // 1-5
+  overallScore Float // (craft + hook) / 2 — only calculated when gates pass
+  notes        String?
+  createdAt    DateTime @default(now())
+
+  @@index([reviewerId])
 }

@@ -333,6 +333,43 @@ exports.Prisma.DomainEventScalarFieldEnum = {
   timestamp: 'timestamp'
 };
 
+exports.Prisma.HarnessConfigScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  version: 'version',
+  isActive: 'isActive',
+  modelMap: 'modelMap',
+  budgetCap: 'budgetCap',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.GenerationRunScalarFieldEnum = {
+  id: 'id',
+  factId: 'factId',
+  configId: 'configId',
+  status: 'status',
+  isEval: 'isEval',
+  costUsd: 'costUsd',
+  tokensUsed: 'tokensUsed',
+  evalPassed: 'evalPassed',
+  startedAt: 'startedAt',
+  endedAt: 'endedAt'
+};
+
+exports.Prisma.PrintRatingScalarFieldEnum = {
+  id: 'id',
+  videoId: 'videoId',
+  reviewerId: 'reviewerId',
+  brandSafety: 'brandSafety',
+  scriptMatch: 'scriptMatch',
+  craftScore: 'craftScore',
+  hookScore: 'hookScore',
+  overallScore: 'overallScore',
+  notes: 'notes',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -433,7 +470,10 @@ exports.Prisma.ModelName = {
   ClickEvent: 'ClickEvent',
   LedgerAccount: 'LedgerAccount',
   LedgerEntry: 'LedgerEntry',
-  DomainEvent: 'DomainEvent'
+  DomainEvent: 'DomainEvent',
+  HarnessConfig: 'HarnessConfig',
+  GenerationRun: 'GenerationRun',
+  PrintRating: 'PrintRating'
 };
 
 /**
