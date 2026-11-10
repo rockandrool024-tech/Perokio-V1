@@ -1,0 +1,423 @@
+// ============================================================================
+// Perokio — Backend Schema (Prisma + PostgreSQL)
+// Build Spec v1 — Cycle B1–B3
+// ============================================================================
+// Locked decisions:
+//   1. Money: all fiat amounts in INTEGER cents (USD/TND). Gems are integers.
+//   2. B11 Moat: ScriptVersion cannot reach status='approved' if any
+//      ScriptLine.verified=false. Enforced at app AND DB level.
+//   3. VerificationReceipt: SHA-256 of canonical JSON (script + sources + reviewer).
+//      invalidatedAt marks receipts voided by off-script brand override.
+//   4. Race conditions: all state transitions use conditional SQL
+//      UPDATE ... WHERE status='expected_old'. Row count = 0 → already moved.
+//   5. ShortLinks: code is unguessable (24-char base62).
+//   6. Double-entry ledger: every money movement creates paired debit/credit
+//      LedgerEntry rows with a unique idempotencyKey.
+// ============================================================================
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================================
+// 1. IDENTITY & ACCESS
+// ============================================================================
+
+enum Role {
+  brand_owner
+  brand_member
+  creator
+  studio_editor
+  qa_reviewer
+  ops
+  finance
+  super_admin
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  role         Role
+  status       String   @default("active")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  brandsOwned  Brand[]  @relation("BrandOwner")
+  brandsMember Brand[]  @relation("BrandMember")
+  creator      Creator?
+
+  // Audit
+  domainEventsActor DomainEvent[] @relation("ActorEvents")
+}
+
+model Brand {
+  id                        String   @id @default(cuid())
+  name                      String
+  ownerId                   String
+  owner                     User     @relation("BrandOwner", fields: [ownerId], references: [id])
+  // §D.5: auto-approve on review expiry (V1 shortcut; move to BrandSettings later)
+  autoApproveOnReviewExpiry Boolean  @default(false)
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
+
+  members        User[]          @relation("BrandMember")
+  calendar       CalendarEntry[]
+  facts          Fact[]
+  ledgerAccounts LedgerAccount[]
+  shortLinks     ShortLink[]
+}
+
+model Creator {
+  id               String   @id @default(cuid())
+  userId           String   @unique
+  user             User     @relation(fields: [userId], references: [id])
+  reliabilityScore Int      @default(100)
+  level            String   @default("Rookie")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  claims         Claim[]
+  ledgerAccounts LedgerAccount[]
+}
+
+// ============================================================================
+// 2. THE CALENDAR (The Plan)
+// §D.6: unique constraint includes `channel` so a brand can publish the same
+// Fact to BRAND_ACCOUNT and CREATOR_WALL simultaneously.
+// ============================================================================
+
+enum EntryType {
+  FACT
+  SPARK
+}
+
+enum ChannelType {
+  BRAND_ACCOUNT
+  CREATOR_WALL
+  DIRECT_INVITE
+}
+
+enum EntryStatus {
+  draft
+  locked
+  approved
+  published
+}
+
+model CalendarEntry {
+  id          String      @id @default(cuid())
+  brandId     String
+  brand       Brand       @relation(fields: [brandId], references: [id])
+  type        EntryType
+  channel     ChannelType
+  status      EntryStatus @default(draft)
+  scheduledAt DateTime
+  timezone    String      @default("Africa/Tunis")
+  factId      String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@unique([brandId, scheduledAt, type, channel])
+  @@index([brandId, status])
+}
+
+// ============================================================================
+// 3. THE B11 MOAT (Script Locking)
+// ============================================================================
+
+model Fact {
+  id        String   @id @default(cuid())
+  brandId   String
+  brand     Brand    @relation(fields: [brandId], references: [id])
+  tier      String // "Hot" | "Standard" | "Premium"
+  language  String // "ar" | "derja" | "fr" | "en"
+  topic     String?
+  status    String   @default("draft") // draft→funded→live→claimed→in_edit→locked→approved→printed→paid
+  cpmBudget Int // cents per 1000 views (e.g., 300 = $3.00)
+  baseFee   Int // cents (e.g., 800 = $8.00)
+  maxClaims Int      @default(10)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  scriptVersions ScriptVersion[]
+  claims         Claim[]
+}
+
+model ScriptVersion {
+  id        String   @id @default(cuid())
+  factId    String
+  fact      Fact     @relation(fields: [factId], references: [id])
+  version   Int
+  status    String   @default("draft") // draft → in_qa → approved
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  lines    ScriptLine[]
+  receipts VerificationReceipt[]
+
+  @@unique([factId, version])
+}
+
+model ScriptLine {
+  id              String        @id @default(cuid())
+  scriptVersionId String
+  scriptVersion   ScriptVersion @relation(fields: [scriptVersionId], references: [id], onDelete: Cascade)
+  position        Int
+  text            String
+  isHook          Boolean       @default(false)
+  durationSec     Int           @default(5)
+  verified        Boolean       @default(false)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  sources ScriptLineSource[]
+
+  @@index([scriptVersionId, position])
+}
+
+// §D.1: join table — a line can be backed by multiple sources
+model Source {
+  id         String   @id @default(cuid())
+  label      String
+  url        String
+  type       String // "official" | "news" | "research" | "brand_asset"
+  verifiedAt DateTime @default(now())
+  verifiedBy String // userId
+  createdAt  DateTime @default(now())
+
+  lineSources ScriptLineSource[]
+}
+
+model ScriptLineSource {
+  id           String     @id @default(cuid())
+  scriptLineId String
+  scriptLine   ScriptLine @relation(fields: [scriptLineId], references: [id], onDelete: Cascade)
+  sourceId     String
+  source       Source     @relation(fields: [sourceId], references: [id])
+  linkedAt     DateTime   @default(now())
+
+  @@unique([scriptLineId, sourceId])
+}
+
+model VerificationReceipt {
+  id                String        @id @default(cuid())
+  scriptVersionId   String
+  scriptVersion     ScriptVersion @relation(fields: [scriptVersionId], references: [id])
+  hash              String // SHA-256 of canonical JSON {lines, sources, reviewer}
+  reviewerId        String
+  createdAt         DateTime      @default(now())
+  // §D.4: when a brand overrides an off-script video, the receipt is voided
+  invalidatedAt     DateTime?
+  invalidatedBy     String?
+  invalidatedReason String?
+
+  @@index([scriptVersionId])
+}
+
+// ============================================================================
+// 4. PRODUCTION & LIFECYCLE
+// ============================================================================
+
+enum ClaimStatus {
+  claimed
+  in_edit
+  locked
+  approved
+  changes_requested
+  rejected
+  expired
+}
+
+enum VideoStatus {
+  editing
+  locked_pending
+  approved_queued
+  publishing
+  published
+  counting
+  settled
+  publish_failed
+  held_factual_deviation
+}
+
+model Claim {
+  id           String      @id @default(cuid())
+  factId       String
+  fact         Fact        @relation(fields: [factId], references: [id])
+  creatorId    String
+  creator      Creator     @relation(fields: [creatorId], references: [id])
+  status       ClaimStatus @default(claimed)
+  claimedAt    DateTime    @default(now())
+  lockDeadline DateTime // +24h from claim
+  lockedAt     DateTime?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  videos Video[]
+
+  @@index([factId, status])
+  @@index([creatorId, status])
+}
+
+model Video {
+  id             String      @id @default(cuid())
+  claimId        String
+  claim          Claim       @relation(fields: [claimId], references: [id])
+  stage          VideoStatus @default(editing)
+  r2Key          String? // Cloudflare R2 object key for uploaded MP4
+  transcript     String? // Used for stay-on-script check
+  durationSec    Int?
+  platform       String      @default("tiktok")
+  lockedAt       DateTime?
+  reviewDeadline DateTime? // +12h from lock
+  publishedAt    DateTime?
+  settledAt      DateTime?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  policyChecks  PolicyCheck[]
+  publishJobs   PublishJob[]
+  viewSnapshots ViewSnapshot[]
+  shortLinks    ShortLink[]
+
+  @@index([claimId])
+  @@index([stage])
+}
+
+model PolicyCheck {
+  id        String   @id @default(cuid())
+  videoId   String
+  video     Video    @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  checkType String // "script_match" | "brand_safety" | "off_script_override"
+  result    String // "pass" | "fail" | "override"
+  details   String?
+  createdAt DateTime @default(now())
+
+  @@index([videoId, result])
+}
+
+// ============================================================================
+// 5. DISTRIBUTION & VIEWS
+// ============================================================================
+
+model PublishJob {
+  id          String    @id @default(cuid())
+  videoId     String
+  video       Video     @relation(fields: [videoId], references: [id])
+  platform    String
+  status      String    @default("scheduled") // scheduled → published | failed
+  externalId  String?
+  scheduledAt DateTime
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([videoId, status])
+}
+
+model ViewSnapshot {
+  id           String   @id @default(cuid())
+  videoId      String
+  video        Video    @relation(fields: [videoId], references: [id])
+  views        Int
+  clicks       Int
+  source       String // "tiktok_api" | "screenshot_proof"
+  isAnomalous  Boolean  @default(false)
+  anomalyFlags Json?
+  takenAt      DateTime @default(now())
+
+  @@index([videoId, takenAt])
+}
+
+// ============================================================================
+// 6. SHORTLINKS
+// ============================================================================
+
+model ShortLink {
+  id        String   @id @default(cuid())
+  code      String   @unique // 24-char base62, unguessable
+  targetUrl String
+  videoId   String?
+  video     Video?   @relation(fields: [videoId], references: [id])
+  brandId   String?
+  brand     Brand?   @relation(fields: [brandId], references: [id])
+  createdAt DateTime @default(now())
+
+  clicks ClickEvent[]
+
+  @@index([videoId])
+}
+
+model ClickEvent {
+  id          String    @id @default(cuid())
+  shortLinkId String
+  shortLink   ShortLink @relation(fields: [shortLinkId], references: [id])
+  ipHash      String // SHA-256 of IP (privacy-preserving)
+  userAgent   String?
+  isBot       Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+
+  @@index([shortLinkId, createdAt])
+  @@index([ipHash, createdAt])
+}
+
+// ============================================================================
+// 7. MONEY & LEDGER (Double-Entry)
+// §D.2: all fiat amounts in INTEGER cents. Gems are integers.
+// Every money movement = paired debit (one account) + credit (another account)
+// ============================================================================
+
+model LedgerAccount {
+  id        String   @id @default(cuid())
+  ownerId   String // brandId or creatorId or "platform"
+  type      String // "brand_escrow" | "creator_pending" | "creator_withdrawable" | "platform_revenue" | "gems"
+  currency  String // "USD" | "TND" | "GEMS"
+  brandId   String?
+  brand     Brand?   @relation(fields: [brandId], references: [id])
+  creatorId String?
+  creator   Creator? @relation(fields: [creatorId], references: [id])
+  createdAt DateTime @default(now())
+
+  entries LedgerEntry[]
+
+  @@unique([ownerId, type, currency])
+}
+
+model LedgerEntry {
+  id             String        @id @default(cuid())
+  accountId      String
+  account        LedgerAccount @relation(fields: [accountId], references: [id])
+  debit          Int           @default(0) // cents or gem-integer
+  credit         Int           @default(0) // cents or gem-integer
+  refType        String // "subscription" | "topup" | "base_fee" | "cpm_payout" | "withdrawal" | "gem_grant" | "gem_spend"
+  refId          String
+  idempotencyKey String        @unique
+  createdAt      DateTime      @default(now())
+
+  @@index([accountId, createdAt])
+  @@index([refType, refId])
+}
+
+// ============================================================================
+// 8. TELEMETRY & OUTBOX (LLM Data Moat)
+// ============================================================================
+
+model DomainEvent {
+  id        String   @id @default(cuid())
+  eventType String // e.g., "fact.created", "script.approved", "claim.locked", "video.published"
+  actorId   String?
+  actor     User?    @relation("ActorEvents", fields: [actorId], references: [id])
+  entityId  String?
+  payload   Json
+  timestamp DateTime @default(now())
+
+  @@index([eventType, timestamp])
+  @@index([entityId])
+}

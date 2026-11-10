@@ -1,0 +1,23 @@
+{
+  "name": "perokio-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Perokio Backend — NestJS Modular Monolith + BullMQ Worker",
+  "scripts": {
+    "db:generate": "pnpm --filter @perokio/db prisma:generate",
+    "db:migrate": "pnpm --filter @perokio/db prisma:migrate",
+    "db:push": "pnpm --filter @perokio/db prisma:push",
+    "db:seed": "pnpm --filter @perokio/db seed",
+    "db:studio": "pnpm --filter @perokio/db prisma:studio",
+    "api:start": "pnpm --filter @perokio/api start",
+    "api:dev": "pnpm --filter @perokio/api dev",
+    "worker:start": "pnpm --filter @perokio/worker start",
+    "worker:dev": "pnpm --filter @perokio/worker dev",
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "services:start": "bash scripts/start-services.sh"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

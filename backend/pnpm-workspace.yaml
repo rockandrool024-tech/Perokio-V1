@@ -1,0 +1,14 @@
+packages:
+  - 'apps/*'
+  - 'packages/*'
+
+onlyBuiltDependencies:
+  - '@prisma/client'
+  - '@prisma/engines'
+  - prisma
+  - '@nestjs/core'
+  - msgpackr-extract
+  - '@parcel/watcher'
+  - '@swc/core'
+  - es5-ext
+  - sharp

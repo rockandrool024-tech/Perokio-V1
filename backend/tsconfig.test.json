@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "ES2022",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "baseUrl": ".",
+    "paths": {
+      "@perokio/db": ["packages/db/src"],
+      "@perokio/db/*": ["packages/db/src/*"]
+    }
+  },
+  "include": ["test/**/*", "packages/db/src/**/*", "apps/api/src/**/*"]
+}
