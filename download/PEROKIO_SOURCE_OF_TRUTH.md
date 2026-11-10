@@ -1,8 +1,8 @@
-# 🦜 PEROKIO — PRODUCT SOURCE OF TRUTH (V1, Post-Cycle 8)
+# 🦜 PEROKIO — PRODUCT SOURCE OF TRUTH (V1, Post-Cycle 9)
 
-> **Status:** V1 Locked. All 8 build cycles complete. 44+ screens across 3 roles.
+> **Status:** V1 Locked. All 9 build cycles complete. 44+ screens across 3 roles.
 > **Stack:** Next.js 16 (App Router) · TypeScript 5 · Tailwind CSS 4 · Zustand · Framer Motion · Recharts · shadcn/ui
-> **Last updated:** November 2024 (post-Cycle 8)
+> **Last updated:** November 2024 (post-Cycle 9)
 
 ---
 
@@ -407,7 +407,62 @@ src/
 
 ---
 
-## 15. WHAT SUCCESS LOOKS LIKE (from the original spec)
+## 15. CYCLE 9 — FINAL V1 POLISH
+
+The final V1 polish cycle. Four phases, all complete.
+
+### Phase 1 — Commercial Metrics (clicks, shortlink, successScore)
+
+Added three commercial fields to the `Video` type and surfaced them across the brand + creator UI:
+
+| Field | Type | Purpose | Surfaced in |
+|---|---|---|---|
+| `clicks` | `number` | Total link clicks from the trackable shortlink | B08 (recent videos: clicks + CTR), B10 (total clicks per fact), B14 (Clicks metric + CTR), B17 (Clicks metric + CTR), WL01 (Link Clicks KPI + shortlink button) |
+| `shortlink` | `string` | Trackable perokio short URL (e.g., `pero.to/f-1101-amira`) | B14 (footer, click-to-copy), B17 (shortlink card, click-to-copy), WL01 (below live views, click-to-copy) |
+| `successScore` | `number` | 0-100 composite of CTR + engagement + brand fit | B08 (Grade A/B/C badge), B10 (Avg. Success stat cell), B14 (★ score badge), B17 (★ score badge) |
+
+All 10 seed videos have these fields populated. Published/counting/settled videos have real values; drafting/editing/locked videos have `clicks: 0, shortlink: '', successScore: 0`.
+
+**Grade logic:** `successScore >= 90` → Grade A (lime), `>= 70` → Grade B (orange), else Grade C (muted). Shown as a compact badge next to the video title.
+
+**CTR formula:** `clicks / views × 100` — displayed to 1 decimal place (e.g., `14.8% CTR`).
+
+### Phase 2 — No Dead Ends (CTA injection)
+
+Every screen now has a clear next-step CTA. Key additions:
+
+| Screen | CTA added | Navigates to |
+|---|---|---|
+| B08 Command Center | "View Analytics" per recent video | B14 Video Detail |
+| B08 Active Fact cards | "Edit Fact" + "View Details" ghost buttons | B11 Script Review / B10 Library |
+| B10 Fact Library | "New Fact" (toast + 400ms transition) | Admin Authoring (A07) |
+| B13 Claim Feed | "Review Now" (locked) / "View Video" (printed) | B12 Review / B14 Detail |
+| B14 Video Detail | "View Live Results (B17)" cross-link | B17 Results |
+| B17 Results | "View Deep-Dive (B14)" cross-link | B14 Video Detail |
+| B18 Next Cycle | "Create fact" + "View Trend Details" | Admin Authoring / toast |
+| C03 Claim Confirmation | "Go to editor" + "View Fact Sources" + "Back to Wall" | C04 / C02 / C01 |
+
+### Phase 3 — Polish Interactions
+
+| Feature | Screen | Implementation |
+|---|---|---|
+| Full-screen approval modal | B12 Video Review | AnimatePresence overlay with CheckCircle2 icon, video thumbnail, "View Schedule" (→ B15) + "Back to Dashboard" (→ B08) CTAs |
+| Force Publish Now | B15 Posting Queue | Orange Zap button on "Ready to post" items, calls `publishVideo()` + toast |
+| Copy Profile Link | WL01 Wallet | Link2 icon button, copies `perokio.com/creator/{handle}`, fires `trackProfileShare()` + toast |
+| Earnings micro-copy | C03 Claim Confirmation | "You will earn an estimated ${baseFee} base + ${MAX_CPM_PAYOUT} CPM potential for this fact." below the 24h timer |
+
+### Phase 4 — Delight Microinteractions (4 of 4 complete)
+
+| Feature | Screen | Implementation |
+|---|---|---|
+| B11 lock shake + Verified stamp | B11 Script Review | SVG rubber stamp with curved text "VERIFIED BY PEROKIO STUDIO" + "MOAT ENGINE · B11", scales in with spring + -12° rotation, holds 1.5s before success toast |
+| WL01 withdraw confetti | WL01 Wallet | 20-particle confetti burst (lime/orange/teal/violet) anchored to the Withdraw button, random angles + trajectories via framer-motion, auto-clears in 2s |
+| C01 swipe-to-claim | C01 Facts Wall | Hot Drops cards: `drag="x"` with `dragConstraints`, swipe right >100px → claim, swipe left >100px → dismiss (fade out). Hint text below carousel |
+| C04 drag-and-drop | C04 Edit Studio | B-Roll timeline clips: `draggable` + `onDragStart`/`onDragOver`/`onDrop` reorder. GripVertical icon on hover, `cursor-grab` styling, drag hint text below toolbar |
+
+---
+
+## 16. WHAT SUCCESS LOOKS LIKE (from the original spec)
 
 When you open the preview:
 
@@ -421,3 +476,17 @@ When you open the preview:
 - ✅ The share card for creator profiles looks good enough to post on Twitter.
 - ✅ B17 and WL01 show the exact same dollar figure for the same video (single Zustand source).
 - ✅ Mobile nav is 5 items max, with a "More" sheet for secondary screens.
+
+**Cycle 9 V1 Lock checkpoints:**
+
+- ✅ Every published video shows a trackable shortlink (click-to-copy) + clicks count + CTR percentage.
+- ✅ Every screen has a clear next-step CTA — no dead ends anywhere in the brand or creator flow.
+- ✅ B14 (deep-dive) and B17 (live results) cross-link to each other so brands can move between post-mortem and live analytics in one click.
+- ✅ B11 publish now fires a rubber-stamp "VERIFIED BY PEROKIO STUDIO" animation before the success toast.
+- ✅ WL01 Withdraw fires a confetti burst (20 particles, 4 colors).
+- ✅ C01 Hot Drops cards can be swiped right to claim, left to dismiss.
+- ✅ C04 B-Roll timeline clips can be dragged to reorder, with a GripVertical handle and cursor-grab styling.
+- ✅ B12 approval opens a full-screen modal (not just a toast) with clear next-step CTAs.
+- ✅ B15 "Force Publish Now" bypasses the schedule with one click.
+- ✅ WL01 "Copy Profile Link" lets creators share their public profile URL from the wallet.
+- ✅ C03 shows estimated earnings micro-copy: "You will earn an estimated $X base + $Y CPM potential."

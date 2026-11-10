@@ -7,13 +7,12 @@ import { usePerokioStore, useActiveFact } from '@/store/perokio'
 import { MAX_CPM_PAYOUT } from '@/lib/perokio/data'
 import { useT, usePick } from '@/lib/perokio/i18n'
 import { formatDuration } from '@/lib/perokio/live'
-import {
-  Lock, Play, Music, ImageIcon, Video, Sparkles, ChevronRight,
-  Clock, ShieldCheck, Wand2, Film,
+import { Lock, Play, Music, ImageIcon, Video, Sparkles, ChevronRight,
+  Clock, ShieldCheck, Wand2, Film, GripVertical,
 } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useToast } from '@/hooks/use-toast'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { cn } from '@/lib/utils'
 
 export function ClaimEdit() {
@@ -26,6 +25,29 @@ export function ClaimEdit() {
   const pick = usePick()
   const [selectedAsset, setSelectedAsset] = useState<string | null>(null)
   const [isLocked, setIsLocked] = useState(false)
+  // §4 Phase 4: drag-and-drop B-Roll timeline — creators can reorder clips
+  const timelineAssets = fact?.assets.filter((a) => a.type === 'broll' || a.type === 'image') ?? []
+  const [timelineOrder, setTimelineOrder] = useState<string[]>(() => timelineAssets.map((a) => a.id))
+  const [draggedAssetId, setDraggedAssetId] = useState<string | null>(null)
+  // Reset timeline order when the active fact changes (e.g., user claims a new fact)
+  useEffect(() => {
+    setTimelineOrder(timelineAssets.map((a) => a.id))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fact?.id])
+  // Reorder handler — moves the dragged clip to the drop position
+  const handleTimelineDrop = (targetId: string) => {
+    if (!draggedAssetId || draggedAssetId === targetId) return
+    setTimelineOrder((prev) => {
+      const fromIdx = prev.indexOf(draggedAssetId)
+      const toIdx = prev.indexOf(targetId)
+      if (fromIdx === -1 || toIdx === -1) return prev
+      const next = [...prev]
+      const [moved] = next.splice(fromIdx, 1)
+      next.splice(toIdx, 0, moved)
+      return next
+    })
+    setDraggedAssetId(null)
+  }
 
   if (!fact) {
     return (
@@ -167,20 +189,35 @@ export function ClaimEdit() {
                 </div>
               </div>
 
-              {/* === Timeline strip of B-Roll clips === */}
+              {/* === Timeline strip of B-Roll clips — drag to reorder (§4 Phase 4) === */}
               <div className="absolute bottom-0 inset-x-0 h-10 bg-black/50 backdrop-blur-md flex items-center px-2 gap-1 border-t border-white/10">
-                {fact.assets.filter((a) => a.type === 'broll' || a.type === 'image').map((a, i) => {
+                {timelineOrder.map((assetId) => {
+                  const a = fact.assets.find((x) => x.id === assetId)
+                  if (!a) return null
                   const Icon = a.type === 'broll' ? Video : ImageIcon
+                  const isDragging = draggedAssetId === a.id
                   return (
                     <motion.button
                       key={a.id}
+                      layout
+                      draggable
+                      onDragStart={() => setDraggedAssetId(a.id)}
+                      onDragEnd={() => setDraggedAssetId(null)}
+                      onDragOver={(e) => e.preventDefault()}
+                      onDrop={(e) => { e.preventDefault(); handleTimelineDrop(a.id) }}
                       whileHover={{ y: -2 }}
                       onClick={() => setSelectedAsset(a.id)}
                       className={cn(
-                        'h-7 flex-1 rounded flex items-center justify-center gap-1 text-[10px] font-medium transition-all',
-                        selectedAsset === a.id ? 'bg-lime text-[#0A0F0D]' : 'bg-white/10 text-white/80 hover:bg-white/20',
+                        'h-7 flex-1 rounded flex items-center justify-center gap-1 text-[10px] font-medium transition-all cursor-grab active:cursor-grabbing',
+                        selectedAsset === a.id
+                          ? 'bg-lime text-[#0A0F0D]'
+                          : isDragging
+                            ? 'bg-lime/30 text-lime opacity-50'
+                            : 'bg-white/10 text-white/80 hover:bg-white/20',
                       )}
+                      title={`Drag to reorder · ${a.label}`}
                     >
+                      <GripVertical className="h-2.5 w-2.5 opacity-50" />
                       <Icon className="h-3 w-3" />
                       {a.thumb}
                     </motion.button>
@@ -221,6 +258,10 @@ export function ClaimEdit() {
               <ImageIcon className="h-4 w-4" /> {t('Swap assets')}
             </Button>
           </div>
+          {/* §4 Phase 4: drag hint for the B-Roll timeline */}
+          <p className="text-center text-[11px] text-muted-fg font-mono" data-mono>
+            ✋ Drag clips in the timeline below to reorder
+          </p>
 
           {/* === Giant lime Lock Video & Submit button === */}
           <Button

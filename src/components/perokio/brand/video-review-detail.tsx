@@ -33,7 +33,7 @@ import {
 } from 'recharts'
 import {
   Eye, ShieldCheck, TrendingUp, DollarSign, ArrowLeft, ChevronRight,
-  CheckCircle2, Clock, Activity, BarChart3, ExternalLink,
+  CheckCircle2, Clock, Activity, BarChart3, ExternalLink, Link2,
 } from 'lucide-react'
 
 // 24h view curve data — generated from the video's total views
@@ -487,15 +487,44 @@ export function VideoReviewDetail() {
           </div>
         </div>
 
-        <div className="mt-4 pt-3 border-t border-white/[0.06] flex items-center gap-2 text-xs text-muted-fg">
+        {/* §1 Phase 1: Trackable shortlink — copyable, surfaced from Video.shortlink */}
+        {activeVideo.shortlink && (
+          <div className="mt-4 pt-3 border-t border-white/[0.06] flex items-center gap-2 text-xs">
+            <Link2 className="h-3.5 w-3.5 text-lime shrink-0" />
+            <span className="text-muted-fg shrink-0">Trackable link</span>
+            <code
+              className="font-mono text-lime bg-lime/10 border border-lime/25 px-2 py-0.5 rounded cursor-pointer hover:bg-lime/20 transition-colors"
+              data-mono
+              title="Click to copy"
+              onClick={() => {
+                if (navigator.clipboard) {
+                  navigator.clipboard.writeText(`https://${activeVideo.shortlink}`).catch(() => {})
+                }
+              }}
+            >
+              {activeVideo.shortlink}
+            </code>
+            <span className="text-muted-fg">· {formatCompact(activeVideo.clicks)} clicks · {activeVideo.views > 0 ? ((activeVideo.clicks / activeVideo.views) * 100).toFixed(1) : '0.0'}% CTR</span>
+          </div>
+        )}
+
+        <div className="mt-3 pt-3 border-t border-white/[0.06] flex items-center gap-2 text-xs text-muted-fg">
           <Clock className="h-3 w-3" />
           <span>
             Settled {activeVideo.publishedAt ? `· published ${activeVideo.publishedAt}` : ''}
           </span>
-          <span className="ms-auto flex items-center gap-1">
-            <ExternalLink className="h-3 w-3" />
-            View on {activeVideo.platform}
-          </span>
+          {/* §2 Phase 2: cross-link to B17 Live Results (complementary view) */}
+          <button
+            onClick={() => {
+              setActiveVideo(activeVideo.id)
+              setView('results')
+            }}
+            className="ms-auto flex items-center gap-1 text-lime hover:text-lime hover:bg-lime/10 px-2 py-0.5 rounded transition-colors"
+          >
+            <BarChart3 className="h-3 w-3" />
+            View Live Results (B17)
+            <ChevronRight className="h-3 w-3" />
+          </button>
         </div>
       </motion.div>
     </div>

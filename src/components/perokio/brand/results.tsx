@@ -32,7 +32,7 @@ import {
 } from 'recharts'
 import {
   BarChart3, Eye, TrendingUp, DollarSign, ArrowLeft, ChevronRight,
-  Zap, ShieldCheck, CheckCircle2, AlertTriangle, Clock,
+  Zap, ShieldCheck, CheckCircle2, AlertTriangle, Clock, Link2,
 } from 'lucide-react'
 import { AssistedPostModal } from './assisted-post-modal'
 
@@ -404,6 +404,52 @@ export function Results() {
         <ComparisonCard label="This video" value={`$${effectiveCpm.toFixed(2)}`} sub="effective CPM" accent="lime" />
         <ComparisonCard label={`${brand.name} avg`} value={`$${brandAvgCpm}`} sub="across all videos" accent="orange" />
         <ComparisonCard label="Industry" value={`$${brandStats.industryAvgCpm}`} sub={brandStats.industryLabel} accent="teal" />
+      </motion.div>
+
+      {/* === §1 Phase 1: Trackable shortlink + §2 Phase 2 cross-link to B14 deep-dive === */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ ...easeEditorial, delay: 0.4 }}
+        className="glass rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center gap-3"
+      >
+        {activeVideo.shortlink ? (
+          <div className="flex items-center gap-2 text-xs flex-1 min-w-0">
+            <Link2 className="h-4 w-4 text-lime shrink-0" />
+            <span className="text-muted-fg shrink-0">Trackable link</span>
+            <code
+              className="font-mono text-lime bg-lime/10 border border-lime/25 px-2 py-0.5 rounded cursor-pointer hover:bg-lime/20 transition-colors truncate"
+              data-mono
+              title="Click to copy"
+              onClick={() => {
+                if (navigator.clipboard) {
+                  navigator.clipboard.writeText(`https://${activeVideo.shortlink}`).catch(() => {})
+                }
+              }}
+            >
+              {activeVideo.shortlink}
+            </code>
+            <span className="text-muted-fg shrink-0 hidden sm:inline">
+              · {formatCompact(activeVideo.clicks)} clicks · {activeVideo.views > 0 ? ((activeVideo.clicks / activeVideo.views) * 100).toFixed(1) : '0.0'}% CTR
+            </span>
+          </div>
+        ) : (
+          <div className="text-xs text-muted-fg flex-1">Link tracking activates once the video is published.</div>
+        )}
+        {/* §2 Phase 2: cross-link to B14 Video Detail (post-mortem / script breakdown) */}
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => {
+            setActiveVideo(activeVideo.id)
+            setView('detail')
+          }}
+          className="gap-2 glass border-lime/25 text-lime hover:bg-lime/10 shrink-0"
+        >
+          <ShieldCheck className="h-3.5 w-3.5" />
+          View Deep-Dive (B14)
+          <ChevronRight className="h-3 w-3" />
+        </Button>
       </motion.div>
 
       {/* B16 Assisted Post Modal — only opens on Boost click */}

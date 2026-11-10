@@ -105,6 +105,8 @@ export function WalletView() {
   // vid_001 is Amira's published video (the one the wallet tracks).
   const trackedVideoId = 'vid_001'
   const { views: liveViews, totalEarned: liveDollars, progress: liveProgress } = useLiveEarnings(trackedVideoId)
+  // §1 Phase 1: look up the tracked video object so we can surface its shortlink + clicks
+  const trackedVideo = VIDEOS.find((v) => v.id === trackedVideoId)
 
   const streakToNext = creator.streak >= 28 ? 30 : creator.streak >= 14 ? 28 : stats.streakCycleDays
   const streakProgress = (creator.streak / streakToNext) * 100
@@ -249,6 +251,26 @@ export function WalletView() {
                 </motion.div>
               </div>
             </div>
+            {/* §1 Phase 1: surface the tracked video's shortlink — creators can copy/share */}
+            {trackedVideo?.shortlink && (
+              <button
+                onClick={() => {
+                  if (navigator.clipboard) {
+                    navigator.clipboard.writeText(`https://${trackedVideo.shortlink}`).catch(() => {})
+                  }
+                  toast({
+                    title: `🔗 ${t('Video link copied')}`,
+                    description: trackedVideo.shortlink,
+                  })
+                }}
+                className="group flex items-center gap-1.5 text-[11px] text-muted-fg hover:text-lime transition-colors"
+                title={t('Click to copy your video link')}
+              >
+                <Link2 className="h-3 w-3" />
+                <span className="font-mono" data-mono>{trackedVideo.shortlink}</span>
+                <span className="text-[10px] text-muted-fg group-hover:text-lime">· {formatCompact(trackedVideo.clicks)} {t('clicks')}</span>
+              </button>
+            )}
           </div>
 
           {/* Streak / level cards */}
