@@ -370,14 +370,22 @@ exports.Prisma.PrintRatingScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.PayoutScalarFieldEnum = {
+  id: 'id',
+  creatorId: 'creatorId',
+  amountCents: 'amountCents',
+  status: 'status',
+  approvedBy: 'approvedBy',
+  approvedAt: 'approvedAt',
+  externalRef: 'externalRef',
+  failureReason: 'failureReason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
-};
-
-exports.Prisma.NullableJsonNullValueInput = {
-  DbNull: Prisma.DbNull,
-  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.JsonNullValueInput = {
@@ -473,7 +481,8 @@ exports.Prisma.ModelName = {
   DomainEvent: 'DomainEvent',
   HarnessConfig: 'HarnessConfig',
   GenerationRun: 'GenerationRun',
-  PrintRating: 'PrintRating'
+  PrintRating: 'PrintRating',
+  Payout: 'Payout'
 };
 
 /**

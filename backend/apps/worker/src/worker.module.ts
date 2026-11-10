@@ -1,6 +1,7 @@
 import { Module, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
 import { startLockExpiryWorker } from './processors/lock-expiry.processor';
 import { startReviewExpiryWorker } from './processors/review-expiry.processor';
+import { startSettleVideoWorker } from './processors/settle-video.processor';
 import Redis from 'ioredis';
 
 @Module({})
@@ -15,8 +16,9 @@ export class WorkerModule implements OnModuleInit, OnModuleDestroy {
 
     this.workers.push(startLockExpiryWorker(this.connection));
     this.workers.push(startReviewExpiryWorker(this.connection));
+    this.workers.push(startSettleVideoWorker(this.connection));
 
-    console.log('🦜 Perokio Worker started — consuming lock-expiry and review-expiry queues');
+    console.log('🦜 Perokio Worker started — consuming lock-expiry, review-expiry, and settle-video queues');
   }
 
   async onModuleDestroy() {

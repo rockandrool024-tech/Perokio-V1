@@ -332,7 +332,7 @@ model ViewSnapshot {
   clicks       Int
   source       String // "tiktok_api" | "screenshot_proof"
   isAnomalous  Boolean  @default(false)
-  anomalyFlags Json?
+  anomalyFlags String[] @default([]) // e.g., ["velocity_spike", "bot_ua"]
   takenAt      DateTime @default(now())
 
   @@index([videoId, takenAt])
@@ -482,4 +482,27 @@ model PrintRating {
   createdAt    DateTime @default(now())
 
   @@index([reviewerId])
+}
+
+// ============================================================================
+// 11. PAYOUTS (Cycle B7)
+// A Payout record is created when the finance admin approves a creator's
+// creator_pending → creator_withdrawable transfer. The actual Flouci API
+// call is mocked in V1.
+// ============================================================================
+
+model Payout {
+  id            String    @id @default(cuid())
+  creatorId     String
+  amountCents   Int
+  status        String    @default("pending") // pending → approved → paid | failed
+  approvedBy    String?
+  approvedAt    DateTime?
+  externalRef   String? // Flouci transaction ID (mocked in V1)
+  failureReason String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([creatorId, status])
+  @@index([status])
 }

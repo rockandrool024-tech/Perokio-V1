@@ -7,6 +7,8 @@ import { ClaimsModule } from './claims/claims.module';
 import { ShortLinksModule } from './shortlinks/shortlinks.module';
 import { HarnessModule } from './harness/harness.module';
 import { AdminModule } from './admin/admin.module';
+import { DistributionModule } from './distribution/distribution.module';
+import { LedgerModule } from './ledger/ledger.module';
 import { AuditInterceptor } from './common/interceptors/audit.interceptor';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 
@@ -27,6 +29,8 @@ export class PrismaModule {}
     ShortLinksModule,
     HarnessModule,
     AdminModule,
+    DistributionModule,
+    LedgerModule,
   ],
   providers: [
     {
