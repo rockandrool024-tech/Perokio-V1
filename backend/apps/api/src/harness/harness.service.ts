@@ -1,5 +1,5 @@
 import {
-  Injectable, BadRequestException, NotFoundException, ConflictException,
+  Injectable, BadRequestException, NotFoundException, ConflictException, Logger,
 } from '@nestjs/common';
 import { prisma } from '@perokio/db';
 import { LlmService } from './llm.service';
@@ -30,6 +30,8 @@ export const EVAL_TRAP_PROMPTS = [
 
 @Injectable()
 export class HarnessService {
+  private readonly logger = new Logger(HarnessService.name);
+
   constructor(private llm: LlmService) {}
 
   // ============================================================================
@@ -38,7 +40,23 @@ export class HarnessService {
 
   async generate(factId: string, configId: string, reviewerId?: string) {
     // 1. Validate fact + config exist
-    const fact = await prisma.fact.findUnique({ where: { id: factId } });
+    const fact = await prisma.fact.findUnique({
+      where: { id: factId },
+      include: {
+        brand: {
+          include: {
+            context: true,
+            assets: { where: { tags: { has: 'tone_guide' } }, take: 3 },
+          },
+        },
+        scriptVersions: {
+          where: { status: 'approved' },
+          include: { lines: { include: { sources: { include: { source: true } } } } },
+          orderBy: { version: 'desc' },
+          take: 1,
+        },
+      },
+    });
     if (!fact) throw new NotFoundException(`Fact ${factId} not found`);
 
     const config = await prisma.harnessConfig.findUnique({ where: { id: configId } });
@@ -66,12 +84,73 @@ export class HarnessService {
       const existingVersions = await prisma.scriptVersion.count({ where: { factId } });
       const nextVersion = existingVersions + 1;
 
-      // 4. Call the LLM
-      const draftModel = (config.modelMap as any)?.draft || 'claude-3.5-sonnet';
-      const prompt = `Generate a 20-second TikTok script about: ${fact.topic || fact.tier} — claim: ${fact.tier}`;
-      const result = await this.llm.generateScript(prompt, draftModel);
+      // 4. B4.5 — Build the RAG context from the Fact + Brand
+      //    - rawClaim: the brand's original unverified claim text
+      //    - verifiedSources: extracted from the latest approved ScriptVersion's Source records
+      //      + any sources stored on Fact.verifiedSources (JSON)
+      //    - brandContext: industry, targetAudience, brandVoice, guidelines
+      const approvedVersion = fact.scriptVersions[0];
+      const verifiedSources = approvedVersion
+        ? approvedVersion.lines
+            .flatMap((l) => l.sources.map((s) => s.source))
+            .filter((s, idx, arr) => arr.findIndex((x) => x.id === s.id) === idx) // dedupe
+            .map((s) => ({ id: s.id, url: s.url, label: s.label, type: s.type }))
+        : [];
 
-      // 5. Create the ScriptVersion (status: draft — needs QA)
+      // If the Fact has verifiedSources stored as JSON, merge those in.
+      // B4.5: For sources that don't exist as Source records yet, create them
+      // so the LLM's suggestedSourceId can be pre-linked via ScriptLineSource.
+      const factStoredSources = (fact.verifiedSources as any[]) || [];
+      const existingSourceIds = new Set(verifiedSources.map((s) => s.id));
+      const newSourcesToCreate = factStoredSources.filter((s) => !existingSourceIds.has(s.id || s.url));
+
+      // Create Source records for any that don't exist yet
+      for (const s of newSourcesToCreate) {
+        const sourceId = s.id || s.url;
+        try {
+          await prisma.source.create({
+            data: {
+              id: sourceId,
+              label: s.label || s.url,
+              url: s.url,
+              type: s.type || 'official',
+              verifiedBy: reviewerId || fact.brand.ownerId,
+            },
+          });
+          this.logger.log(`  → Created Source record: ${sourceId} (${s.label})`);
+        } catch {
+          // Source already exists — fine
+        }
+      }
+
+      const allSources = [
+        ...verifiedSources,
+        ...factStoredSources
+          .filter((s) => !verifiedSources.find((v) => v.id === s.id || v.url === s.url))
+          .map((s) => ({ id: s.id || s.url, url: s.url, label: s.label || s.url, type: s.type || 'official' })),
+      ];
+
+      const ragContext = {
+        rawClaim: fact.rawClaim || fact.topic || `Verified fact about ${fact.tier}`,
+        verifiedSources: allSources,
+        brandContext: fact.brand.context
+          ? {
+              industry: fact.brand.context.industry,
+              targetAudience: fact.brand.context.targetAudience,
+              brandVoice: fact.brand.context.brandVoice,
+              guidelines: fact.brand.context.guidelines,
+            }
+          : undefined,
+      };
+
+      this.logger.log(`📚 RAG context: ${allSources.length} sources, brandVoice=${ragContext.brandContext?.brandVoice || 'none'}`);
+
+      // 5. Call the LLM with the RAG context
+      const draftModel = (config.modelMap as any)?.draft || 'claude-3.5-sonnet';
+      const prompt = `Generate a 20-second TikTok script for fact ${factId} (${fact.language})`;
+      const result = await this.llm.generateScriptWithRAG(prompt, ragContext, draftModel);
+
+      // 6. Create the ScriptVersion (status: draft — needs QA)
       const scriptVersion = await prisma.scriptVersion.create({
         data: {
           factId,
@@ -80,20 +159,43 @@ export class HarnessService {
         },
       });
 
-      // 6. Create ScriptLines — ALL with verified = false (§0 lock 1)
+      // 7. Create ScriptLines — ALL with verified = false (§0 lock 1)
       //    The Harness CANNOT verify lines. Only a human Admin can.
-      await prisma.scriptLine.createMany({
-        data: result.lines.map((line) => ({
-          scriptVersionId: scriptVersion.id,
-          position: line.position,
-          text: line.text,
-          isHook: line.isHook,
-          durationSec: line.durationSec,
-          verified: false, // ALWAYS false from the harness
-        })),
-      });
+      //    B4.5: If the LLM suggested a source_id, we AUTO-LINK the ScriptLineSource
+      //    join row, but verified stays false until the human confirms via
+      //    POST /admin/lines/:id/verify.
+      for (const line of result.lines) {
+        const created = await prisma.scriptLine.create({
+          data: {
+            scriptVersionId: scriptVersion.id,
+            position: line.position,
+            text: line.text,
+            isHook: line.isHook,
+            durationSec: line.durationSec,
+            verified: false, // ALWAYS false from the harness
+          },
+        });
 
-      // 7. Update the GenerationRun with cost/tokens
+        // B4.5: If the LLM suggested a source, pre-link it (but verified=false)
+        if (line.suggestedSourceId) {
+          const sourceExists = allSources.find((s) => s.id === line.suggestedSourceId);
+          if (sourceExists) {
+            try {
+              await prisma.scriptLineSource.create({
+                data: {
+                  scriptLineId: created.id,
+                  sourceId: line.suggestedSourceId,
+                },
+              });
+              this.logger.log(`  → L${line.position + 1}: suggested source ${line.suggestedSourceId} pre-linked (verified=false)`);
+            } catch {
+              // Source already linked — fine
+            }
+          }
+        }
+      }
+
+      // 8. Update the GenerationRun with cost/tokens
       await prisma.generationRun.update({
         where: { id: run.id },
         data: {
@@ -111,9 +213,16 @@ export class HarnessService {
         version: nextVersion,
         linesCreated: result.lines.length,
         allVerified: false, // Explicitly: harness never verifies
+        sourcesAvailable: allSources.length,
+        sourcesSuggested: result.lines.filter((l) => l.suggestedSourceId).length,
         costUsd: result.costUsd,
         tokensUsed: result.tokensUsed,
         model: result.model,
+        ragContextUsed: {
+          rawClaimLength: ragContext.rawClaim.length,
+          sourcesCount: allSources.length,
+          brandContextProvided: !!ragContext.brandContext,
+        },
       };
     } catch (e: any) {
       await prisma.generationRun.update({
@@ -152,8 +261,16 @@ export class HarnessService {
         // the LLM "tries" to verify the fake claim → eval fails.
         const wouldHallucinate = this.llm.wouldHallucinate(trap.prompt);
 
-        // Call the LLM to simulate the run
-        const result = await this.llm.generateScript(trap.prompt, checkModel);
+        // Call the LLM with a RAG context containing the trap prompt as the rawClaim
+        // The eval asserts the LLM refuses to verify the fake claim
+        const result = await this.llm.generateScriptWithRAG(
+          trap.prompt,
+          {
+            rawClaim: trap.prompt,
+            verifiedSources: [], // No real sources for a fake claim
+          },
+          checkModel,
+        );
 
         // The eval passes if the LLM REFUSED to verify the fake claim
         // (i.e., did NOT hallucinate). It fails if the LLM hallucinated.

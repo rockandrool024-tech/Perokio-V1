@@ -72,6 +72,35 @@ model Brand {
   facts          Fact[]
   ledgerAccounts LedgerAccount[]
   shortLinks     ShortLink[]
+  context        BrandContext?
+  assets         BrandAsset[]
+}
+
+// ============================================================================
+// B4.5 — BrandContext & BrandAsset (RAG pipeline inputs)
+// ============================================================================
+
+model BrandContext {
+  id             String   @id @default(cuid())
+  brandId        String   @unique
+  brand          Brand    @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  industry       String? // e.g., "Café & Hospitality", "Beauty"
+  targetAudience String? // e.g., "Tunisian women 18-34"
+  brandVoice     String? // e.g., "warm, authoritative, playful"
+  guidelines     String? // free-form do/don't list
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model BrandAsset {
+  id        String   @id @default(cuid())
+  brandId   String
+  brand     Brand    @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  r2Url     String // Cloudflare R2 URL for the asset (image, doc, brand kit)
+  tags      String[] @default([]) // e.g., ["logo", "product_shot", "tone_guide"]
+  createdAt DateTime @default(now())
+
+  @@index([brandId])
 }
 
 model Creator {
@@ -133,18 +162,21 @@ model CalendarEntry {
 // ============================================================================
 
 model Fact {
-  id        String   @id @default(cuid())
-  brandId   String
-  brand     Brand    @relation(fields: [brandId], references: [id])
-  tier      String // "Hot" | "Standard" | "Premium"
-  language  String // "ar" | "derja" | "fr" | "en"
-  topic     String?
-  status    String   @default("draft") // draft→funded→live→claimed→in_edit→locked→approved→printed→paid
-  cpmBudget Int // cents per 1000 views (e.g., 300 = $3.00)
-  baseFee   Int // cents (e.g., 800 = $8.00)
-  maxClaims Int      @default(10)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id              String   @id @default(cuid())
+  brandId         String
+  brand           Brand    @relation(fields: [brandId], references: [id])
+  tier            String // "Hot" | "Standard" | "Premium"
+  language        String // "ar" | "derja" | "fr" | "en"
+  topic           String?
+  status          String   @default("draft") // draft→funded→live→claimed→in_edit→locked→approved→printed→paid
+  cpmBudget       Int // cents per 1000 views (e.g., 300 = $3.00)
+  baseFee         Int // cents (e.g., 800 = $8.00)
+  maxClaims       Int      @default(10)
+  // B4.5 — RAG pipeline inputs
+  rawClaim        String? // the brand's original unverified claim text (pre-fact-check)
+  verifiedSources Json? // array of { url, label, type } — the verified backing for this fact
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
   scriptVersions ScriptVersion[]
   claims         Claim[]

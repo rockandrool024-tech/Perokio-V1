@@ -140,6 +140,25 @@ exports.Prisma.BrandScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.BrandContextScalarFieldEnum = {
+  id: 'id',
+  brandId: 'brandId',
+  industry: 'industry',
+  targetAudience: 'targetAudience',
+  brandVoice: 'brandVoice',
+  guidelines: 'guidelines',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.BrandAssetScalarFieldEnum = {
+  id: 'id',
+  brandId: 'brandId',
+  r2Url: 'r2Url',
+  tags: 'tags',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.CreatorScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -172,6 +191,8 @@ exports.Prisma.FactScalarFieldEnum = {
   cpmBudget: 'cpmBudget',
   baseFee: 'baseFee',
   maxClaims: 'maxClaims',
+  rawClaim: 'rawClaim',
+  verifiedSources: 'verifiedSources',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -388,6 +409,11 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
 exports.Prisma.JsonNullValueInput = {
   JsonNull: Prisma.JsonNull
 };
@@ -461,6 +487,8 @@ exports.VideoStatus = exports.$Enums.VideoStatus = {
 exports.Prisma.ModelName = {
   User: 'User',
   Brand: 'Brand',
+  BrandContext: 'BrandContext',
+  BrandAsset: 'BrandAsset',
   Creator: 'Creator',
   CalendarEntry: 'CalendarEntry',
   Fact: 'Fact',

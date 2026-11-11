@@ -1,6 +1,6 @@
 # 🦜 PEROKIO BACKEND — PRODUCTION SOURCE OF TRUTH (V1)
 
-> **Status:** V1 Locked. Cycles B1–B7 complete. 25 tables, 39 API routes, 3 BullMQ workers.
+> **Status:** V1 Locked. Cycles B1–B7 + B4.5 (RAG) complete. 27 tables, 39 API routes, 3 BullMQ workers.
 > **Stack:** NestJS (Modular Monolith) · Prisma ORM · PostgreSQL · Redis + BullMQ · Cloudflare R2
 > **Last updated:** November 2026 (post-B7)
 > **File:** This document is the definitive reference for the frontend team and future backend engineers. It supersedes all chat logs and prompt transcripts.
@@ -16,7 +16,7 @@
 | Framework | NestJS | 10.4.x | Modular monolith. App Router pattern, dependency injection. |
 | Language | TypeScript | 5.7+ | Strict mode (per-package). Decorators + metadata enabled. |
 | ORM | Prisma Client | 6.19.x | Generated client at `packages/db/src/generated/prisma`. |
-| Database | PostgreSQL | 17.11 | 25 tables, native arrays + JSON, conditional UPDATE for race safety. |
+| Database | PostgreSQL | 17.11 | 27 tables (incl. BrandContext + BrandAsset from B4.5), native arrays + JSON, conditional UPDATE for race safety. |
 | Cache/Queue | Redis | 7.4 | BullMQ delayed jobs for timers. Idempotency key cache (24h TTL). |
 | Job Queue | BullMQ | 5.34.x | 3 queues: `lock-expiry`, `review-expiry`, `settle-video`. |
 | Object Storage | Cloudflare R2 | — | Video MP4 storage. Key stored as `Video.r2Key`. Mocked in V1. |
@@ -419,6 +419,113 @@ const result = await prisma.$transaction(async (tx) => {
 
 ---
 
+### Section 3.1: The RAG Pipeline (B4.5)
+
+The Harness doesn't just call an LLM with a bare prompt. It uses **Retrieval-Augmented Generation (RAG)** to ground the LLM in the brand's verified facts and brand voice. This prevents hallucination and ensures every generated line is traceable to a source.
+
+#### RAG Context Assembly
+
+When `POST /facts/:factId/generate` is called, the `HarnessService` assembles a `RAGContext` object from three inputs:
+
+| Input | Source | Purpose |
+|---|---|---|
+| `rawClaim` | `Fact.rawClaim` | The brand's original unverified claim text (pre-fact-check) |
+| `verifiedSources` | `Fact.verifiedSources` (JSON) + `Source` records from the latest approved `ScriptVersion` | The list of sources the LLM is allowed to reference |
+| `brandContext` | `BrandContext` (1:1 with Brand) | Industry, target audience, brand voice, guidelines — for tone matching |
+
+**Code path:**
+```typescript
+// apps/api/src/harness/harness.service.ts → generate()
+const fact = await prisma.fact.findUnique({
+  where: { id: factId },
+  include: {
+    brand: { include: { context: true, assets: { where: { tags: { has: 'tone_guide' } } } } },
+    scriptVersions: { where: { status: 'approved' }, include: { lines: { include: { sources: { include: { source: true } } } } } },
+  },
+});
+
+// Merge sources from approved ScriptVersion + Fact.verifiedSources JSON
+const allSources = [...verifiedSources, ...factStoredSources];
+const ragContext = { rawClaim: fact.rawClaim, verifiedSources: allSources, brandContext: fact.brand.context };
+const result = await this.llm.generateScriptWithRAG(prompt, ragContext, draftModel);
+```
+
+#### The System Prompt (Sent to the LLM)
+
+The `LlmService.buildRAGSystemPrompt()` method constructs a prompt that STRICTLY instructs the LLM:
+
+```
+You are Perokio's script generation assistant.
+
+STRICT RULES:
+1. You MUST ground every factual line in one of the verified sources listed below.
+2. For each line, set "suggestedSourceId" to the source_id that backs the claim.
+3. If a line is a CTA or outro (no factual claim), set "suggestedSourceId" to null.
+4. You MUST NOT invent new claims or sources. If the raw claim is not backed by a source,
+   do not generate a line for it.
+5. Keep the total duration between 15-20 seconds.
+6. Match the brand voice and target audience exactly.
+
+RAW CLAIM: <Fact.rawClaim>
+
+VERIFIED SOURCES (you may ONLY reference these):
+  [1] source_id="src_capbon_report" — Cap Bon Agricultural Report 2024 (official)
+      URL: https://capbon.tn/arabica-2024.pdf
+  [2] source_id="src_altitude_survey" — Tunisian Geographic Survey (research)
+      URL: https://geo.tn/altitude-survey
+
+BRAND CONTEXT:
+  - Industry: Café & Hospitality
+  - Target audience: Tunisian coffee lovers, 25-44
+  - Brand voice: warm, authoritative, playful
+  - Guidelines: Do: mention origin, altitude. Don't: use medical claims.
+
+Respond with a JSON array of script lines. Each line: { position, text, isHook, durationSec, suggestedSourceId }.
+```
+
+#### Source Pre-Linking (verified stays false)
+
+When the LLM returns a line with `suggestedSourceId`, the Harness:
+
+1. **Creates the `ScriptLine`** with `verified = false` (the Harness CANNOT verify)
+2. **Pre-links the `ScriptLineSource` join row** — so the QA reviewer sees the LLM's suggestion
+3. If the suggested source doesn't exist as a `Source` record, the Harness **creates it** from the `Fact.verifiedSources` JSON
+
+```typescript
+for (const line of result.lines) {
+  const created = await prisma.scriptLine.create({
+    data: { ...line, verified: false }, // ALWAYS false from the harness
+  });
+  if (line.suggestedSourceId) {
+    await prisma.scriptLineSource.create({
+      data: { scriptLineId: created.id, sourceId: line.suggestedSourceId },
+    });
+  }
+}
+```
+
+**The human Admin then confirms** via `POST /admin/lines/:id/verify` — which sets `verified = true`. The pre-linked source becomes the official backing.
+
+#### Prisma Models Added (B4.5)
+
+| Model | Fields | Purpose |
+|---|---|---|
+| `BrandContext` | `brandId @unique`, `industry`, `targetAudience`, `brandVoice`, `guidelines` | 1:1 with Brand. The RAG brand-voice input. |
+| `BrandAsset` | `brandId`, `r2Url`, `tags String[]` | Brand kit assets (logos, tone guides). Filtered by `tags: { has: 'tone_guide' }` for RAG. |
+| `Fact.rawClaim` (new field) | `String?` | The brand's original unverified claim text — the RAG retrieval query. |
+| `Fact.verifiedSources` (new field) | `Json?` | Array of `{ id, url, label, type }` — the verified backing for the fact. |
+
+#### Verification Proof
+
+`scripts/proof-rag-pipeline.sh` — demonstrates:
+- BrandContext created (industry: Café, audience: Tunisian 25-44, voice: warm)
+- Fact created with `rawClaim` + 2 `verifiedSources`
+- `POST /facts/:id/generate` returns `ragContextUsed: { rawClaimLength: 71, sourcesCount: 2, brandContextProvided: true }`
+- Generated lines: L0 → pre-linked to `src_capbon_report`, L1 → pre-linked to `src_altitude_survey`, L2 → no source (CTA)
+- All 3 lines have `verified = false` (Harness cannot verify)
+
+---
+
 ### B5: The Admin Control Plane
 
 **Goal:** Endpoints for the Studio to manage scripts, review videos, and override deviations.
@@ -685,18 +792,18 @@ payoutCents = fact.baseFee + cpmEarned
 
 **Trigger:** Brand spends gems on an extra video credit or AI feature.
 
-**Money flow:** Brand Escrow → Platform Revenue
+**Money flow:** Brand Escrow (USD) → Platform Revenue (GEMS). Note: gem transactions use `amountGems` (integer gem count), not `amountCents`. The `LedgerAccount` for gems has `currency: 'GEMS'`.
 
 | Account | Debit | Credit |
 |---|---|---|
-| `platform_revenue` (revenue ↑) | **+amountCents** | |
-| `brand_escrow` (asset ↓ — brand paid for the feature) | | **+amountCents** |
+| `platform_revenue` (revenue ↑, GEMS) | **+amountGems** | |
+| `gems` (asset ↓ — brand spent gems, GEMS) | | **+amountGems** |
 
-**Example:** Brand spends $5.00 on an extra video credit → Debit platform_revenue 500c, Credit brand_escrow 500c.
+**Example:** Brand spends 50 gems on an extra video credit → Debit platform_revenue 50 GEMS, Credit gems 50 GEMS.
 
 **idempotencyKey:** `gem_spend:<refId>:debit` / `:credit`
 
-**Note:** Gems are tracked as an asset in the ledger (`type: 'gems'`, `currency: 'GEMS'`) — not a separate table. A brand's gem balance = `SUM(debit) - SUM(credit)` on their `gems` account.
+**Note:** Gems are tracked as an asset in the ledger (`type: 'gems'`, `currency: 'GEMS'`) — not a separate table. A brand's gem balance = `SUM(debit) - SUM(credit)` on their `gems` account. Gem transactions are denominated in **integer gem counts**, never cents. Fiat top-ups, settlements, and payouts use `amountCents`; gem features use `amountGems`.
 
 ---
 
@@ -733,6 +840,7 @@ Per-account:
 | `test/race-condition.test.ts` | B3 | `lock()` and `expire()` fired simultaneously — exactly one wins |
 | `test/click-redirect.test.ts` | B3 | ClickEvent created + 302 redirect + bot detection (WhatsApp/Telegram) |
 | `scripts/proof-harness-eval.sh` | B4 | Eval catches hallucination, activation blocked, generate creates `verified=false` lines |
+| `scripts/proof-rag-pipeline.sh` | B4.5 | RAG context assembled (rawClaim + verifiedSources + brandContext), LLM suggests source_ids, pre-linked but `verified=false` |
 | `test/admin-override.test.ts` | B5 | Override sets `invalidatedAt`, creates `PolicyCheck{override}`, moves video to `locked_pending` |
 | `scripts/proof-print-rating.sh` | B5 | 400 on `brandSafety=false`, 201 on both gates true with `overallScore=4.5` |
 | `test/distribution-ledger.test.ts` | B6/B7 | Anomaly hold (velocity spike prevents settlement) + Ledger balance (debits=credits) + Idempotency (duplicate webhook rejected) |

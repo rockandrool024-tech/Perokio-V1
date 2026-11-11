@@ -24,6 +24,16 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  */
 export type Brand = $Result.DefaultSelection<Prisma.$BrandPayload>
 /**
+ * Model BrandContext
+ * 
+ */
+export type BrandContext = $Result.DefaultSelection<Prisma.$BrandContextPayload>
+/**
+ * Model BrandAsset
+ * 
+ */
+export type BrandAsset = $Result.DefaultSelection<Prisma.$BrandAssetPayload>
+/**
  * Model Creator
  * 
  */
@@ -369,6 +379,26 @@ export class PrismaClient<
     * ```
     */
   get brand(): Prisma.BrandDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.brandContext`: Exposes CRUD operations for the **BrandContext** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more BrandContexts
+    * const brandContexts = await prisma.brandContext.findMany()
+    * ```
+    */
+  get brandContext(): Prisma.BrandContextDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.brandAsset`: Exposes CRUD operations for the **BrandAsset** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more BrandAssets
+    * const brandAssets = await prisma.brandAsset.findMany()
+    * ```
+    */
+  get brandAsset(): Prisma.BrandAssetDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.creator`: Exposes CRUD operations for the **Creator** model.
@@ -1032,6 +1062,8 @@ export namespace Prisma {
   export const ModelName: {
     User: 'User',
     Brand: 'Brand',
+    BrandContext: 'BrandContext',
+    BrandAsset: 'BrandAsset',
     Creator: 'Creator',
     CalendarEntry: 'CalendarEntry',
     Fact: 'Fact',
@@ -1072,7 +1104,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "brand" | "creator" | "calendarEntry" | "fact" | "scriptVersion" | "scriptLine" | "source" | "scriptLineSource" | "verificationReceipt" | "claim" | "video" | "policyCheck" | "publishJob" | "viewSnapshot" | "shortLink" | "clickEvent" | "ledgerAccount" | "ledgerEntry" | "domainEvent" | "harnessConfig" | "generationRun" | "printRating" | "payout"
+      modelProps: "user" | "brand" | "brandContext" | "brandAsset" | "creator" | "calendarEntry" | "fact" | "scriptVersion" | "scriptLine" | "source" | "scriptLineSource" | "verificationReceipt" | "claim" | "video" | "policyCheck" | "publishJob" | "viewSnapshot" | "shortLink" | "clickEvent" | "ledgerAccount" | "ledgerEntry" | "domainEvent" | "harnessConfig" | "generationRun" | "printRating" | "payout"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1221,6 +1253,154 @@ export namespace Prisma {
           count: {
             args: Prisma.BrandCountArgs<ExtArgs>
             result: $Utils.Optional<BrandCountAggregateOutputType> | number
+          }
+        }
+      }
+      BrandContext: {
+        payload: Prisma.$BrandContextPayload<ExtArgs>
+        fields: Prisma.BrandContextFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.BrandContextFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandContextPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.BrandContextFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandContextPayload>
+          }
+          findFirst: {
+            args: Prisma.BrandContextFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandContextPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.BrandContextFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandContextPayload>
+          }
+          findMany: {
+            args: Prisma.BrandContextFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandContextPayload>[]
+          }
+          create: {
+            args: Prisma.BrandContextCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandContextPayload>
+          }
+          createMany: {
+            args: Prisma.BrandContextCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.BrandContextCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandContextPayload>[]
+          }
+          delete: {
+            args: Prisma.BrandContextDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandContextPayload>
+          }
+          update: {
+            args: Prisma.BrandContextUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandContextPayload>
+          }
+          deleteMany: {
+            args: Prisma.BrandContextDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.BrandContextUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.BrandContextUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandContextPayload>[]
+          }
+          upsert: {
+            args: Prisma.BrandContextUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandContextPayload>
+          }
+          aggregate: {
+            args: Prisma.BrandContextAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateBrandContext>
+          }
+          groupBy: {
+            args: Prisma.BrandContextGroupByArgs<ExtArgs>
+            result: $Utils.Optional<BrandContextGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.BrandContextCountArgs<ExtArgs>
+            result: $Utils.Optional<BrandContextCountAggregateOutputType> | number
+          }
+        }
+      }
+      BrandAsset: {
+        payload: Prisma.$BrandAssetPayload<ExtArgs>
+        fields: Prisma.BrandAssetFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.BrandAssetFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandAssetPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.BrandAssetFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandAssetPayload>
+          }
+          findFirst: {
+            args: Prisma.BrandAssetFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandAssetPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.BrandAssetFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandAssetPayload>
+          }
+          findMany: {
+            args: Prisma.BrandAssetFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandAssetPayload>[]
+          }
+          create: {
+            args: Prisma.BrandAssetCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandAssetPayload>
+          }
+          createMany: {
+            args: Prisma.BrandAssetCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.BrandAssetCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandAssetPayload>[]
+          }
+          delete: {
+            args: Prisma.BrandAssetDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandAssetPayload>
+          }
+          update: {
+            args: Prisma.BrandAssetUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandAssetPayload>
+          }
+          deleteMany: {
+            args: Prisma.BrandAssetDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.BrandAssetUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.BrandAssetUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandAssetPayload>[]
+          }
+          upsert: {
+            args: Prisma.BrandAssetUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandAssetPayload>
+          }
+          aggregate: {
+            args: Prisma.BrandAssetAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateBrandAsset>
+          }
+          groupBy: {
+            args: Prisma.BrandAssetGroupByArgs<ExtArgs>
+            result: $Utils.Optional<BrandAssetGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.BrandAssetCountArgs<ExtArgs>
+            result: $Utils.Optional<BrandAssetCountAggregateOutputType> | number
           }
         }
       }
@@ -2950,6 +3130,8 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     user?: UserOmit
     brand?: BrandOmit
+    brandContext?: BrandContextOmit
+    brandAsset?: BrandAssetOmit
     creator?: CreatorOmit
     calendarEntry?: CalendarEntryOmit
     fact?: FactOmit
@@ -3106,6 +3288,7 @@ export namespace Prisma {
     facts: number
     ledgerAccounts: number
     shortLinks: number
+    assets: number
   }
 
   export type BrandCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3114,6 +3297,7 @@ export namespace Prisma {
     facts?: boolean | BrandCountOutputTypeCountFactsArgs
     ledgerAccounts?: boolean | BrandCountOutputTypeCountLedgerAccountsArgs
     shortLinks?: boolean | BrandCountOutputTypeCountShortLinksArgs
+    assets?: boolean | BrandCountOutputTypeCountAssetsArgs
   }
 
   // Custom InputTypes
@@ -3160,6 +3344,13 @@ export namespace Prisma {
    */
   export type BrandCountOutputTypeCountShortLinksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ShortLinkWhereInput
+  }
+
+  /**
+   * BrandCountOutputType without action
+   */
+  export type BrandCountOutputTypeCountAssetsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BrandAssetWhereInput
   }
 
 
@@ -4893,6 +5084,8 @@ export namespace Prisma {
     facts?: boolean | Brand$factsArgs<ExtArgs>
     ledgerAccounts?: boolean | Brand$ledgerAccountsArgs<ExtArgs>
     shortLinks?: boolean | Brand$shortLinksArgs<ExtArgs>
+    context?: boolean | Brand$contextArgs<ExtArgs>
+    assets?: boolean | Brand$assetsArgs<ExtArgs>
     _count?: boolean | BrandCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["brand"]>
 
@@ -4933,6 +5126,8 @@ export namespace Prisma {
     facts?: boolean | Brand$factsArgs<ExtArgs>
     ledgerAccounts?: boolean | Brand$ledgerAccountsArgs<ExtArgs>
     shortLinks?: boolean | Brand$shortLinksArgs<ExtArgs>
+    context?: boolean | Brand$contextArgs<ExtArgs>
+    assets?: boolean | Brand$assetsArgs<ExtArgs>
     _count?: boolean | BrandCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type BrandIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4951,6 +5146,8 @@ export namespace Prisma {
       facts: Prisma.$FactPayload<ExtArgs>[]
       ledgerAccounts: Prisma.$LedgerAccountPayload<ExtArgs>[]
       shortLinks: Prisma.$ShortLinkPayload<ExtArgs>[]
+      context: Prisma.$BrandContextPayload<ExtArgs> | null
+      assets: Prisma.$BrandAssetPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5359,6 +5556,8 @@ export namespace Prisma {
     facts<T extends Brand$factsArgs<ExtArgs> = {}>(args?: Subset<T, Brand$factsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ledgerAccounts<T extends Brand$ledgerAccountsArgs<ExtArgs> = {}>(args?: Subset<T, Brand$ledgerAccountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LedgerAccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     shortLinks<T extends Brand$shortLinksArgs<ExtArgs> = {}>(args?: Subset<T, Brand$shortLinksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ShortLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    context<T extends Brand$contextArgs<ExtArgs> = {}>(args?: Subset<T, Brand$contextArgs<ExtArgs>>): Prisma__BrandContextClient<$Result.GetResult<Prisma.$BrandContextPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    assets<T extends Brand$assetsArgs<ExtArgs> = {}>(args?: Subset<T, Brand$assetsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BrandAssetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5910,6 +6109,49 @@ export namespace Prisma {
   }
 
   /**
+   * Brand.context
+   */
+  export type Brand$contextArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandContext
+     */
+    select?: BrandContextSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandContext
+     */
+    omit?: BrandContextOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandContextInclude<ExtArgs> | null
+    where?: BrandContextWhereInput
+  }
+
+  /**
+   * Brand.assets
+   */
+  export type Brand$assetsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandAsset
+     */
+    select?: BrandAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandAsset
+     */
+    omit?: BrandAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandAssetInclude<ExtArgs> | null
+    where?: BrandAssetWhereInput
+    orderBy?: BrandAssetOrderByWithRelationInput | BrandAssetOrderByWithRelationInput[]
+    cursor?: BrandAssetWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BrandAssetScalarFieldEnum | BrandAssetScalarFieldEnum[]
+  }
+
+  /**
    * Brand without action
    */
   export type BrandDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5925,6 +6167,2157 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: BrandInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model BrandContext
+   */
+
+  export type AggregateBrandContext = {
+    _count: BrandContextCountAggregateOutputType | null
+    _min: BrandContextMinAggregateOutputType | null
+    _max: BrandContextMaxAggregateOutputType | null
+  }
+
+  export type BrandContextMinAggregateOutputType = {
+    id: string | null
+    brandId: string | null
+    industry: string | null
+    targetAudience: string | null
+    brandVoice: string | null
+    guidelines: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BrandContextMaxAggregateOutputType = {
+    id: string | null
+    brandId: string | null
+    industry: string | null
+    targetAudience: string | null
+    brandVoice: string | null
+    guidelines: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BrandContextCountAggregateOutputType = {
+    id: number
+    brandId: number
+    industry: number
+    targetAudience: number
+    brandVoice: number
+    guidelines: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type BrandContextMinAggregateInputType = {
+    id?: true
+    brandId?: true
+    industry?: true
+    targetAudience?: true
+    brandVoice?: true
+    guidelines?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BrandContextMaxAggregateInputType = {
+    id?: true
+    brandId?: true
+    industry?: true
+    targetAudience?: true
+    brandVoice?: true
+    guidelines?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BrandContextCountAggregateInputType = {
+    id?: true
+    brandId?: true
+    industry?: true
+    targetAudience?: true
+    brandVoice?: true
+    guidelines?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type BrandContextAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BrandContext to aggregate.
+     */
+    where?: BrandContextWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BrandContexts to fetch.
+     */
+    orderBy?: BrandContextOrderByWithRelationInput | BrandContextOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BrandContextWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BrandContexts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BrandContexts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned BrandContexts
+    **/
+    _count?: true | BrandContextCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BrandContextMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BrandContextMaxAggregateInputType
+  }
+
+  export type GetBrandContextAggregateType<T extends BrandContextAggregateArgs> = {
+        [P in keyof T & keyof AggregateBrandContext]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBrandContext[P]>
+      : GetScalarType<T[P], AggregateBrandContext[P]>
+  }
+
+
+
+
+  export type BrandContextGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BrandContextWhereInput
+    orderBy?: BrandContextOrderByWithAggregationInput | BrandContextOrderByWithAggregationInput[]
+    by: BrandContextScalarFieldEnum[] | BrandContextScalarFieldEnum
+    having?: BrandContextScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BrandContextCountAggregateInputType | true
+    _min?: BrandContextMinAggregateInputType
+    _max?: BrandContextMaxAggregateInputType
+  }
+
+  export type BrandContextGroupByOutputType = {
+    id: string
+    brandId: string
+    industry: string | null
+    targetAudience: string | null
+    brandVoice: string | null
+    guidelines: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: BrandContextCountAggregateOutputType | null
+    _min: BrandContextMinAggregateOutputType | null
+    _max: BrandContextMaxAggregateOutputType | null
+  }
+
+  type GetBrandContextGroupByPayload<T extends BrandContextGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<BrandContextGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BrandContextGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BrandContextGroupByOutputType[P]>
+            : GetScalarType<T[P], BrandContextGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BrandContextSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    brandId?: boolean
+    industry?: boolean
+    targetAudience?: boolean
+    brandVoice?: boolean
+    guidelines?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    brand?: boolean | BrandDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["brandContext"]>
+
+  export type BrandContextSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    brandId?: boolean
+    industry?: boolean
+    targetAudience?: boolean
+    brandVoice?: boolean
+    guidelines?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    brand?: boolean | BrandDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["brandContext"]>
+
+  export type BrandContextSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    brandId?: boolean
+    industry?: boolean
+    targetAudience?: boolean
+    brandVoice?: boolean
+    guidelines?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    brand?: boolean | BrandDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["brandContext"]>
+
+  export type BrandContextSelectScalar = {
+    id?: boolean
+    brandId?: boolean
+    industry?: boolean
+    targetAudience?: boolean
+    brandVoice?: boolean
+    guidelines?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type BrandContextOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "brandId" | "industry" | "targetAudience" | "brandVoice" | "guidelines" | "createdAt" | "updatedAt", ExtArgs["result"]["brandContext"]>
+  export type BrandContextInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    brand?: boolean | BrandDefaultArgs<ExtArgs>
+  }
+  export type BrandContextIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    brand?: boolean | BrandDefaultArgs<ExtArgs>
+  }
+  export type BrandContextIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    brand?: boolean | BrandDefaultArgs<ExtArgs>
+  }
+
+  export type $BrandContextPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "BrandContext"
+    objects: {
+      brand: Prisma.$BrandPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      brandId: string
+      industry: string | null
+      targetAudience: string | null
+      brandVoice: string | null
+      guidelines: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["brandContext"]>
+    composites: {}
+  }
+
+  type BrandContextGetPayload<S extends boolean | null | undefined | BrandContextDefaultArgs> = $Result.GetResult<Prisma.$BrandContextPayload, S>
+
+  type BrandContextCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<BrandContextFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: BrandContextCountAggregateInputType | true
+    }
+
+  export interface BrandContextDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['BrandContext'], meta: { name: 'BrandContext' } }
+    /**
+     * Find zero or one BrandContext that matches the filter.
+     * @param {BrandContextFindUniqueArgs} args - Arguments to find a BrandContext
+     * @example
+     * // Get one BrandContext
+     * const brandContext = await prisma.brandContext.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends BrandContextFindUniqueArgs>(args: SelectSubset<T, BrandContextFindUniqueArgs<ExtArgs>>): Prisma__BrandContextClient<$Result.GetResult<Prisma.$BrandContextPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one BrandContext that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {BrandContextFindUniqueOrThrowArgs} args - Arguments to find a BrandContext
+     * @example
+     * // Get one BrandContext
+     * const brandContext = await prisma.brandContext.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends BrandContextFindUniqueOrThrowArgs>(args: SelectSubset<T, BrandContextFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BrandContextClient<$Result.GetResult<Prisma.$BrandContextPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BrandContext that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrandContextFindFirstArgs} args - Arguments to find a BrandContext
+     * @example
+     * // Get one BrandContext
+     * const brandContext = await prisma.brandContext.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends BrandContextFindFirstArgs>(args?: SelectSubset<T, BrandContextFindFirstArgs<ExtArgs>>): Prisma__BrandContextClient<$Result.GetResult<Prisma.$BrandContextPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BrandContext that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrandContextFindFirstOrThrowArgs} args - Arguments to find a BrandContext
+     * @example
+     * // Get one BrandContext
+     * const brandContext = await prisma.brandContext.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends BrandContextFindFirstOrThrowArgs>(args?: SelectSubset<T, BrandContextFindFirstOrThrowArgs<ExtArgs>>): Prisma__BrandContextClient<$Result.GetResult<Prisma.$BrandContextPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more BrandContexts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrandContextFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all BrandContexts
+     * const brandContexts = await prisma.brandContext.findMany()
+     * 
+     * // Get first 10 BrandContexts
+     * const brandContexts = await prisma.brandContext.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const brandContextWithIdOnly = await prisma.brandContext.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends BrandContextFindManyArgs>(args?: SelectSubset<T, BrandContextFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BrandContextPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a BrandContext.
+     * @param {BrandContextCreateArgs} args - Arguments to create a BrandContext.
+     * @example
+     * // Create one BrandContext
+     * const BrandContext = await prisma.brandContext.create({
+     *   data: {
+     *     // ... data to create a BrandContext
+     *   }
+     * })
+     * 
+     */
+    create<T extends BrandContextCreateArgs>(args: SelectSubset<T, BrandContextCreateArgs<ExtArgs>>): Prisma__BrandContextClient<$Result.GetResult<Prisma.$BrandContextPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many BrandContexts.
+     * @param {BrandContextCreateManyArgs} args - Arguments to create many BrandContexts.
+     * @example
+     * // Create many BrandContexts
+     * const brandContext = await prisma.brandContext.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends BrandContextCreateManyArgs>(args?: SelectSubset<T, BrandContextCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many BrandContexts and returns the data saved in the database.
+     * @param {BrandContextCreateManyAndReturnArgs} args - Arguments to create many BrandContexts.
+     * @example
+     * // Create many BrandContexts
+     * const brandContext = await prisma.brandContext.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many BrandContexts and only return the `id`
+     * const brandContextWithIdOnly = await prisma.brandContext.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends BrandContextCreateManyAndReturnArgs>(args?: SelectSubset<T, BrandContextCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BrandContextPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a BrandContext.
+     * @param {BrandContextDeleteArgs} args - Arguments to delete one BrandContext.
+     * @example
+     * // Delete one BrandContext
+     * const BrandContext = await prisma.brandContext.delete({
+     *   where: {
+     *     // ... filter to delete one BrandContext
+     *   }
+     * })
+     * 
+     */
+    delete<T extends BrandContextDeleteArgs>(args: SelectSubset<T, BrandContextDeleteArgs<ExtArgs>>): Prisma__BrandContextClient<$Result.GetResult<Prisma.$BrandContextPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one BrandContext.
+     * @param {BrandContextUpdateArgs} args - Arguments to update one BrandContext.
+     * @example
+     * // Update one BrandContext
+     * const brandContext = await prisma.brandContext.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends BrandContextUpdateArgs>(args: SelectSubset<T, BrandContextUpdateArgs<ExtArgs>>): Prisma__BrandContextClient<$Result.GetResult<Prisma.$BrandContextPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more BrandContexts.
+     * @param {BrandContextDeleteManyArgs} args - Arguments to filter BrandContexts to delete.
+     * @example
+     * // Delete a few BrandContexts
+     * const { count } = await prisma.brandContext.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends BrandContextDeleteManyArgs>(args?: SelectSubset<T, BrandContextDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BrandContexts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrandContextUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many BrandContexts
+     * const brandContext = await prisma.brandContext.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends BrandContextUpdateManyArgs>(args: SelectSubset<T, BrandContextUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BrandContexts and returns the data updated in the database.
+     * @param {BrandContextUpdateManyAndReturnArgs} args - Arguments to update many BrandContexts.
+     * @example
+     * // Update many BrandContexts
+     * const brandContext = await prisma.brandContext.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more BrandContexts and only return the `id`
+     * const brandContextWithIdOnly = await prisma.brandContext.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends BrandContextUpdateManyAndReturnArgs>(args: SelectSubset<T, BrandContextUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BrandContextPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one BrandContext.
+     * @param {BrandContextUpsertArgs} args - Arguments to update or create a BrandContext.
+     * @example
+     * // Update or create a BrandContext
+     * const brandContext = await prisma.brandContext.upsert({
+     *   create: {
+     *     // ... data to create a BrandContext
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the BrandContext we want to update
+     *   }
+     * })
+     */
+    upsert<T extends BrandContextUpsertArgs>(args: SelectSubset<T, BrandContextUpsertArgs<ExtArgs>>): Prisma__BrandContextClient<$Result.GetResult<Prisma.$BrandContextPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of BrandContexts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrandContextCountArgs} args - Arguments to filter BrandContexts to count.
+     * @example
+     * // Count the number of BrandContexts
+     * const count = await prisma.brandContext.count({
+     *   where: {
+     *     // ... the filter for the BrandContexts we want to count
+     *   }
+     * })
+    **/
+    count<T extends BrandContextCountArgs>(
+      args?: Subset<T, BrandContextCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BrandContextCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a BrandContext.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrandContextAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BrandContextAggregateArgs>(args: Subset<T, BrandContextAggregateArgs>): Prisma.PrismaPromise<GetBrandContextAggregateType<T>>
+
+    /**
+     * Group by BrandContext.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrandContextGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BrandContextGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BrandContextGroupByArgs['orderBy'] }
+        : { orderBy?: BrandContextGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BrandContextGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBrandContextGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the BrandContext model
+   */
+  readonly fields: BrandContextFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for BrandContext.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__BrandContextClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    brand<T extends BrandDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BrandDefaultArgs<ExtArgs>>): Prisma__BrandClient<$Result.GetResult<Prisma.$BrandPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the BrandContext model
+   */
+  interface BrandContextFieldRefs {
+    readonly id: FieldRef<"BrandContext", 'String'>
+    readonly brandId: FieldRef<"BrandContext", 'String'>
+    readonly industry: FieldRef<"BrandContext", 'String'>
+    readonly targetAudience: FieldRef<"BrandContext", 'String'>
+    readonly brandVoice: FieldRef<"BrandContext", 'String'>
+    readonly guidelines: FieldRef<"BrandContext", 'String'>
+    readonly createdAt: FieldRef<"BrandContext", 'DateTime'>
+    readonly updatedAt: FieldRef<"BrandContext", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * BrandContext findUnique
+   */
+  export type BrandContextFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandContext
+     */
+    select?: BrandContextSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandContext
+     */
+    omit?: BrandContextOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandContextInclude<ExtArgs> | null
+    /**
+     * Filter, which BrandContext to fetch.
+     */
+    where: BrandContextWhereUniqueInput
+  }
+
+  /**
+   * BrandContext findUniqueOrThrow
+   */
+  export type BrandContextFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandContext
+     */
+    select?: BrandContextSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandContext
+     */
+    omit?: BrandContextOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandContextInclude<ExtArgs> | null
+    /**
+     * Filter, which BrandContext to fetch.
+     */
+    where: BrandContextWhereUniqueInput
+  }
+
+  /**
+   * BrandContext findFirst
+   */
+  export type BrandContextFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandContext
+     */
+    select?: BrandContextSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandContext
+     */
+    omit?: BrandContextOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandContextInclude<ExtArgs> | null
+    /**
+     * Filter, which BrandContext to fetch.
+     */
+    where?: BrandContextWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BrandContexts to fetch.
+     */
+    orderBy?: BrandContextOrderByWithRelationInput | BrandContextOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BrandContexts.
+     */
+    cursor?: BrandContextWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BrandContexts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BrandContexts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BrandContexts.
+     */
+    distinct?: BrandContextScalarFieldEnum | BrandContextScalarFieldEnum[]
+  }
+
+  /**
+   * BrandContext findFirstOrThrow
+   */
+  export type BrandContextFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandContext
+     */
+    select?: BrandContextSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandContext
+     */
+    omit?: BrandContextOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandContextInclude<ExtArgs> | null
+    /**
+     * Filter, which BrandContext to fetch.
+     */
+    where?: BrandContextWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BrandContexts to fetch.
+     */
+    orderBy?: BrandContextOrderByWithRelationInput | BrandContextOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BrandContexts.
+     */
+    cursor?: BrandContextWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BrandContexts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BrandContexts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BrandContexts.
+     */
+    distinct?: BrandContextScalarFieldEnum | BrandContextScalarFieldEnum[]
+  }
+
+  /**
+   * BrandContext findMany
+   */
+  export type BrandContextFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandContext
+     */
+    select?: BrandContextSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandContext
+     */
+    omit?: BrandContextOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandContextInclude<ExtArgs> | null
+    /**
+     * Filter, which BrandContexts to fetch.
+     */
+    where?: BrandContextWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BrandContexts to fetch.
+     */
+    orderBy?: BrandContextOrderByWithRelationInput | BrandContextOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing BrandContexts.
+     */
+    cursor?: BrandContextWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BrandContexts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BrandContexts.
+     */
+    skip?: number
+    distinct?: BrandContextScalarFieldEnum | BrandContextScalarFieldEnum[]
+  }
+
+  /**
+   * BrandContext create
+   */
+  export type BrandContextCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandContext
+     */
+    select?: BrandContextSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandContext
+     */
+    omit?: BrandContextOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandContextInclude<ExtArgs> | null
+    /**
+     * The data needed to create a BrandContext.
+     */
+    data: XOR<BrandContextCreateInput, BrandContextUncheckedCreateInput>
+  }
+
+  /**
+   * BrandContext createMany
+   */
+  export type BrandContextCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many BrandContexts.
+     */
+    data: BrandContextCreateManyInput | BrandContextCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * BrandContext createManyAndReturn
+   */
+  export type BrandContextCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandContext
+     */
+    select?: BrandContextSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandContext
+     */
+    omit?: BrandContextOmit<ExtArgs> | null
+    /**
+     * The data used to create many BrandContexts.
+     */
+    data: BrandContextCreateManyInput | BrandContextCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandContextIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * BrandContext update
+   */
+  export type BrandContextUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandContext
+     */
+    select?: BrandContextSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandContext
+     */
+    omit?: BrandContextOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandContextInclude<ExtArgs> | null
+    /**
+     * The data needed to update a BrandContext.
+     */
+    data: XOR<BrandContextUpdateInput, BrandContextUncheckedUpdateInput>
+    /**
+     * Choose, which BrandContext to update.
+     */
+    where: BrandContextWhereUniqueInput
+  }
+
+  /**
+   * BrandContext updateMany
+   */
+  export type BrandContextUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update BrandContexts.
+     */
+    data: XOR<BrandContextUpdateManyMutationInput, BrandContextUncheckedUpdateManyInput>
+    /**
+     * Filter which BrandContexts to update
+     */
+    where?: BrandContextWhereInput
+    /**
+     * Limit how many BrandContexts to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * BrandContext updateManyAndReturn
+   */
+  export type BrandContextUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandContext
+     */
+    select?: BrandContextSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandContext
+     */
+    omit?: BrandContextOmit<ExtArgs> | null
+    /**
+     * The data used to update BrandContexts.
+     */
+    data: XOR<BrandContextUpdateManyMutationInput, BrandContextUncheckedUpdateManyInput>
+    /**
+     * Filter which BrandContexts to update
+     */
+    where?: BrandContextWhereInput
+    /**
+     * Limit how many BrandContexts to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandContextIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * BrandContext upsert
+   */
+  export type BrandContextUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandContext
+     */
+    select?: BrandContextSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandContext
+     */
+    omit?: BrandContextOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandContextInclude<ExtArgs> | null
+    /**
+     * The filter to search for the BrandContext to update in case it exists.
+     */
+    where: BrandContextWhereUniqueInput
+    /**
+     * In case the BrandContext found by the `where` argument doesn't exist, create a new BrandContext with this data.
+     */
+    create: XOR<BrandContextCreateInput, BrandContextUncheckedCreateInput>
+    /**
+     * In case the BrandContext was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BrandContextUpdateInput, BrandContextUncheckedUpdateInput>
+  }
+
+  /**
+   * BrandContext delete
+   */
+  export type BrandContextDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandContext
+     */
+    select?: BrandContextSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandContext
+     */
+    omit?: BrandContextOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandContextInclude<ExtArgs> | null
+    /**
+     * Filter which BrandContext to delete.
+     */
+    where: BrandContextWhereUniqueInput
+  }
+
+  /**
+   * BrandContext deleteMany
+   */
+  export type BrandContextDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BrandContexts to delete
+     */
+    where?: BrandContextWhereInput
+    /**
+     * Limit how many BrandContexts to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * BrandContext without action
+   */
+  export type BrandContextDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandContext
+     */
+    select?: BrandContextSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandContext
+     */
+    omit?: BrandContextOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandContextInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model BrandAsset
+   */
+
+  export type AggregateBrandAsset = {
+    _count: BrandAssetCountAggregateOutputType | null
+    _min: BrandAssetMinAggregateOutputType | null
+    _max: BrandAssetMaxAggregateOutputType | null
+  }
+
+  export type BrandAssetMinAggregateOutputType = {
+    id: string | null
+    brandId: string | null
+    r2Url: string | null
+    createdAt: Date | null
+  }
+
+  export type BrandAssetMaxAggregateOutputType = {
+    id: string | null
+    brandId: string | null
+    r2Url: string | null
+    createdAt: Date | null
+  }
+
+  export type BrandAssetCountAggregateOutputType = {
+    id: number
+    brandId: number
+    r2Url: number
+    tags: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type BrandAssetMinAggregateInputType = {
+    id?: true
+    brandId?: true
+    r2Url?: true
+    createdAt?: true
+  }
+
+  export type BrandAssetMaxAggregateInputType = {
+    id?: true
+    brandId?: true
+    r2Url?: true
+    createdAt?: true
+  }
+
+  export type BrandAssetCountAggregateInputType = {
+    id?: true
+    brandId?: true
+    r2Url?: true
+    tags?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type BrandAssetAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BrandAsset to aggregate.
+     */
+    where?: BrandAssetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BrandAssets to fetch.
+     */
+    orderBy?: BrandAssetOrderByWithRelationInput | BrandAssetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BrandAssetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BrandAssets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BrandAssets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned BrandAssets
+    **/
+    _count?: true | BrandAssetCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BrandAssetMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BrandAssetMaxAggregateInputType
+  }
+
+  export type GetBrandAssetAggregateType<T extends BrandAssetAggregateArgs> = {
+        [P in keyof T & keyof AggregateBrandAsset]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBrandAsset[P]>
+      : GetScalarType<T[P], AggregateBrandAsset[P]>
+  }
+
+
+
+
+  export type BrandAssetGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BrandAssetWhereInput
+    orderBy?: BrandAssetOrderByWithAggregationInput | BrandAssetOrderByWithAggregationInput[]
+    by: BrandAssetScalarFieldEnum[] | BrandAssetScalarFieldEnum
+    having?: BrandAssetScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BrandAssetCountAggregateInputType | true
+    _min?: BrandAssetMinAggregateInputType
+    _max?: BrandAssetMaxAggregateInputType
+  }
+
+  export type BrandAssetGroupByOutputType = {
+    id: string
+    brandId: string
+    r2Url: string
+    tags: string[]
+    createdAt: Date
+    _count: BrandAssetCountAggregateOutputType | null
+    _min: BrandAssetMinAggregateOutputType | null
+    _max: BrandAssetMaxAggregateOutputType | null
+  }
+
+  type GetBrandAssetGroupByPayload<T extends BrandAssetGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<BrandAssetGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BrandAssetGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BrandAssetGroupByOutputType[P]>
+            : GetScalarType<T[P], BrandAssetGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BrandAssetSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    brandId?: boolean
+    r2Url?: boolean
+    tags?: boolean
+    createdAt?: boolean
+    brand?: boolean | BrandDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["brandAsset"]>
+
+  export type BrandAssetSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    brandId?: boolean
+    r2Url?: boolean
+    tags?: boolean
+    createdAt?: boolean
+    brand?: boolean | BrandDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["brandAsset"]>
+
+  export type BrandAssetSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    brandId?: boolean
+    r2Url?: boolean
+    tags?: boolean
+    createdAt?: boolean
+    brand?: boolean | BrandDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["brandAsset"]>
+
+  export type BrandAssetSelectScalar = {
+    id?: boolean
+    brandId?: boolean
+    r2Url?: boolean
+    tags?: boolean
+    createdAt?: boolean
+  }
+
+  export type BrandAssetOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "brandId" | "r2Url" | "tags" | "createdAt", ExtArgs["result"]["brandAsset"]>
+  export type BrandAssetInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    brand?: boolean | BrandDefaultArgs<ExtArgs>
+  }
+  export type BrandAssetIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    brand?: boolean | BrandDefaultArgs<ExtArgs>
+  }
+  export type BrandAssetIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    brand?: boolean | BrandDefaultArgs<ExtArgs>
+  }
+
+  export type $BrandAssetPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "BrandAsset"
+    objects: {
+      brand: Prisma.$BrandPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      brandId: string
+      r2Url: string
+      tags: string[]
+      createdAt: Date
+    }, ExtArgs["result"]["brandAsset"]>
+    composites: {}
+  }
+
+  type BrandAssetGetPayload<S extends boolean | null | undefined | BrandAssetDefaultArgs> = $Result.GetResult<Prisma.$BrandAssetPayload, S>
+
+  type BrandAssetCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<BrandAssetFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: BrandAssetCountAggregateInputType | true
+    }
+
+  export interface BrandAssetDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['BrandAsset'], meta: { name: 'BrandAsset' } }
+    /**
+     * Find zero or one BrandAsset that matches the filter.
+     * @param {BrandAssetFindUniqueArgs} args - Arguments to find a BrandAsset
+     * @example
+     * // Get one BrandAsset
+     * const brandAsset = await prisma.brandAsset.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends BrandAssetFindUniqueArgs>(args: SelectSubset<T, BrandAssetFindUniqueArgs<ExtArgs>>): Prisma__BrandAssetClient<$Result.GetResult<Prisma.$BrandAssetPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one BrandAsset that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {BrandAssetFindUniqueOrThrowArgs} args - Arguments to find a BrandAsset
+     * @example
+     * // Get one BrandAsset
+     * const brandAsset = await prisma.brandAsset.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends BrandAssetFindUniqueOrThrowArgs>(args: SelectSubset<T, BrandAssetFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BrandAssetClient<$Result.GetResult<Prisma.$BrandAssetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BrandAsset that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrandAssetFindFirstArgs} args - Arguments to find a BrandAsset
+     * @example
+     * // Get one BrandAsset
+     * const brandAsset = await prisma.brandAsset.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends BrandAssetFindFirstArgs>(args?: SelectSubset<T, BrandAssetFindFirstArgs<ExtArgs>>): Prisma__BrandAssetClient<$Result.GetResult<Prisma.$BrandAssetPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BrandAsset that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrandAssetFindFirstOrThrowArgs} args - Arguments to find a BrandAsset
+     * @example
+     * // Get one BrandAsset
+     * const brandAsset = await prisma.brandAsset.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends BrandAssetFindFirstOrThrowArgs>(args?: SelectSubset<T, BrandAssetFindFirstOrThrowArgs<ExtArgs>>): Prisma__BrandAssetClient<$Result.GetResult<Prisma.$BrandAssetPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more BrandAssets that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrandAssetFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all BrandAssets
+     * const brandAssets = await prisma.brandAsset.findMany()
+     * 
+     * // Get first 10 BrandAssets
+     * const brandAssets = await prisma.brandAsset.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const brandAssetWithIdOnly = await prisma.brandAsset.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends BrandAssetFindManyArgs>(args?: SelectSubset<T, BrandAssetFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BrandAssetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a BrandAsset.
+     * @param {BrandAssetCreateArgs} args - Arguments to create a BrandAsset.
+     * @example
+     * // Create one BrandAsset
+     * const BrandAsset = await prisma.brandAsset.create({
+     *   data: {
+     *     // ... data to create a BrandAsset
+     *   }
+     * })
+     * 
+     */
+    create<T extends BrandAssetCreateArgs>(args: SelectSubset<T, BrandAssetCreateArgs<ExtArgs>>): Prisma__BrandAssetClient<$Result.GetResult<Prisma.$BrandAssetPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many BrandAssets.
+     * @param {BrandAssetCreateManyArgs} args - Arguments to create many BrandAssets.
+     * @example
+     * // Create many BrandAssets
+     * const brandAsset = await prisma.brandAsset.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends BrandAssetCreateManyArgs>(args?: SelectSubset<T, BrandAssetCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many BrandAssets and returns the data saved in the database.
+     * @param {BrandAssetCreateManyAndReturnArgs} args - Arguments to create many BrandAssets.
+     * @example
+     * // Create many BrandAssets
+     * const brandAsset = await prisma.brandAsset.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many BrandAssets and only return the `id`
+     * const brandAssetWithIdOnly = await prisma.brandAsset.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends BrandAssetCreateManyAndReturnArgs>(args?: SelectSubset<T, BrandAssetCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BrandAssetPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a BrandAsset.
+     * @param {BrandAssetDeleteArgs} args - Arguments to delete one BrandAsset.
+     * @example
+     * // Delete one BrandAsset
+     * const BrandAsset = await prisma.brandAsset.delete({
+     *   where: {
+     *     // ... filter to delete one BrandAsset
+     *   }
+     * })
+     * 
+     */
+    delete<T extends BrandAssetDeleteArgs>(args: SelectSubset<T, BrandAssetDeleteArgs<ExtArgs>>): Prisma__BrandAssetClient<$Result.GetResult<Prisma.$BrandAssetPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one BrandAsset.
+     * @param {BrandAssetUpdateArgs} args - Arguments to update one BrandAsset.
+     * @example
+     * // Update one BrandAsset
+     * const brandAsset = await prisma.brandAsset.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends BrandAssetUpdateArgs>(args: SelectSubset<T, BrandAssetUpdateArgs<ExtArgs>>): Prisma__BrandAssetClient<$Result.GetResult<Prisma.$BrandAssetPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more BrandAssets.
+     * @param {BrandAssetDeleteManyArgs} args - Arguments to filter BrandAssets to delete.
+     * @example
+     * // Delete a few BrandAssets
+     * const { count } = await prisma.brandAsset.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends BrandAssetDeleteManyArgs>(args?: SelectSubset<T, BrandAssetDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BrandAssets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrandAssetUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many BrandAssets
+     * const brandAsset = await prisma.brandAsset.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends BrandAssetUpdateManyArgs>(args: SelectSubset<T, BrandAssetUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BrandAssets and returns the data updated in the database.
+     * @param {BrandAssetUpdateManyAndReturnArgs} args - Arguments to update many BrandAssets.
+     * @example
+     * // Update many BrandAssets
+     * const brandAsset = await prisma.brandAsset.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more BrandAssets and only return the `id`
+     * const brandAssetWithIdOnly = await prisma.brandAsset.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends BrandAssetUpdateManyAndReturnArgs>(args: SelectSubset<T, BrandAssetUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BrandAssetPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one BrandAsset.
+     * @param {BrandAssetUpsertArgs} args - Arguments to update or create a BrandAsset.
+     * @example
+     * // Update or create a BrandAsset
+     * const brandAsset = await prisma.brandAsset.upsert({
+     *   create: {
+     *     // ... data to create a BrandAsset
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the BrandAsset we want to update
+     *   }
+     * })
+     */
+    upsert<T extends BrandAssetUpsertArgs>(args: SelectSubset<T, BrandAssetUpsertArgs<ExtArgs>>): Prisma__BrandAssetClient<$Result.GetResult<Prisma.$BrandAssetPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of BrandAssets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrandAssetCountArgs} args - Arguments to filter BrandAssets to count.
+     * @example
+     * // Count the number of BrandAssets
+     * const count = await prisma.brandAsset.count({
+     *   where: {
+     *     // ... the filter for the BrandAssets we want to count
+     *   }
+     * })
+    **/
+    count<T extends BrandAssetCountArgs>(
+      args?: Subset<T, BrandAssetCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BrandAssetCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a BrandAsset.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrandAssetAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BrandAssetAggregateArgs>(args: Subset<T, BrandAssetAggregateArgs>): Prisma.PrismaPromise<GetBrandAssetAggregateType<T>>
+
+    /**
+     * Group by BrandAsset.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrandAssetGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BrandAssetGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BrandAssetGroupByArgs['orderBy'] }
+        : { orderBy?: BrandAssetGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BrandAssetGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBrandAssetGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the BrandAsset model
+   */
+  readonly fields: BrandAssetFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for BrandAsset.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__BrandAssetClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    brand<T extends BrandDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BrandDefaultArgs<ExtArgs>>): Prisma__BrandClient<$Result.GetResult<Prisma.$BrandPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the BrandAsset model
+   */
+  interface BrandAssetFieldRefs {
+    readonly id: FieldRef<"BrandAsset", 'String'>
+    readonly brandId: FieldRef<"BrandAsset", 'String'>
+    readonly r2Url: FieldRef<"BrandAsset", 'String'>
+    readonly tags: FieldRef<"BrandAsset", 'String[]'>
+    readonly createdAt: FieldRef<"BrandAsset", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * BrandAsset findUnique
+   */
+  export type BrandAssetFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandAsset
+     */
+    select?: BrandAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandAsset
+     */
+    omit?: BrandAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandAssetInclude<ExtArgs> | null
+    /**
+     * Filter, which BrandAsset to fetch.
+     */
+    where: BrandAssetWhereUniqueInput
+  }
+
+  /**
+   * BrandAsset findUniqueOrThrow
+   */
+  export type BrandAssetFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandAsset
+     */
+    select?: BrandAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandAsset
+     */
+    omit?: BrandAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandAssetInclude<ExtArgs> | null
+    /**
+     * Filter, which BrandAsset to fetch.
+     */
+    where: BrandAssetWhereUniqueInput
+  }
+
+  /**
+   * BrandAsset findFirst
+   */
+  export type BrandAssetFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandAsset
+     */
+    select?: BrandAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandAsset
+     */
+    omit?: BrandAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandAssetInclude<ExtArgs> | null
+    /**
+     * Filter, which BrandAsset to fetch.
+     */
+    where?: BrandAssetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BrandAssets to fetch.
+     */
+    orderBy?: BrandAssetOrderByWithRelationInput | BrandAssetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BrandAssets.
+     */
+    cursor?: BrandAssetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BrandAssets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BrandAssets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BrandAssets.
+     */
+    distinct?: BrandAssetScalarFieldEnum | BrandAssetScalarFieldEnum[]
+  }
+
+  /**
+   * BrandAsset findFirstOrThrow
+   */
+  export type BrandAssetFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandAsset
+     */
+    select?: BrandAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandAsset
+     */
+    omit?: BrandAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandAssetInclude<ExtArgs> | null
+    /**
+     * Filter, which BrandAsset to fetch.
+     */
+    where?: BrandAssetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BrandAssets to fetch.
+     */
+    orderBy?: BrandAssetOrderByWithRelationInput | BrandAssetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BrandAssets.
+     */
+    cursor?: BrandAssetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BrandAssets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BrandAssets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BrandAssets.
+     */
+    distinct?: BrandAssetScalarFieldEnum | BrandAssetScalarFieldEnum[]
+  }
+
+  /**
+   * BrandAsset findMany
+   */
+  export type BrandAssetFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandAsset
+     */
+    select?: BrandAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandAsset
+     */
+    omit?: BrandAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandAssetInclude<ExtArgs> | null
+    /**
+     * Filter, which BrandAssets to fetch.
+     */
+    where?: BrandAssetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BrandAssets to fetch.
+     */
+    orderBy?: BrandAssetOrderByWithRelationInput | BrandAssetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing BrandAssets.
+     */
+    cursor?: BrandAssetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BrandAssets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BrandAssets.
+     */
+    skip?: number
+    distinct?: BrandAssetScalarFieldEnum | BrandAssetScalarFieldEnum[]
+  }
+
+  /**
+   * BrandAsset create
+   */
+  export type BrandAssetCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandAsset
+     */
+    select?: BrandAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandAsset
+     */
+    omit?: BrandAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandAssetInclude<ExtArgs> | null
+    /**
+     * The data needed to create a BrandAsset.
+     */
+    data: XOR<BrandAssetCreateInput, BrandAssetUncheckedCreateInput>
+  }
+
+  /**
+   * BrandAsset createMany
+   */
+  export type BrandAssetCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many BrandAssets.
+     */
+    data: BrandAssetCreateManyInput | BrandAssetCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * BrandAsset createManyAndReturn
+   */
+  export type BrandAssetCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandAsset
+     */
+    select?: BrandAssetSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandAsset
+     */
+    omit?: BrandAssetOmit<ExtArgs> | null
+    /**
+     * The data used to create many BrandAssets.
+     */
+    data: BrandAssetCreateManyInput | BrandAssetCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandAssetIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * BrandAsset update
+   */
+  export type BrandAssetUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandAsset
+     */
+    select?: BrandAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandAsset
+     */
+    omit?: BrandAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandAssetInclude<ExtArgs> | null
+    /**
+     * The data needed to update a BrandAsset.
+     */
+    data: XOR<BrandAssetUpdateInput, BrandAssetUncheckedUpdateInput>
+    /**
+     * Choose, which BrandAsset to update.
+     */
+    where: BrandAssetWhereUniqueInput
+  }
+
+  /**
+   * BrandAsset updateMany
+   */
+  export type BrandAssetUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update BrandAssets.
+     */
+    data: XOR<BrandAssetUpdateManyMutationInput, BrandAssetUncheckedUpdateManyInput>
+    /**
+     * Filter which BrandAssets to update
+     */
+    where?: BrandAssetWhereInput
+    /**
+     * Limit how many BrandAssets to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * BrandAsset updateManyAndReturn
+   */
+  export type BrandAssetUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandAsset
+     */
+    select?: BrandAssetSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandAsset
+     */
+    omit?: BrandAssetOmit<ExtArgs> | null
+    /**
+     * The data used to update BrandAssets.
+     */
+    data: XOR<BrandAssetUpdateManyMutationInput, BrandAssetUncheckedUpdateManyInput>
+    /**
+     * Filter which BrandAssets to update
+     */
+    where?: BrandAssetWhereInput
+    /**
+     * Limit how many BrandAssets to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandAssetIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * BrandAsset upsert
+   */
+  export type BrandAssetUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandAsset
+     */
+    select?: BrandAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandAsset
+     */
+    omit?: BrandAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandAssetInclude<ExtArgs> | null
+    /**
+     * The filter to search for the BrandAsset to update in case it exists.
+     */
+    where: BrandAssetWhereUniqueInput
+    /**
+     * In case the BrandAsset found by the `where` argument doesn't exist, create a new BrandAsset with this data.
+     */
+    create: XOR<BrandAssetCreateInput, BrandAssetUncheckedCreateInput>
+    /**
+     * In case the BrandAsset was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BrandAssetUpdateInput, BrandAssetUncheckedUpdateInput>
+  }
+
+  /**
+   * BrandAsset delete
+   */
+  export type BrandAssetDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandAsset
+     */
+    select?: BrandAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandAsset
+     */
+    omit?: BrandAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandAssetInclude<ExtArgs> | null
+    /**
+     * Filter which BrandAsset to delete.
+     */
+    where: BrandAssetWhereUniqueInput
+  }
+
+  /**
+   * BrandAsset deleteMany
+   */
+  export type BrandAssetDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BrandAssets to delete
+     */
+    where?: BrandAssetWhereInput
+    /**
+     * Limit how many BrandAssets to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * BrandAsset without action
+   */
+  export type BrandAssetDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandAsset
+     */
+    select?: BrandAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandAsset
+     */
+    omit?: BrandAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandAssetInclude<ExtArgs> | null
   }
 
 
@@ -8248,6 +10641,7 @@ export namespace Prisma {
     cpmBudget: number | null
     baseFee: number | null
     maxClaims: number | null
+    rawClaim: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -8262,6 +10656,7 @@ export namespace Prisma {
     cpmBudget: number | null
     baseFee: number | null
     maxClaims: number | null
+    rawClaim: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -8276,6 +10671,8 @@ export namespace Prisma {
     cpmBudget: number
     baseFee: number
     maxClaims: number
+    rawClaim: number
+    verifiedSources: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -8304,6 +10701,7 @@ export namespace Prisma {
     cpmBudget?: true
     baseFee?: true
     maxClaims?: true
+    rawClaim?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -8318,6 +10716,7 @@ export namespace Prisma {
     cpmBudget?: true
     baseFee?: true
     maxClaims?: true
+    rawClaim?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -8332,6 +10731,8 @@ export namespace Prisma {
     cpmBudget?: true
     baseFee?: true
     maxClaims?: true
+    rawClaim?: true
+    verifiedSources?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -8433,6 +10834,8 @@ export namespace Prisma {
     cpmBudget: number
     baseFee: number
     maxClaims: number
+    rawClaim: string | null
+    verifiedSources: JsonValue | null
     createdAt: Date
     updatedAt: Date
     _count: FactCountAggregateOutputType | null
@@ -8466,6 +10869,8 @@ export namespace Prisma {
     cpmBudget?: boolean
     baseFee?: boolean
     maxClaims?: boolean
+    rawClaim?: boolean
+    verifiedSources?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     brand?: boolean | BrandDefaultArgs<ExtArgs>
@@ -8485,6 +10890,8 @@ export namespace Prisma {
     cpmBudget?: boolean
     baseFee?: boolean
     maxClaims?: boolean
+    rawClaim?: boolean
+    verifiedSources?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     brand?: boolean | BrandDefaultArgs<ExtArgs>
@@ -8500,6 +10907,8 @@ export namespace Prisma {
     cpmBudget?: boolean
     baseFee?: boolean
     maxClaims?: boolean
+    rawClaim?: boolean
+    verifiedSources?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     brand?: boolean | BrandDefaultArgs<ExtArgs>
@@ -8515,11 +10924,13 @@ export namespace Prisma {
     cpmBudget?: boolean
     baseFee?: boolean
     maxClaims?: boolean
+    rawClaim?: boolean
+    verifiedSources?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type FactOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "brandId" | "tier" | "language" | "topic" | "status" | "cpmBudget" | "baseFee" | "maxClaims" | "createdAt" | "updatedAt", ExtArgs["result"]["fact"]>
+  export type FactOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "brandId" | "tier" | "language" | "topic" | "status" | "cpmBudget" | "baseFee" | "maxClaims" | "rawClaim" | "verifiedSources" | "createdAt" | "updatedAt", ExtArgs["result"]["fact"]>
   export type FactInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     brand?: boolean | BrandDefaultArgs<ExtArgs>
     scriptVersions?: boolean | Fact$scriptVersionsArgs<ExtArgs>
@@ -8552,6 +10963,8 @@ export namespace Prisma {
       cpmBudget: number
       baseFee: number
       maxClaims: number
+      rawClaim: string | null
+      verifiedSources: Prisma.JsonValue | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["fact"]>
@@ -8990,6 +11403,8 @@ export namespace Prisma {
     readonly cpmBudget: FieldRef<"Fact", 'Int'>
     readonly baseFee: FieldRef<"Fact", 'Int'>
     readonly maxClaims: FieldRef<"Fact", 'Int'>
+    readonly rawClaim: FieldRef<"Fact", 'String'>
+    readonly verifiedSources: FieldRef<"Fact", 'Json'>
     readonly createdAt: FieldRef<"Fact", 'DateTime'>
     readonly updatedAt: FieldRef<"Fact", 'DateTime'>
   }
@@ -31086,6 +33501,31 @@ export namespace Prisma {
   export type BrandScalarFieldEnum = (typeof BrandScalarFieldEnum)[keyof typeof BrandScalarFieldEnum]
 
 
+  export const BrandContextScalarFieldEnum: {
+    id: 'id',
+    brandId: 'brandId',
+    industry: 'industry',
+    targetAudience: 'targetAudience',
+    brandVoice: 'brandVoice',
+    guidelines: 'guidelines',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type BrandContextScalarFieldEnum = (typeof BrandContextScalarFieldEnum)[keyof typeof BrandContextScalarFieldEnum]
+
+
+  export const BrandAssetScalarFieldEnum: {
+    id: 'id',
+    brandId: 'brandId',
+    r2Url: 'r2Url',
+    tags: 'tags',
+    createdAt: 'createdAt'
+  };
+
+  export type BrandAssetScalarFieldEnum = (typeof BrandAssetScalarFieldEnum)[keyof typeof BrandAssetScalarFieldEnum]
+
+
   export const CreatorScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
@@ -31124,6 +33564,8 @@ export namespace Prisma {
     cpmBudget: 'cpmBudget',
     baseFee: 'baseFee',
     maxClaims: 'maxClaims',
+    rawClaim: 'rawClaim',
+    verifiedSources: 'verifiedSources',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -31403,6 +33845,14 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+  export const NullableJsonNullValueInput: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull
+  };
+
+  export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
   export const JsonNullValueInput: {
     JsonNull: typeof JsonNull
   };
@@ -31546,6 +33996,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+  /**
    * Reference to a field of type 'ClaimStatus'
    */
   export type EnumClaimStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ClaimStatus'>
@@ -31570,20 +34034,6 @@ export namespace Prisma {
    * Reference to a field of type 'VideoStatus[]'
    */
   export type ListEnumVideoStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VideoStatus[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Json'
-   */
-  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-  /**
-   * Reference to a field of type 'QueryMode'
-   */
-  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -31694,6 +34144,8 @@ export namespace Prisma {
     facts?: FactListRelationFilter
     ledgerAccounts?: LedgerAccountListRelationFilter
     shortLinks?: ShortLinkListRelationFilter
+    context?: XOR<BrandContextNullableScalarRelationFilter, BrandContextWhereInput> | null
+    assets?: BrandAssetListRelationFilter
   }
 
   export type BrandOrderByWithRelationInput = {
@@ -31709,6 +34161,8 @@ export namespace Prisma {
     facts?: FactOrderByRelationAggregateInput
     ledgerAccounts?: LedgerAccountOrderByRelationAggregateInput
     shortLinks?: ShortLinkOrderByRelationAggregateInput
+    context?: BrandContextOrderByWithRelationInput
+    assets?: BrandAssetOrderByRelationAggregateInput
   }
 
   export type BrandWhereUniqueInput = Prisma.AtLeast<{
@@ -31727,6 +34181,8 @@ export namespace Prisma {
     facts?: FactListRelationFilter
     ledgerAccounts?: LedgerAccountListRelationFilter
     shortLinks?: ShortLinkListRelationFilter
+    context?: XOR<BrandContextNullableScalarRelationFilter, BrandContextWhereInput> | null
+    assets?: BrandAssetListRelationFilter
   }, "id">
 
   export type BrandOrderByWithAggregationInput = {
@@ -31751,6 +34207,131 @@ export namespace Prisma {
     autoApproveOnReviewExpiry?: BoolWithAggregatesFilter<"Brand"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Brand"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Brand"> | Date | string
+  }
+
+  export type BrandContextWhereInput = {
+    AND?: BrandContextWhereInput | BrandContextWhereInput[]
+    OR?: BrandContextWhereInput[]
+    NOT?: BrandContextWhereInput | BrandContextWhereInput[]
+    id?: StringFilter<"BrandContext"> | string
+    brandId?: StringFilter<"BrandContext"> | string
+    industry?: StringNullableFilter<"BrandContext"> | string | null
+    targetAudience?: StringNullableFilter<"BrandContext"> | string | null
+    brandVoice?: StringNullableFilter<"BrandContext"> | string | null
+    guidelines?: StringNullableFilter<"BrandContext"> | string | null
+    createdAt?: DateTimeFilter<"BrandContext"> | Date | string
+    updatedAt?: DateTimeFilter<"BrandContext"> | Date | string
+    brand?: XOR<BrandScalarRelationFilter, BrandWhereInput>
+  }
+
+  export type BrandContextOrderByWithRelationInput = {
+    id?: SortOrder
+    brandId?: SortOrder
+    industry?: SortOrderInput | SortOrder
+    targetAudience?: SortOrderInput | SortOrder
+    brandVoice?: SortOrderInput | SortOrder
+    guidelines?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    brand?: BrandOrderByWithRelationInput
+  }
+
+  export type BrandContextWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    brandId?: string
+    AND?: BrandContextWhereInput | BrandContextWhereInput[]
+    OR?: BrandContextWhereInput[]
+    NOT?: BrandContextWhereInput | BrandContextWhereInput[]
+    industry?: StringNullableFilter<"BrandContext"> | string | null
+    targetAudience?: StringNullableFilter<"BrandContext"> | string | null
+    brandVoice?: StringNullableFilter<"BrandContext"> | string | null
+    guidelines?: StringNullableFilter<"BrandContext"> | string | null
+    createdAt?: DateTimeFilter<"BrandContext"> | Date | string
+    updatedAt?: DateTimeFilter<"BrandContext"> | Date | string
+    brand?: XOR<BrandScalarRelationFilter, BrandWhereInput>
+  }, "id" | "brandId">
+
+  export type BrandContextOrderByWithAggregationInput = {
+    id?: SortOrder
+    brandId?: SortOrder
+    industry?: SortOrderInput | SortOrder
+    targetAudience?: SortOrderInput | SortOrder
+    brandVoice?: SortOrderInput | SortOrder
+    guidelines?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: BrandContextCountOrderByAggregateInput
+    _max?: BrandContextMaxOrderByAggregateInput
+    _min?: BrandContextMinOrderByAggregateInput
+  }
+
+  export type BrandContextScalarWhereWithAggregatesInput = {
+    AND?: BrandContextScalarWhereWithAggregatesInput | BrandContextScalarWhereWithAggregatesInput[]
+    OR?: BrandContextScalarWhereWithAggregatesInput[]
+    NOT?: BrandContextScalarWhereWithAggregatesInput | BrandContextScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"BrandContext"> | string
+    brandId?: StringWithAggregatesFilter<"BrandContext"> | string
+    industry?: StringNullableWithAggregatesFilter<"BrandContext"> | string | null
+    targetAudience?: StringNullableWithAggregatesFilter<"BrandContext"> | string | null
+    brandVoice?: StringNullableWithAggregatesFilter<"BrandContext"> | string | null
+    guidelines?: StringNullableWithAggregatesFilter<"BrandContext"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"BrandContext"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"BrandContext"> | Date | string
+  }
+
+  export type BrandAssetWhereInput = {
+    AND?: BrandAssetWhereInput | BrandAssetWhereInput[]
+    OR?: BrandAssetWhereInput[]
+    NOT?: BrandAssetWhereInput | BrandAssetWhereInput[]
+    id?: StringFilter<"BrandAsset"> | string
+    brandId?: StringFilter<"BrandAsset"> | string
+    r2Url?: StringFilter<"BrandAsset"> | string
+    tags?: StringNullableListFilter<"BrandAsset">
+    createdAt?: DateTimeFilter<"BrandAsset"> | Date | string
+    brand?: XOR<BrandScalarRelationFilter, BrandWhereInput>
+  }
+
+  export type BrandAssetOrderByWithRelationInput = {
+    id?: SortOrder
+    brandId?: SortOrder
+    r2Url?: SortOrder
+    tags?: SortOrder
+    createdAt?: SortOrder
+    brand?: BrandOrderByWithRelationInput
+  }
+
+  export type BrandAssetWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: BrandAssetWhereInput | BrandAssetWhereInput[]
+    OR?: BrandAssetWhereInput[]
+    NOT?: BrandAssetWhereInput | BrandAssetWhereInput[]
+    brandId?: StringFilter<"BrandAsset"> | string
+    r2Url?: StringFilter<"BrandAsset"> | string
+    tags?: StringNullableListFilter<"BrandAsset">
+    createdAt?: DateTimeFilter<"BrandAsset"> | Date | string
+    brand?: XOR<BrandScalarRelationFilter, BrandWhereInput>
+  }, "id">
+
+  export type BrandAssetOrderByWithAggregationInput = {
+    id?: SortOrder
+    brandId?: SortOrder
+    r2Url?: SortOrder
+    tags?: SortOrder
+    createdAt?: SortOrder
+    _count?: BrandAssetCountOrderByAggregateInput
+    _max?: BrandAssetMaxOrderByAggregateInput
+    _min?: BrandAssetMinOrderByAggregateInput
+  }
+
+  export type BrandAssetScalarWhereWithAggregatesInput = {
+    AND?: BrandAssetScalarWhereWithAggregatesInput | BrandAssetScalarWhereWithAggregatesInput[]
+    OR?: BrandAssetScalarWhereWithAggregatesInput[]
+    NOT?: BrandAssetScalarWhereWithAggregatesInput | BrandAssetScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"BrandAsset"> | string
+    brandId?: StringWithAggregatesFilter<"BrandAsset"> | string
+    r2Url?: StringWithAggregatesFilter<"BrandAsset"> | string
+    tags?: StringNullableListFilter<"BrandAsset">
+    createdAt?: DateTimeWithAggregatesFilter<"BrandAsset"> | Date | string
   }
 
   export type CreatorWhereInput = {
@@ -31915,6 +34496,8 @@ export namespace Prisma {
     cpmBudget?: IntFilter<"Fact"> | number
     baseFee?: IntFilter<"Fact"> | number
     maxClaims?: IntFilter<"Fact"> | number
+    rawClaim?: StringNullableFilter<"Fact"> | string | null
+    verifiedSources?: JsonNullableFilter<"Fact">
     createdAt?: DateTimeFilter<"Fact"> | Date | string
     updatedAt?: DateTimeFilter<"Fact"> | Date | string
     brand?: XOR<BrandScalarRelationFilter, BrandWhereInput>
@@ -31933,6 +34516,8 @@ export namespace Prisma {
     cpmBudget?: SortOrder
     baseFee?: SortOrder
     maxClaims?: SortOrder
+    rawClaim?: SortOrderInput | SortOrder
+    verifiedSources?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     brand?: BrandOrderByWithRelationInput
@@ -31954,6 +34539,8 @@ export namespace Prisma {
     cpmBudget?: IntFilter<"Fact"> | number
     baseFee?: IntFilter<"Fact"> | number
     maxClaims?: IntFilter<"Fact"> | number
+    rawClaim?: StringNullableFilter<"Fact"> | string | null
+    verifiedSources?: JsonNullableFilter<"Fact">
     createdAt?: DateTimeFilter<"Fact"> | Date | string
     updatedAt?: DateTimeFilter<"Fact"> | Date | string
     brand?: XOR<BrandScalarRelationFilter, BrandWhereInput>
@@ -31972,6 +34559,8 @@ export namespace Prisma {
     cpmBudget?: SortOrder
     baseFee?: SortOrder
     maxClaims?: SortOrder
+    rawClaim?: SortOrderInput | SortOrder
+    verifiedSources?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: FactCountOrderByAggregateInput
@@ -31994,6 +34583,8 @@ export namespace Prisma {
     cpmBudget?: IntWithAggregatesFilter<"Fact"> | number
     baseFee?: IntWithAggregatesFilter<"Fact"> | number
     maxClaims?: IntWithAggregatesFilter<"Fact"> | number
+    rawClaim?: StringNullableWithAggregatesFilter<"Fact"> | string | null
+    verifiedSources?: JsonNullableWithAggregatesFilter<"Fact">
     createdAt?: DateTimeWithAggregatesFilter<"Fact"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Fact"> | Date | string
   }
@@ -33482,6 +36073,8 @@ export namespace Prisma {
     facts?: FactCreateNestedManyWithoutBrandInput
     ledgerAccounts?: LedgerAccountCreateNestedManyWithoutBrandInput
     shortLinks?: ShortLinkCreateNestedManyWithoutBrandInput
+    context?: BrandContextCreateNestedOneWithoutBrandInput
+    assets?: BrandAssetCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateInput = {
@@ -33496,6 +36089,8 @@ export namespace Prisma {
     facts?: FactUncheckedCreateNestedManyWithoutBrandInput
     ledgerAccounts?: LedgerAccountUncheckedCreateNestedManyWithoutBrandInput
     shortLinks?: ShortLinkUncheckedCreateNestedManyWithoutBrandInput
+    context?: BrandContextUncheckedCreateNestedOneWithoutBrandInput
+    assets?: BrandAssetUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUpdateInput = {
@@ -33510,6 +36105,8 @@ export namespace Prisma {
     facts?: FactUpdateManyWithoutBrandNestedInput
     ledgerAccounts?: LedgerAccountUpdateManyWithoutBrandNestedInput
     shortLinks?: ShortLinkUpdateManyWithoutBrandNestedInput
+    context?: BrandContextUpdateOneWithoutBrandNestedInput
+    assets?: BrandAssetUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateInput = {
@@ -33524,6 +36121,8 @@ export namespace Prisma {
     facts?: FactUncheckedUpdateManyWithoutBrandNestedInput
     ledgerAccounts?: LedgerAccountUncheckedUpdateManyWithoutBrandNestedInput
     shortLinks?: ShortLinkUncheckedUpdateManyWithoutBrandNestedInput
+    context?: BrandContextUncheckedUpdateOneWithoutBrandNestedInput
+    assets?: BrandAssetUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandCreateManyInput = {
@@ -33550,6 +36149,137 @@ export namespace Prisma {
     autoApproveOnReviewExpiry?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BrandContextCreateInput = {
+    id?: string
+    industry?: string | null
+    targetAudience?: string | null
+    brandVoice?: string | null
+    guidelines?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    brand: BrandCreateNestedOneWithoutContextInput
+  }
+
+  export type BrandContextUncheckedCreateInput = {
+    id?: string
+    brandId: string
+    industry?: string | null
+    targetAudience?: string | null
+    brandVoice?: string | null
+    guidelines?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BrandContextUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    targetAudience?: NullableStringFieldUpdateOperationsInput | string | null
+    brandVoice?: NullableStringFieldUpdateOperationsInput | string | null
+    guidelines?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brand?: BrandUpdateOneRequiredWithoutContextNestedInput
+  }
+
+  export type BrandContextUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    brandId?: StringFieldUpdateOperationsInput | string
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    targetAudience?: NullableStringFieldUpdateOperationsInput | string | null
+    brandVoice?: NullableStringFieldUpdateOperationsInput | string | null
+    guidelines?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BrandContextCreateManyInput = {
+    id?: string
+    brandId: string
+    industry?: string | null
+    targetAudience?: string | null
+    brandVoice?: string | null
+    guidelines?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BrandContextUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    targetAudience?: NullableStringFieldUpdateOperationsInput | string | null
+    brandVoice?: NullableStringFieldUpdateOperationsInput | string | null
+    guidelines?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BrandContextUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    brandId?: StringFieldUpdateOperationsInput | string
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    targetAudience?: NullableStringFieldUpdateOperationsInput | string | null
+    brandVoice?: NullableStringFieldUpdateOperationsInput | string | null
+    guidelines?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BrandAssetCreateInput = {
+    id?: string
+    r2Url: string
+    tags?: BrandAssetCreatetagsInput | string[]
+    createdAt?: Date | string
+    brand: BrandCreateNestedOneWithoutAssetsInput
+  }
+
+  export type BrandAssetUncheckedCreateInput = {
+    id?: string
+    brandId: string
+    r2Url: string
+    tags?: BrandAssetCreatetagsInput | string[]
+    createdAt?: Date | string
+  }
+
+  export type BrandAssetUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    r2Url?: StringFieldUpdateOperationsInput | string
+    tags?: BrandAssetUpdatetagsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brand?: BrandUpdateOneRequiredWithoutAssetsNestedInput
+  }
+
+  export type BrandAssetUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    brandId?: StringFieldUpdateOperationsInput | string
+    r2Url?: StringFieldUpdateOperationsInput | string
+    tags?: BrandAssetUpdatetagsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BrandAssetCreateManyInput = {
+    id?: string
+    brandId: string
+    r2Url: string
+    tags?: BrandAssetCreatetagsInput | string[]
+    createdAt?: Date | string
+  }
+
+  export type BrandAssetUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    r2Url?: StringFieldUpdateOperationsInput | string
+    tags?: BrandAssetUpdatetagsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BrandAssetUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    brandId?: StringFieldUpdateOperationsInput | string
+    r2Url?: StringFieldUpdateOperationsInput | string
+    tags?: BrandAssetUpdatetagsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CreatorCreateInput = {
@@ -33721,6 +36451,8 @@ export namespace Prisma {
     cpmBudget: number
     baseFee: number
     maxClaims?: number
+    rawClaim?: string | null
+    verifiedSources?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     brand: BrandCreateNestedOneWithoutFactsInput
@@ -33739,6 +36471,8 @@ export namespace Prisma {
     cpmBudget: number
     baseFee: number
     maxClaims?: number
+    rawClaim?: string | null
+    verifiedSources?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     scriptVersions?: ScriptVersionUncheckedCreateNestedManyWithoutFactInput
@@ -33755,6 +36489,8 @@ export namespace Prisma {
     cpmBudget?: IntFieldUpdateOperationsInput | number
     baseFee?: IntFieldUpdateOperationsInput | number
     maxClaims?: IntFieldUpdateOperationsInput | number
+    rawClaim?: NullableStringFieldUpdateOperationsInput | string | null
+    verifiedSources?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     brand?: BrandUpdateOneRequiredWithoutFactsNestedInput
@@ -33773,6 +36509,8 @@ export namespace Prisma {
     cpmBudget?: IntFieldUpdateOperationsInput | number
     baseFee?: IntFieldUpdateOperationsInput | number
     maxClaims?: IntFieldUpdateOperationsInput | number
+    rawClaim?: NullableStringFieldUpdateOperationsInput | string | null
+    verifiedSources?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     scriptVersions?: ScriptVersionUncheckedUpdateManyWithoutFactNestedInput
@@ -33790,6 +36528,8 @@ export namespace Prisma {
     cpmBudget: number
     baseFee: number
     maxClaims?: number
+    rawClaim?: string | null
+    verifiedSources?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -33803,6 +36543,8 @@ export namespace Prisma {
     cpmBudget?: IntFieldUpdateOperationsInput | number
     baseFee?: IntFieldUpdateOperationsInput | number
     maxClaims?: IntFieldUpdateOperationsInput | number
+    rawClaim?: NullableStringFieldUpdateOperationsInput | string | null
+    verifiedSources?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -33817,6 +36559,8 @@ export namespace Prisma {
     cpmBudget?: IntFieldUpdateOperationsInput | number
     baseFee?: IntFieldUpdateOperationsInput | number
     maxClaims?: IntFieldUpdateOperationsInput | number
+    rawClaim?: NullableStringFieldUpdateOperationsInput | string | null
+    verifiedSources?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -35471,6 +38215,17 @@ export namespace Prisma {
     none?: ShortLinkWhereInput
   }
 
+  export type BrandContextNullableScalarRelationFilter = {
+    is?: BrandContextWhereInput | null
+    isNot?: BrandContextWhereInput | null
+  }
+
+  export type BrandAssetListRelationFilter = {
+    every?: BrandAssetWhereInput
+    some?: BrandAssetWhereInput
+    none?: BrandAssetWhereInput
+  }
+
   export type UserOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -35488,6 +38243,10 @@ export namespace Prisma {
   }
 
   export type ShortLinkOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type BrandAssetOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -35524,6 +38283,112 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type BrandScalarRelationFilter = {
+    is?: BrandWhereInput
+    isNot?: BrandWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
+  export type BrandContextCountOrderByAggregateInput = {
+    id?: SortOrder
+    brandId?: SortOrder
+    industry?: SortOrder
+    targetAudience?: SortOrder
+    brandVoice?: SortOrder
+    guidelines?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BrandContextMaxOrderByAggregateInput = {
+    id?: SortOrder
+    brandId?: SortOrder
+    industry?: SortOrder
+    targetAudience?: SortOrder
+    brandVoice?: SortOrder
+    guidelines?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BrandContextMinOrderByAggregateInput = {
+    id?: SortOrder
+    brandId?: SortOrder
+    industry?: SortOrder
+    targetAudience?: SortOrder
+    brandVoice?: SortOrder
+    guidelines?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type BrandAssetCountOrderByAggregateInput = {
+    id?: SortOrder
+    brandId?: SortOrder
+    r2Url?: SortOrder
+    tags?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type BrandAssetMaxOrderByAggregateInput = {
+    id?: SortOrder
+    brandId?: SortOrder
+    r2Url?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type BrandAssetMinOrderByAggregateInput = {
+    id?: SortOrder
+    brandId?: SortOrder
+    r2Url?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -35619,31 +38484,6 @@ export namespace Prisma {
     not?: NestedEnumEntryStatusFilter<$PrismaModel> | $Enums.EntryStatus
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
-  export type BrandScalarRelationFilter = {
-    is?: BrandWhereInput
-    isNot?: BrandWhereInput
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
-  }
-
   export type CalendarEntryBrandIdScheduledAtTypeChannelCompoundUniqueInput = {
     brandId: string
     scheduledAt: Date | string
@@ -35719,23 +38559,28 @@ export namespace Prisma {
     _min?: NestedEnumEntryStatusFilter<$PrismaModel>
     _max?: NestedEnumEntryStatusFilter<$PrismaModel>
   }
+  export type JsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
 
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
   export type ScriptVersionListRelationFilter = {
@@ -35768,6 +38613,8 @@ export namespace Prisma {
     cpmBudget?: SortOrder
     baseFee?: SortOrder
     maxClaims?: SortOrder
+    rawClaim?: SortOrder
+    verifiedSources?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -35788,6 +38635,7 @@ export namespace Prisma {
     cpmBudget?: SortOrder
     baseFee?: SortOrder
     maxClaims?: SortOrder
+    rawClaim?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -35802,6 +38650,7 @@ export namespace Prisma {
     cpmBudget?: SortOrder
     baseFee?: SortOrder
     maxClaims?: SortOrder
+    rawClaim?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -35810,6 +38659,32 @@ export namespace Prisma {
     cpmBudget?: SortOrder
     baseFee?: SortOrder
     maxClaims?: SortOrder
+  }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
   export type FactScalarRelationFilter = {
@@ -36336,14 +39211,6 @@ export namespace Prisma {
     publishedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-  }
-
-  export type StringNullableListFilter<$PrismaModel = never> = {
-    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    has?: string | StringFieldRefInput<$PrismaModel> | null
-    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
-    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
   }
 
   export type ViewSnapshotCountOrderByAggregateInput = {
@@ -37083,6 +39950,19 @@ export namespace Prisma {
     connect?: ShortLinkWhereUniqueInput | ShortLinkWhereUniqueInput[]
   }
 
+  export type BrandContextCreateNestedOneWithoutBrandInput = {
+    create?: XOR<BrandContextCreateWithoutBrandInput, BrandContextUncheckedCreateWithoutBrandInput>
+    connectOrCreate?: BrandContextCreateOrConnectWithoutBrandInput
+    connect?: BrandContextWhereUniqueInput
+  }
+
+  export type BrandAssetCreateNestedManyWithoutBrandInput = {
+    create?: XOR<BrandAssetCreateWithoutBrandInput, BrandAssetUncheckedCreateWithoutBrandInput> | BrandAssetCreateWithoutBrandInput[] | BrandAssetUncheckedCreateWithoutBrandInput[]
+    connectOrCreate?: BrandAssetCreateOrConnectWithoutBrandInput | BrandAssetCreateOrConnectWithoutBrandInput[]
+    createMany?: BrandAssetCreateManyBrandInputEnvelope
+    connect?: BrandAssetWhereUniqueInput | BrandAssetWhereUniqueInput[]
+  }
+
   export type UserUncheckedCreateNestedManyWithoutBrandsMemberInput = {
     create?: XOR<UserCreateWithoutBrandsMemberInput, UserUncheckedCreateWithoutBrandsMemberInput> | UserCreateWithoutBrandsMemberInput[] | UserUncheckedCreateWithoutBrandsMemberInput[]
     connectOrCreate?: UserCreateOrConnectWithoutBrandsMemberInput | UserCreateOrConnectWithoutBrandsMemberInput[]
@@ -37115,6 +39995,19 @@ export namespace Prisma {
     connectOrCreate?: ShortLinkCreateOrConnectWithoutBrandInput | ShortLinkCreateOrConnectWithoutBrandInput[]
     createMany?: ShortLinkCreateManyBrandInputEnvelope
     connect?: ShortLinkWhereUniqueInput | ShortLinkWhereUniqueInput[]
+  }
+
+  export type BrandContextUncheckedCreateNestedOneWithoutBrandInput = {
+    create?: XOR<BrandContextCreateWithoutBrandInput, BrandContextUncheckedCreateWithoutBrandInput>
+    connectOrCreate?: BrandContextCreateOrConnectWithoutBrandInput
+    connect?: BrandContextWhereUniqueInput
+  }
+
+  export type BrandAssetUncheckedCreateNestedManyWithoutBrandInput = {
+    create?: XOR<BrandAssetCreateWithoutBrandInput, BrandAssetUncheckedCreateWithoutBrandInput> | BrandAssetCreateWithoutBrandInput[] | BrandAssetUncheckedCreateWithoutBrandInput[]
+    connectOrCreate?: BrandAssetCreateOrConnectWithoutBrandInput | BrandAssetCreateOrConnectWithoutBrandInput[]
+    createMany?: BrandAssetCreateManyBrandInputEnvelope
+    connect?: BrandAssetWhereUniqueInput | BrandAssetWhereUniqueInput[]
   }
 
   export type BoolFieldUpdateOperationsInput = {
@@ -37198,6 +40091,30 @@ export namespace Prisma {
     deleteMany?: ShortLinkScalarWhereInput | ShortLinkScalarWhereInput[]
   }
 
+  export type BrandContextUpdateOneWithoutBrandNestedInput = {
+    create?: XOR<BrandContextCreateWithoutBrandInput, BrandContextUncheckedCreateWithoutBrandInput>
+    connectOrCreate?: BrandContextCreateOrConnectWithoutBrandInput
+    upsert?: BrandContextUpsertWithoutBrandInput
+    disconnect?: BrandContextWhereInput | boolean
+    delete?: BrandContextWhereInput | boolean
+    connect?: BrandContextWhereUniqueInput
+    update?: XOR<XOR<BrandContextUpdateToOneWithWhereWithoutBrandInput, BrandContextUpdateWithoutBrandInput>, BrandContextUncheckedUpdateWithoutBrandInput>
+  }
+
+  export type BrandAssetUpdateManyWithoutBrandNestedInput = {
+    create?: XOR<BrandAssetCreateWithoutBrandInput, BrandAssetUncheckedCreateWithoutBrandInput> | BrandAssetCreateWithoutBrandInput[] | BrandAssetUncheckedCreateWithoutBrandInput[]
+    connectOrCreate?: BrandAssetCreateOrConnectWithoutBrandInput | BrandAssetCreateOrConnectWithoutBrandInput[]
+    upsert?: BrandAssetUpsertWithWhereUniqueWithoutBrandInput | BrandAssetUpsertWithWhereUniqueWithoutBrandInput[]
+    createMany?: BrandAssetCreateManyBrandInputEnvelope
+    set?: BrandAssetWhereUniqueInput | BrandAssetWhereUniqueInput[]
+    disconnect?: BrandAssetWhereUniqueInput | BrandAssetWhereUniqueInput[]
+    delete?: BrandAssetWhereUniqueInput | BrandAssetWhereUniqueInput[]
+    connect?: BrandAssetWhereUniqueInput | BrandAssetWhereUniqueInput[]
+    update?: BrandAssetUpdateWithWhereUniqueWithoutBrandInput | BrandAssetUpdateWithWhereUniqueWithoutBrandInput[]
+    updateMany?: BrandAssetUpdateManyWithWhereWithoutBrandInput | BrandAssetUpdateManyWithWhereWithoutBrandInput[]
+    deleteMany?: BrandAssetScalarWhereInput | BrandAssetScalarWhereInput[]
+  }
+
   export type UserUncheckedUpdateManyWithoutBrandsMemberNestedInput = {
     create?: XOR<UserCreateWithoutBrandsMemberInput, UserUncheckedCreateWithoutBrandsMemberInput> | UserCreateWithoutBrandsMemberInput[] | UserUncheckedCreateWithoutBrandsMemberInput[]
     connectOrCreate?: UserCreateOrConnectWithoutBrandsMemberInput | UserCreateOrConnectWithoutBrandsMemberInput[]
@@ -37265,6 +40182,71 @@ export namespace Prisma {
     update?: ShortLinkUpdateWithWhereUniqueWithoutBrandInput | ShortLinkUpdateWithWhereUniqueWithoutBrandInput[]
     updateMany?: ShortLinkUpdateManyWithWhereWithoutBrandInput | ShortLinkUpdateManyWithWhereWithoutBrandInput[]
     deleteMany?: ShortLinkScalarWhereInput | ShortLinkScalarWhereInput[]
+  }
+
+  export type BrandContextUncheckedUpdateOneWithoutBrandNestedInput = {
+    create?: XOR<BrandContextCreateWithoutBrandInput, BrandContextUncheckedCreateWithoutBrandInput>
+    connectOrCreate?: BrandContextCreateOrConnectWithoutBrandInput
+    upsert?: BrandContextUpsertWithoutBrandInput
+    disconnect?: BrandContextWhereInput | boolean
+    delete?: BrandContextWhereInput | boolean
+    connect?: BrandContextWhereUniqueInput
+    update?: XOR<XOR<BrandContextUpdateToOneWithWhereWithoutBrandInput, BrandContextUpdateWithoutBrandInput>, BrandContextUncheckedUpdateWithoutBrandInput>
+  }
+
+  export type BrandAssetUncheckedUpdateManyWithoutBrandNestedInput = {
+    create?: XOR<BrandAssetCreateWithoutBrandInput, BrandAssetUncheckedCreateWithoutBrandInput> | BrandAssetCreateWithoutBrandInput[] | BrandAssetUncheckedCreateWithoutBrandInput[]
+    connectOrCreate?: BrandAssetCreateOrConnectWithoutBrandInput | BrandAssetCreateOrConnectWithoutBrandInput[]
+    upsert?: BrandAssetUpsertWithWhereUniqueWithoutBrandInput | BrandAssetUpsertWithWhereUniqueWithoutBrandInput[]
+    createMany?: BrandAssetCreateManyBrandInputEnvelope
+    set?: BrandAssetWhereUniqueInput | BrandAssetWhereUniqueInput[]
+    disconnect?: BrandAssetWhereUniqueInput | BrandAssetWhereUniqueInput[]
+    delete?: BrandAssetWhereUniqueInput | BrandAssetWhereUniqueInput[]
+    connect?: BrandAssetWhereUniqueInput | BrandAssetWhereUniqueInput[]
+    update?: BrandAssetUpdateWithWhereUniqueWithoutBrandInput | BrandAssetUpdateWithWhereUniqueWithoutBrandInput[]
+    updateMany?: BrandAssetUpdateManyWithWhereWithoutBrandInput | BrandAssetUpdateManyWithWhereWithoutBrandInput[]
+    deleteMany?: BrandAssetScalarWhereInput | BrandAssetScalarWhereInput[]
+  }
+
+  export type BrandCreateNestedOneWithoutContextInput = {
+    create?: XOR<BrandCreateWithoutContextInput, BrandUncheckedCreateWithoutContextInput>
+    connectOrCreate?: BrandCreateOrConnectWithoutContextInput
+    connect?: BrandWhereUniqueInput
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
+  export type BrandUpdateOneRequiredWithoutContextNestedInput = {
+    create?: XOR<BrandCreateWithoutContextInput, BrandUncheckedCreateWithoutContextInput>
+    connectOrCreate?: BrandCreateOrConnectWithoutContextInput
+    upsert?: BrandUpsertWithoutContextInput
+    connect?: BrandWhereUniqueInput
+    update?: XOR<XOR<BrandUpdateToOneWithWhereWithoutContextInput, BrandUpdateWithoutContextInput>, BrandUncheckedUpdateWithoutContextInput>
+  }
+
+  export type BrandAssetCreatetagsInput = {
+    set: string[]
+  }
+
+  export type BrandCreateNestedOneWithoutAssetsInput = {
+    create?: XOR<BrandCreateWithoutAssetsInput, BrandUncheckedCreateWithoutAssetsInput>
+    connectOrCreate?: BrandCreateOrConnectWithoutAssetsInput
+    connect?: BrandWhereUniqueInput
+  }
+
+  export type BrandAssetUpdatetagsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type BrandUpdateOneRequiredWithoutAssetsNestedInput = {
+    create?: XOR<BrandCreateWithoutAssetsInput, BrandUncheckedCreateWithoutAssetsInput>
+    connectOrCreate?: BrandCreateOrConnectWithoutAssetsInput
+    upsert?: BrandUpsertWithoutAssetsInput
+    connect?: BrandWhereUniqueInput
+    update?: XOR<XOR<BrandUpdateToOneWithWhereWithoutAssetsInput, BrandUpdateWithoutAssetsInput>, BrandUncheckedUpdateWithoutAssetsInput>
   }
 
   export type UserCreateNestedOneWithoutCreatorInput = {
@@ -37389,10 +40371,6 @@ export namespace Prisma {
 
   export type EnumEntryStatusFieldUpdateOperationsInput = {
     set?: $Enums.EntryStatus
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type BrandUpdateOneRequiredWithoutCalendarNestedInput = {
@@ -38523,6 +41501,48 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -38571,20 +41591,6 @@ export namespace Prisma {
     not?: NestedEnumEntryStatusFilter<$PrismaModel> | $Enums.EntryStatus
   }
 
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
   export type NestedEnumEntryTypeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.EntryType | EnumEntryTypeFieldRefInput<$PrismaModel>
     in?: $Enums.EntryType[] | ListEnumEntryTypeFieldRefInput<$PrismaModel>
@@ -38614,33 +41620,28 @@ export namespace Prisma {
     _min?: NestedEnumEntryStatusFilter<$PrismaModel>
     _max?: NestedEnumEntryStatusFilter<$PrismaModel>
   }
+  export type NestedJsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
 
-  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
@@ -38792,6 +41793,8 @@ export namespace Prisma {
     facts?: FactCreateNestedManyWithoutBrandInput
     ledgerAccounts?: LedgerAccountCreateNestedManyWithoutBrandInput
     shortLinks?: ShortLinkCreateNestedManyWithoutBrandInput
+    context?: BrandContextCreateNestedOneWithoutBrandInput
+    assets?: BrandAssetCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateWithoutOwnerInput = {
@@ -38805,6 +41808,8 @@ export namespace Prisma {
     facts?: FactUncheckedCreateNestedManyWithoutBrandInput
     ledgerAccounts?: LedgerAccountUncheckedCreateNestedManyWithoutBrandInput
     shortLinks?: ShortLinkUncheckedCreateNestedManyWithoutBrandInput
+    context?: BrandContextUncheckedCreateNestedOneWithoutBrandInput
+    assets?: BrandAssetUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandCreateOrConnectWithoutOwnerInput = {
@@ -38828,6 +41833,8 @@ export namespace Prisma {
     facts?: FactCreateNestedManyWithoutBrandInput
     ledgerAccounts?: LedgerAccountCreateNestedManyWithoutBrandInput
     shortLinks?: ShortLinkCreateNestedManyWithoutBrandInput
+    context?: BrandContextCreateNestedOneWithoutBrandInput
+    assets?: BrandAssetCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateWithoutMembersInput = {
@@ -38841,6 +41848,8 @@ export namespace Prisma {
     facts?: FactUncheckedCreateNestedManyWithoutBrandInput
     ledgerAccounts?: LedgerAccountUncheckedCreateNestedManyWithoutBrandInput
     shortLinks?: ShortLinkUncheckedCreateNestedManyWithoutBrandInput
+    context?: BrandContextUncheckedCreateNestedOneWithoutBrandInput
+    assets?: BrandAssetUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandCreateOrConnectWithoutMembersInput = {
@@ -39107,6 +42116,8 @@ export namespace Prisma {
     cpmBudget: number
     baseFee: number
     maxClaims?: number
+    rawClaim?: string | null
+    verifiedSources?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     scriptVersions?: ScriptVersionCreateNestedManyWithoutFactInput
@@ -39123,6 +42134,8 @@ export namespace Prisma {
     cpmBudget: number
     baseFee: number
     maxClaims?: number
+    rawClaim?: string | null
+    verifiedSources?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     scriptVersions?: ScriptVersionUncheckedCreateNestedManyWithoutFactInput
@@ -39195,6 +42208,55 @@ export namespace Prisma {
 
   export type ShortLinkCreateManyBrandInputEnvelope = {
     data: ShortLinkCreateManyBrandInput | ShortLinkCreateManyBrandInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type BrandContextCreateWithoutBrandInput = {
+    id?: string
+    industry?: string | null
+    targetAudience?: string | null
+    brandVoice?: string | null
+    guidelines?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BrandContextUncheckedCreateWithoutBrandInput = {
+    id?: string
+    industry?: string | null
+    targetAudience?: string | null
+    brandVoice?: string | null
+    guidelines?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BrandContextCreateOrConnectWithoutBrandInput = {
+    where: BrandContextWhereUniqueInput
+    create: XOR<BrandContextCreateWithoutBrandInput, BrandContextUncheckedCreateWithoutBrandInput>
+  }
+
+  export type BrandAssetCreateWithoutBrandInput = {
+    id?: string
+    r2Url: string
+    tags?: BrandAssetCreatetagsInput | string[]
+    createdAt?: Date | string
+  }
+
+  export type BrandAssetUncheckedCreateWithoutBrandInput = {
+    id?: string
+    r2Url: string
+    tags?: BrandAssetCreatetagsInput | string[]
+    createdAt?: Date | string
+  }
+
+  export type BrandAssetCreateOrConnectWithoutBrandInput = {
+    where: BrandAssetWhereUniqueInput
+    create: XOR<BrandAssetCreateWithoutBrandInput, BrandAssetUncheckedCreateWithoutBrandInput>
+  }
+
+  export type BrandAssetCreateManyBrandInputEnvelope = {
+    data: BrandAssetCreateManyBrandInput | BrandAssetCreateManyBrandInput[]
     skipDuplicates?: boolean
   }
 
@@ -39325,6 +42387,8 @@ export namespace Prisma {
     cpmBudget?: IntFilter<"Fact"> | number
     baseFee?: IntFilter<"Fact"> | number
     maxClaims?: IntFilter<"Fact"> | number
+    rawClaim?: StringNullableFilter<"Fact"> | string | null
+    verifiedSources?: JsonNullableFilter<"Fact">
     createdAt?: DateTimeFilter<"Fact"> | Date | string
     updatedAt?: DateTimeFilter<"Fact"> | Date | string
   }
@@ -39384,6 +42448,216 @@ export namespace Prisma {
     videoId?: StringNullableFilter<"ShortLink"> | string | null
     brandId?: StringNullableFilter<"ShortLink"> | string | null
     createdAt?: DateTimeFilter<"ShortLink"> | Date | string
+  }
+
+  export type BrandContextUpsertWithoutBrandInput = {
+    update: XOR<BrandContextUpdateWithoutBrandInput, BrandContextUncheckedUpdateWithoutBrandInput>
+    create: XOR<BrandContextCreateWithoutBrandInput, BrandContextUncheckedCreateWithoutBrandInput>
+    where?: BrandContextWhereInput
+  }
+
+  export type BrandContextUpdateToOneWithWhereWithoutBrandInput = {
+    where?: BrandContextWhereInput
+    data: XOR<BrandContextUpdateWithoutBrandInput, BrandContextUncheckedUpdateWithoutBrandInput>
+  }
+
+  export type BrandContextUpdateWithoutBrandInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    targetAudience?: NullableStringFieldUpdateOperationsInput | string | null
+    brandVoice?: NullableStringFieldUpdateOperationsInput | string | null
+    guidelines?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BrandContextUncheckedUpdateWithoutBrandInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    targetAudience?: NullableStringFieldUpdateOperationsInput | string | null
+    brandVoice?: NullableStringFieldUpdateOperationsInput | string | null
+    guidelines?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BrandAssetUpsertWithWhereUniqueWithoutBrandInput = {
+    where: BrandAssetWhereUniqueInput
+    update: XOR<BrandAssetUpdateWithoutBrandInput, BrandAssetUncheckedUpdateWithoutBrandInput>
+    create: XOR<BrandAssetCreateWithoutBrandInput, BrandAssetUncheckedCreateWithoutBrandInput>
+  }
+
+  export type BrandAssetUpdateWithWhereUniqueWithoutBrandInput = {
+    where: BrandAssetWhereUniqueInput
+    data: XOR<BrandAssetUpdateWithoutBrandInput, BrandAssetUncheckedUpdateWithoutBrandInput>
+  }
+
+  export type BrandAssetUpdateManyWithWhereWithoutBrandInput = {
+    where: BrandAssetScalarWhereInput
+    data: XOR<BrandAssetUpdateManyMutationInput, BrandAssetUncheckedUpdateManyWithoutBrandInput>
+  }
+
+  export type BrandAssetScalarWhereInput = {
+    AND?: BrandAssetScalarWhereInput | BrandAssetScalarWhereInput[]
+    OR?: BrandAssetScalarWhereInput[]
+    NOT?: BrandAssetScalarWhereInput | BrandAssetScalarWhereInput[]
+    id?: StringFilter<"BrandAsset"> | string
+    brandId?: StringFilter<"BrandAsset"> | string
+    r2Url?: StringFilter<"BrandAsset"> | string
+    tags?: StringNullableListFilter<"BrandAsset">
+    createdAt?: DateTimeFilter<"BrandAsset"> | Date | string
+  }
+
+  export type BrandCreateWithoutContextInput = {
+    id?: string
+    name: string
+    autoApproveOnReviewExpiry?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    owner: UserCreateNestedOneWithoutBrandsOwnedInput
+    members?: UserCreateNestedManyWithoutBrandsMemberInput
+    calendar?: CalendarEntryCreateNestedManyWithoutBrandInput
+    facts?: FactCreateNestedManyWithoutBrandInput
+    ledgerAccounts?: LedgerAccountCreateNestedManyWithoutBrandInput
+    shortLinks?: ShortLinkCreateNestedManyWithoutBrandInput
+    assets?: BrandAssetCreateNestedManyWithoutBrandInput
+  }
+
+  export type BrandUncheckedCreateWithoutContextInput = {
+    id?: string
+    name: string
+    ownerId: string
+    autoApproveOnReviewExpiry?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    members?: UserUncheckedCreateNestedManyWithoutBrandsMemberInput
+    calendar?: CalendarEntryUncheckedCreateNestedManyWithoutBrandInput
+    facts?: FactUncheckedCreateNestedManyWithoutBrandInput
+    ledgerAccounts?: LedgerAccountUncheckedCreateNestedManyWithoutBrandInput
+    shortLinks?: ShortLinkUncheckedCreateNestedManyWithoutBrandInput
+    assets?: BrandAssetUncheckedCreateNestedManyWithoutBrandInput
+  }
+
+  export type BrandCreateOrConnectWithoutContextInput = {
+    where: BrandWhereUniqueInput
+    create: XOR<BrandCreateWithoutContextInput, BrandUncheckedCreateWithoutContextInput>
+  }
+
+  export type BrandUpsertWithoutContextInput = {
+    update: XOR<BrandUpdateWithoutContextInput, BrandUncheckedUpdateWithoutContextInput>
+    create: XOR<BrandCreateWithoutContextInput, BrandUncheckedCreateWithoutContextInput>
+    where?: BrandWhereInput
+  }
+
+  export type BrandUpdateToOneWithWhereWithoutContextInput = {
+    where?: BrandWhereInput
+    data: XOR<BrandUpdateWithoutContextInput, BrandUncheckedUpdateWithoutContextInput>
+  }
+
+  export type BrandUpdateWithoutContextInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    autoApproveOnReviewExpiry?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: UserUpdateOneRequiredWithoutBrandsOwnedNestedInput
+    members?: UserUpdateManyWithoutBrandsMemberNestedInput
+    calendar?: CalendarEntryUpdateManyWithoutBrandNestedInput
+    facts?: FactUpdateManyWithoutBrandNestedInput
+    ledgerAccounts?: LedgerAccountUpdateManyWithoutBrandNestedInput
+    shortLinks?: ShortLinkUpdateManyWithoutBrandNestedInput
+    assets?: BrandAssetUpdateManyWithoutBrandNestedInput
+  }
+
+  export type BrandUncheckedUpdateWithoutContextInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+    autoApproveOnReviewExpiry?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: UserUncheckedUpdateManyWithoutBrandsMemberNestedInput
+    calendar?: CalendarEntryUncheckedUpdateManyWithoutBrandNestedInput
+    facts?: FactUncheckedUpdateManyWithoutBrandNestedInput
+    ledgerAccounts?: LedgerAccountUncheckedUpdateManyWithoutBrandNestedInput
+    shortLinks?: ShortLinkUncheckedUpdateManyWithoutBrandNestedInput
+    assets?: BrandAssetUncheckedUpdateManyWithoutBrandNestedInput
+  }
+
+  export type BrandCreateWithoutAssetsInput = {
+    id?: string
+    name: string
+    autoApproveOnReviewExpiry?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    owner: UserCreateNestedOneWithoutBrandsOwnedInput
+    members?: UserCreateNestedManyWithoutBrandsMemberInput
+    calendar?: CalendarEntryCreateNestedManyWithoutBrandInput
+    facts?: FactCreateNestedManyWithoutBrandInput
+    ledgerAccounts?: LedgerAccountCreateNestedManyWithoutBrandInput
+    shortLinks?: ShortLinkCreateNestedManyWithoutBrandInput
+    context?: BrandContextCreateNestedOneWithoutBrandInput
+  }
+
+  export type BrandUncheckedCreateWithoutAssetsInput = {
+    id?: string
+    name: string
+    ownerId: string
+    autoApproveOnReviewExpiry?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    members?: UserUncheckedCreateNestedManyWithoutBrandsMemberInput
+    calendar?: CalendarEntryUncheckedCreateNestedManyWithoutBrandInput
+    facts?: FactUncheckedCreateNestedManyWithoutBrandInput
+    ledgerAccounts?: LedgerAccountUncheckedCreateNestedManyWithoutBrandInput
+    shortLinks?: ShortLinkUncheckedCreateNestedManyWithoutBrandInput
+    context?: BrandContextUncheckedCreateNestedOneWithoutBrandInput
+  }
+
+  export type BrandCreateOrConnectWithoutAssetsInput = {
+    where: BrandWhereUniqueInput
+    create: XOR<BrandCreateWithoutAssetsInput, BrandUncheckedCreateWithoutAssetsInput>
+  }
+
+  export type BrandUpsertWithoutAssetsInput = {
+    update: XOR<BrandUpdateWithoutAssetsInput, BrandUncheckedUpdateWithoutAssetsInput>
+    create: XOR<BrandCreateWithoutAssetsInput, BrandUncheckedCreateWithoutAssetsInput>
+    where?: BrandWhereInput
+  }
+
+  export type BrandUpdateToOneWithWhereWithoutAssetsInput = {
+    where?: BrandWhereInput
+    data: XOR<BrandUpdateWithoutAssetsInput, BrandUncheckedUpdateWithoutAssetsInput>
+  }
+
+  export type BrandUpdateWithoutAssetsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    autoApproveOnReviewExpiry?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: UserUpdateOneRequiredWithoutBrandsOwnedNestedInput
+    members?: UserUpdateManyWithoutBrandsMemberNestedInput
+    calendar?: CalendarEntryUpdateManyWithoutBrandNestedInput
+    facts?: FactUpdateManyWithoutBrandNestedInput
+    ledgerAccounts?: LedgerAccountUpdateManyWithoutBrandNestedInput
+    shortLinks?: ShortLinkUpdateManyWithoutBrandNestedInput
+    context?: BrandContextUpdateOneWithoutBrandNestedInput
+  }
+
+  export type BrandUncheckedUpdateWithoutAssetsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+    autoApproveOnReviewExpiry?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: UserUncheckedUpdateManyWithoutBrandsMemberNestedInput
+    calendar?: CalendarEntryUncheckedUpdateManyWithoutBrandNestedInput
+    facts?: FactUncheckedUpdateManyWithoutBrandNestedInput
+    ledgerAccounts?: LedgerAccountUncheckedUpdateManyWithoutBrandNestedInput
+    shortLinks?: ShortLinkUncheckedUpdateManyWithoutBrandNestedInput
+    context?: BrandContextUncheckedUpdateOneWithoutBrandNestedInput
   }
 
   export type UserCreateWithoutCreatorInput = {
@@ -39576,6 +42850,8 @@ export namespace Prisma {
     facts?: FactCreateNestedManyWithoutBrandInput
     ledgerAccounts?: LedgerAccountCreateNestedManyWithoutBrandInput
     shortLinks?: ShortLinkCreateNestedManyWithoutBrandInput
+    context?: BrandContextCreateNestedOneWithoutBrandInput
+    assets?: BrandAssetCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateWithoutCalendarInput = {
@@ -39589,6 +42865,8 @@ export namespace Prisma {
     facts?: FactUncheckedCreateNestedManyWithoutBrandInput
     ledgerAccounts?: LedgerAccountUncheckedCreateNestedManyWithoutBrandInput
     shortLinks?: ShortLinkUncheckedCreateNestedManyWithoutBrandInput
+    context?: BrandContextUncheckedCreateNestedOneWithoutBrandInput
+    assets?: BrandAssetUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandCreateOrConnectWithoutCalendarInput = {
@@ -39618,6 +42896,8 @@ export namespace Prisma {
     facts?: FactUpdateManyWithoutBrandNestedInput
     ledgerAccounts?: LedgerAccountUpdateManyWithoutBrandNestedInput
     shortLinks?: ShortLinkUpdateManyWithoutBrandNestedInput
+    context?: BrandContextUpdateOneWithoutBrandNestedInput
+    assets?: BrandAssetUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateWithoutCalendarInput = {
@@ -39631,6 +42911,8 @@ export namespace Prisma {
     facts?: FactUncheckedUpdateManyWithoutBrandNestedInput
     ledgerAccounts?: LedgerAccountUncheckedUpdateManyWithoutBrandNestedInput
     shortLinks?: ShortLinkUncheckedUpdateManyWithoutBrandNestedInput
+    context?: BrandContextUncheckedUpdateOneWithoutBrandNestedInput
+    assets?: BrandAssetUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandCreateWithoutFactsInput = {
@@ -39644,6 +42926,8 @@ export namespace Prisma {
     calendar?: CalendarEntryCreateNestedManyWithoutBrandInput
     ledgerAccounts?: LedgerAccountCreateNestedManyWithoutBrandInput
     shortLinks?: ShortLinkCreateNestedManyWithoutBrandInput
+    context?: BrandContextCreateNestedOneWithoutBrandInput
+    assets?: BrandAssetCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateWithoutFactsInput = {
@@ -39657,6 +42941,8 @@ export namespace Prisma {
     calendar?: CalendarEntryUncheckedCreateNestedManyWithoutBrandInput
     ledgerAccounts?: LedgerAccountUncheckedCreateNestedManyWithoutBrandInput
     shortLinks?: ShortLinkUncheckedCreateNestedManyWithoutBrandInput
+    context?: BrandContextUncheckedCreateNestedOneWithoutBrandInput
+    assets?: BrandAssetUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandCreateOrConnectWithoutFactsInput = {
@@ -39784,6 +43070,8 @@ export namespace Prisma {
     calendar?: CalendarEntryUpdateManyWithoutBrandNestedInput
     ledgerAccounts?: LedgerAccountUpdateManyWithoutBrandNestedInput
     shortLinks?: ShortLinkUpdateManyWithoutBrandNestedInput
+    context?: BrandContextUpdateOneWithoutBrandNestedInput
+    assets?: BrandAssetUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateWithoutFactsInput = {
@@ -39797,6 +43085,8 @@ export namespace Prisma {
     calendar?: CalendarEntryUncheckedUpdateManyWithoutBrandNestedInput
     ledgerAccounts?: LedgerAccountUncheckedUpdateManyWithoutBrandNestedInput
     shortLinks?: ShortLinkUncheckedUpdateManyWithoutBrandNestedInput
+    context?: BrandContextUncheckedUpdateOneWithoutBrandNestedInput
+    assets?: BrandAssetUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type ScriptVersionUpsertWithWhereUniqueWithoutFactInput = {
@@ -39884,6 +43174,8 @@ export namespace Prisma {
     cpmBudget: number
     baseFee: number
     maxClaims?: number
+    rawClaim?: string | null
+    verifiedSources?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     brand: BrandCreateNestedOneWithoutFactsInput
@@ -39901,6 +43193,8 @@ export namespace Prisma {
     cpmBudget: number
     baseFee: number
     maxClaims?: number
+    rawClaim?: string | null
+    verifiedSources?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     claims?: ClaimUncheckedCreateNestedManyWithoutFactInput
@@ -39996,6 +43290,8 @@ export namespace Prisma {
     cpmBudget?: IntFieldUpdateOperationsInput | number
     baseFee?: IntFieldUpdateOperationsInput | number
     maxClaims?: IntFieldUpdateOperationsInput | number
+    rawClaim?: NullableStringFieldUpdateOperationsInput | string | null
+    verifiedSources?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     brand?: BrandUpdateOneRequiredWithoutFactsNestedInput
@@ -40013,6 +43309,8 @@ export namespace Prisma {
     cpmBudget?: IntFieldUpdateOperationsInput | number
     baseFee?: IntFieldUpdateOperationsInput | number
     maxClaims?: IntFieldUpdateOperationsInput | number
+    rawClaim?: NullableStringFieldUpdateOperationsInput | string | null
+    verifiedSources?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     claims?: ClaimUncheckedUpdateManyWithoutFactNestedInput
@@ -40407,6 +43705,8 @@ export namespace Prisma {
     cpmBudget: number
     baseFee: number
     maxClaims?: number
+    rawClaim?: string | null
+    verifiedSources?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     brand: BrandCreateNestedOneWithoutFactsInput
@@ -40424,6 +43724,8 @@ export namespace Prisma {
     cpmBudget: number
     baseFee: number
     maxClaims?: number
+    rawClaim?: string | null
+    verifiedSources?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     scriptVersions?: ScriptVersionUncheckedCreateNestedManyWithoutFactInput
@@ -40530,6 +43832,8 @@ export namespace Prisma {
     cpmBudget?: IntFieldUpdateOperationsInput | number
     baseFee?: IntFieldUpdateOperationsInput | number
     maxClaims?: IntFieldUpdateOperationsInput | number
+    rawClaim?: NullableStringFieldUpdateOperationsInput | string | null
+    verifiedSources?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     brand?: BrandUpdateOneRequiredWithoutFactsNestedInput
@@ -40547,6 +43851,8 @@ export namespace Prisma {
     cpmBudget?: IntFieldUpdateOperationsInput | number
     baseFee?: IntFieldUpdateOperationsInput | number
     maxClaims?: IntFieldUpdateOperationsInput | number
+    rawClaim?: NullableStringFieldUpdateOperationsInput | string | null
+    verifiedSources?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     scriptVersions?: ScriptVersionUncheckedUpdateManyWithoutFactNestedInput
@@ -41312,6 +44618,8 @@ export namespace Prisma {
     calendar?: CalendarEntryCreateNestedManyWithoutBrandInput
     facts?: FactCreateNestedManyWithoutBrandInput
     ledgerAccounts?: LedgerAccountCreateNestedManyWithoutBrandInput
+    context?: BrandContextCreateNestedOneWithoutBrandInput
+    assets?: BrandAssetCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateWithoutShortLinksInput = {
@@ -41325,6 +44633,8 @@ export namespace Prisma {
     calendar?: CalendarEntryUncheckedCreateNestedManyWithoutBrandInput
     facts?: FactUncheckedCreateNestedManyWithoutBrandInput
     ledgerAccounts?: LedgerAccountUncheckedCreateNestedManyWithoutBrandInput
+    context?: BrandContextUncheckedCreateNestedOneWithoutBrandInput
+    assets?: BrandAssetUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandCreateOrConnectWithoutShortLinksInput = {
@@ -41431,6 +44741,8 @@ export namespace Prisma {
     calendar?: CalendarEntryUpdateManyWithoutBrandNestedInput
     facts?: FactUpdateManyWithoutBrandNestedInput
     ledgerAccounts?: LedgerAccountUpdateManyWithoutBrandNestedInput
+    context?: BrandContextUpdateOneWithoutBrandNestedInput
+    assets?: BrandAssetUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateWithoutShortLinksInput = {
@@ -41444,6 +44756,8 @@ export namespace Prisma {
     calendar?: CalendarEntryUncheckedUpdateManyWithoutBrandNestedInput
     facts?: FactUncheckedUpdateManyWithoutBrandNestedInput
     ledgerAccounts?: LedgerAccountUncheckedUpdateManyWithoutBrandNestedInput
+    context?: BrandContextUncheckedUpdateOneWithoutBrandNestedInput
+    assets?: BrandAssetUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type ClickEventUpsertWithWhereUniqueWithoutShortLinkInput = {
@@ -41537,6 +44851,8 @@ export namespace Prisma {
     calendar?: CalendarEntryCreateNestedManyWithoutBrandInput
     facts?: FactCreateNestedManyWithoutBrandInput
     shortLinks?: ShortLinkCreateNestedManyWithoutBrandInput
+    context?: BrandContextCreateNestedOneWithoutBrandInput
+    assets?: BrandAssetCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateWithoutLedgerAccountsInput = {
@@ -41550,6 +44866,8 @@ export namespace Prisma {
     calendar?: CalendarEntryUncheckedCreateNestedManyWithoutBrandInput
     facts?: FactUncheckedCreateNestedManyWithoutBrandInput
     shortLinks?: ShortLinkUncheckedCreateNestedManyWithoutBrandInput
+    context?: BrandContextUncheckedCreateNestedOneWithoutBrandInput
+    assets?: BrandAssetUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandCreateOrConnectWithoutLedgerAccountsInput = {
@@ -41634,6 +44952,8 @@ export namespace Prisma {
     calendar?: CalendarEntryUpdateManyWithoutBrandNestedInput
     facts?: FactUpdateManyWithoutBrandNestedInput
     shortLinks?: ShortLinkUpdateManyWithoutBrandNestedInput
+    context?: BrandContextUpdateOneWithoutBrandNestedInput
+    assets?: BrandAssetUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateWithoutLedgerAccountsInput = {
@@ -41647,6 +44967,8 @@ export namespace Prisma {
     calendar?: CalendarEntryUncheckedUpdateManyWithoutBrandNestedInput
     facts?: FactUncheckedUpdateManyWithoutBrandNestedInput
     shortLinks?: ShortLinkUncheckedUpdateManyWithoutBrandNestedInput
+    context?: BrandContextUncheckedUpdateOneWithoutBrandNestedInput
+    assets?: BrandAssetUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type CreatorUpsertWithoutLedgerAccountsInput = {
@@ -41893,6 +45215,8 @@ export namespace Prisma {
     cpmBudget: number
     baseFee: number
     maxClaims?: number
+    rawClaim?: string | null
+    verifiedSources?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     brand: BrandCreateNestedOneWithoutFactsInput
@@ -41910,6 +45234,8 @@ export namespace Prisma {
     cpmBudget: number
     baseFee: number
     maxClaims?: number
+    rawClaim?: string | null
+    verifiedSources?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     scriptVersions?: ScriptVersionUncheckedCreateNestedManyWithoutFactInput
@@ -41968,6 +45294,8 @@ export namespace Prisma {
     cpmBudget?: IntFieldUpdateOperationsInput | number
     baseFee?: IntFieldUpdateOperationsInput | number
     maxClaims?: IntFieldUpdateOperationsInput | number
+    rawClaim?: NullableStringFieldUpdateOperationsInput | string | null
+    verifiedSources?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     brand?: BrandUpdateOneRequiredWithoutFactsNestedInput
@@ -41985,6 +45313,8 @@ export namespace Prisma {
     cpmBudget?: IntFieldUpdateOperationsInput | number
     baseFee?: IntFieldUpdateOperationsInput | number
     maxClaims?: IntFieldUpdateOperationsInput | number
+    rawClaim?: NullableStringFieldUpdateOperationsInput | string | null
+    verifiedSources?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     scriptVersions?: ScriptVersionUncheckedUpdateManyWithoutFactNestedInput
@@ -42147,6 +45477,8 @@ export namespace Prisma {
     facts?: FactUpdateManyWithoutBrandNestedInput
     ledgerAccounts?: LedgerAccountUpdateManyWithoutBrandNestedInput
     shortLinks?: ShortLinkUpdateManyWithoutBrandNestedInput
+    context?: BrandContextUpdateOneWithoutBrandNestedInput
+    assets?: BrandAssetUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateWithoutOwnerInput = {
@@ -42160,6 +45492,8 @@ export namespace Prisma {
     facts?: FactUncheckedUpdateManyWithoutBrandNestedInput
     ledgerAccounts?: LedgerAccountUncheckedUpdateManyWithoutBrandNestedInput
     shortLinks?: ShortLinkUncheckedUpdateManyWithoutBrandNestedInput
+    context?: BrandContextUncheckedUpdateOneWithoutBrandNestedInput
+    assets?: BrandAssetUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateManyWithoutOwnerInput = {
@@ -42181,6 +45515,8 @@ export namespace Prisma {
     facts?: FactUpdateManyWithoutBrandNestedInput
     ledgerAccounts?: LedgerAccountUpdateManyWithoutBrandNestedInput
     shortLinks?: ShortLinkUpdateManyWithoutBrandNestedInput
+    context?: BrandContextUpdateOneWithoutBrandNestedInput
+    assets?: BrandAssetUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateWithoutMembersInput = {
@@ -42194,6 +45530,8 @@ export namespace Prisma {
     facts?: FactUncheckedUpdateManyWithoutBrandNestedInput
     ledgerAccounts?: LedgerAccountUncheckedUpdateManyWithoutBrandNestedInput
     shortLinks?: ShortLinkUncheckedUpdateManyWithoutBrandNestedInput
+    context?: BrandContextUncheckedUpdateOneWithoutBrandNestedInput
+    assets?: BrandAssetUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateManyWithoutMembersInput = {
@@ -42250,6 +45588,8 @@ export namespace Prisma {
     cpmBudget: number
     baseFee: number
     maxClaims?: number
+    rawClaim?: string | null
+    verifiedSources?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -42268,6 +45608,13 @@ export namespace Prisma {
     code: string
     targetUrl: string
     videoId?: string | null
+    createdAt?: Date | string
+  }
+
+  export type BrandAssetCreateManyBrandInput = {
+    id?: string
+    r2Url: string
+    tags?: BrandAssetCreatetagsInput | string[]
     createdAt?: Date | string
   }
 
@@ -42352,6 +45699,8 @@ export namespace Prisma {
     cpmBudget?: IntFieldUpdateOperationsInput | number
     baseFee?: IntFieldUpdateOperationsInput | number
     maxClaims?: IntFieldUpdateOperationsInput | number
+    rawClaim?: NullableStringFieldUpdateOperationsInput | string | null
+    verifiedSources?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     scriptVersions?: ScriptVersionUpdateManyWithoutFactNestedInput
@@ -42368,6 +45717,8 @@ export namespace Prisma {
     cpmBudget?: IntFieldUpdateOperationsInput | number
     baseFee?: IntFieldUpdateOperationsInput | number
     maxClaims?: IntFieldUpdateOperationsInput | number
+    rawClaim?: NullableStringFieldUpdateOperationsInput | string | null
+    verifiedSources?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     scriptVersions?: ScriptVersionUncheckedUpdateManyWithoutFactNestedInput
@@ -42384,6 +45735,8 @@ export namespace Prisma {
     cpmBudget?: IntFieldUpdateOperationsInput | number
     baseFee?: IntFieldUpdateOperationsInput | number
     maxClaims?: IntFieldUpdateOperationsInput | number
+    rawClaim?: NullableStringFieldUpdateOperationsInput | string | null
+    verifiedSources?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -42440,6 +45793,27 @@ export namespace Prisma {
     code?: StringFieldUpdateOperationsInput | string
     targetUrl?: StringFieldUpdateOperationsInput | string
     videoId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BrandAssetUpdateWithoutBrandInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    r2Url?: StringFieldUpdateOperationsInput | string
+    tags?: BrandAssetUpdatetagsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BrandAssetUncheckedUpdateWithoutBrandInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    r2Url?: StringFieldUpdateOperationsInput | string
+    tags?: BrandAssetUpdatetagsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BrandAssetUncheckedUpdateManyWithoutBrandInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    r2Url?: StringFieldUpdateOperationsInput | string
+    tags?: BrandAssetUpdatetagsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
