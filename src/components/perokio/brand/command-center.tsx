@@ -3,6 +3,7 @@
 import { StatCard } from '@/components/perokio/shared/stat-card'
 import { ViewTicker } from '@/components/perokio/shared/view-ticker'
 import { Countdown } from '@/components/perokio/shared/countdown'
+import { WeekGrid } from '@/components/perokio/shared/week-grid'
 import { ParrotEye, ParrotEyeHandle, ParrotLogo } from '@/components/perokio/shared/parrot-logo'
 import { usePerokioLiveViews, formatUSD, formatCompact, formatNumber } from '@/lib/perokio/live'
 import { usePerokioStore } from '@/store/perokio'
@@ -62,6 +63,16 @@ export function CommandCenter() {
           ))}
         </div>
       </div>
+
+      {/* === WeekGrid — the Calendar-as-Spine (replaces the dashboard hero) === */}
+      <WeekGrid
+        onEntryClick={(entry) => {
+          if (entry.factId) {
+            setActiveFact(entry.factId)
+            setView('script')
+          }
+        }}
+      />
 
       {/* === Hero — Parrot Eye + Live views + Wallet === */}
       <div className="relative overflow-hidden rounded-2xl glass p-6 lg:p-8">
@@ -420,6 +431,21 @@ export function CommandCenter() {
                 {t('View Analytics')}
                 <ArrowUpRight className="h-3 w-3" />
               </Button>
+              {/* Boost CTA — only if views < 50% of cap (underperforming) */}
+              {v.views > 0 && v.views < v.viewCap * 0.5 && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    setActiveVideo(v.id)
+                    setView('results')
+                  }}
+                  className="text-xs text-orange hover:text-orange hover:bg-orange/10 shrink-0 gap-1"
+                >
+                  <Zap className="h-3 w-3" />
+                  {t('Boost')}
+                </Button>
+              )}
             </div>
             )
           })}

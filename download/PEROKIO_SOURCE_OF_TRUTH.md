@@ -1,8 +1,8 @@
-# 🦜 PEROKIO — PRODUCT SOURCE OF TRUTH (V1, Post-Cycle 9)
+# 🦜 PEROKIO — PRODUCT SOURCE OF TRUTH (V1, Post-Cycle 9 + Frontend Phase 2)
 
-> **Status:** V1 Locked. All 9 build cycles complete. 44+ screens across 3 roles.
-> **Stack:** Next.js 16 (App Router) · TypeScript 5 · Tailwind CSS 4 · Zustand · Framer Motion · Recharts · shadcn/ui
-> **Last updated:** November 2024 (post-Cycle 9)
+> **Status:** V1 Locked. All 9 build cycles + Frontend Phases 1-2 (API integration + UX polish) complete. 44+ screens, 3 roles. Backend: 27 tables, 39 API routes, 3 BullMQ workers.
+> **Stack:** Next.js 16 (App Router) · TypeScript 5 · Tailwind CSS 4 · Zustand · Framer Motion · Recharts · shadcn/ui · NestJS · Prisma · PostgreSQL · Redis + BullMQ
+> **Last updated:** November 2026 (post-Frontend Phase 2)
 
 ---
 
@@ -272,6 +272,39 @@ Zustand store with:
 | **StatCard** | `stat-card.tsx` | Glass card with accent glow, icon, delta indicator. |
 | **Countdown** | `countdown.tsx` | Legacy countdown (used in C01 "Next refresh" only — all lifecycle timers use TimerBar). |
 | **ViewTicker** | `view-ticker.tsx` | JetBrains Mono number that ticks up, fires onTick callback for ParrotEye blink. |
+| **WeekGrid** | `week-grid.tsx` | **The Calendar-as-Spine** ($499 product). 7-day horizontal grid showing Facts (lime cards) and Sparks (orange cards). Highlights "Today" with a lime border. Shows "Next week locks Monday 9am" urgency text. Used in B08 Command Center hero + Onboarding live preview. |
+| **ApprovalModal** | `approval-modal.tsx` | Full-screen B12 success modal. Opens on "Approve" — shows CheckCircle2 icon, video thumbnail, "Video Approved. Auto-publishing in 1 hour via Postiz." + [View Schedule] + [Back to Dashboard] CTAs. |
+
+### Cycle 9 UX Enhancements (Frontend Phase 2)
+
+The following UX updates were implemented on top of the live API data:
+
+**1. Clicks & CTR Metrics (ROI Engine):**
+- B08 Command Center: "Recent videos" table includes Clicks column + CTR % below it
+- B14 Video Detail & B17 Results: 5-card metric grid (Views, Clicks, Earned, Effective CPM, Engagement)
+- B10 Fact Library: Featured card shows Views + Clicks stat cells
+- WL01 Creator Wallet: "Link Clicks" KPI card in the creator profile section
+
+**2. Success Rating Engine:**
+- B08 & B14/B17: Success Score badge (★ 92/100) next to the "Printed" badge, lime accent
+- B10 Fact Library: "Avg. Success" stat cell (computed from PrintRating.overallScore × 20, converted to 100-point scale)
+
+**3. Missing CTAs (No Dead Ends):**
+- B13 Claim Feed: [Review Now] next to "locked a video" entries → B12 Video Review; [View Video] next to "printed first version" → B14 Video Detail
+- B08 Command Center: [Edit Fact] + [View Details] on Active Fact Bundles; [View Analytics →] on recent videos; [Boost] on underperforming videos (<50% view cap)
+- C03 Claim Confirmation: [View Fact Sources] CTA alongside [Go to editor →]
+
+**4. Creator Workspace Enhancements:**
+- WL01 Wallet: [Copy Profile Link] CTA next to creator name (copies `perokio.com/creator/{handle}`)
+- C03 Claim Confirmation: Earnings micro-copy below the 24h timer: "You will earn an estimated $X base + $Y CPM potential for this fact."
+
+**5. Monday Lock & Calendar-as-Spine:**
+- Onboarding (B01-B07): Collapsed from 7 steps to a single 3-field screen (Brand Name, Industry, Logo) with a live WeekGrid preview
+- B08 Command Center: WeekGrid hero replaces the dashboard top — 7-day grid with "Next week locks Monday 9am" urgency
+- B12 Video Review: Full-screen ApprovalModal on "Approve" click
+
+**6. Mobile Navigation Fix:**
+- All 3 app shells (brand, creator, admin) have `pb-24` on the main scroll container so the sticky bottom nav never covers content
 
 ---
 

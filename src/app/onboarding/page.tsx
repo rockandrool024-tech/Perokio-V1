@@ -1,9 +1,8 @@
-import { OnboardingWizard } from '@/components/perokio/onboarding/onboarding-wizard'
+import { OnboardingWizard } from '@/components/perokio/onboarding/onboarding-collapsed'
 
 export const metadata = {
-  title: 'Brand Setup · Perokio',
-  description:
-    'Set up your brand on Perokio in 7 steps. Fund your first verified fact in under 5 minutes.',
+  title: 'Set up your brand · Perokio',
+  description: 'Three fields. Generate your first Fact Bundle and schedule it for Monday.',
 }
 
 export default function OnboardingPage() {
