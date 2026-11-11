@@ -1,53 +1,72 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { PerokioWordmark, ParrotLogo } from '@/components/perokio/shared/parrot-logo'
 import { AnimatedCTA } from '@/components/perokio/shared/animated-cta'
 import { easeEditorial, springSnappy } from '@/lib/perokio/motion'
-import { Mail, Check, ArrowRight, ArrowLeft } from 'lucide-react'
+import { useAuthStore } from '@/lib/perokio/auth-store'
+import { usePerokioStore } from '@/store/perokio'
+import { Mail, Lock, Check, ArrowRight, ArrowLeft, AlertCircle, Zap } from 'lucide-react'
 
 /**
- * P02 Login — VISUAL RESTYLE ONLY.
+ * P02 Login — Backend-connected auth (Frontend Integration Phase 1).
  *
- * Per Amendment #5: "Do NOT add a real magic-link flow — that's a separate
- * functional cycle. Mock the visual if needed with a setTimeout, but don't
- * fake a real email signup."
+ * Replaces the mock magic-link flow with real POST /api/auth/login.
+ * The JWT access token is stored in memory (api-client.ts), the refresh
+ * token in localStorage (dev). On success, routes based on the user's role:
+ *   - brand_owner / brand_member → Brand Studio
+ *   - creator → Creator Wall
+ *   - studio_editor / qa_reviewer / ops / finance / super_admin → Admin Cockpit
  *
- * Behavior:
- *   - Step 1: email input + "Send magic link" button. Click → setTimeout(800ms)
- *     → flips to Step 2 ("Check your inbox" confirmation). NO real email sent.
- *   - Step 2: "Open the demo" button → routes to / (the app).
- *   - Social sign-in buttons (Apple / Google) → also mock with setTimeout → /
- *
- * Premium aesthetic: single glass card, single column, generous whitespace.
- * No "🚀" emojis, no SaaS illustrations.
+ * Demo credentials are pre-filled for quick testing.
  */
 
-type Step = 'email' | 'sent' | 'signing-in'
+type Step = 'credentials' | 'signing-in' | 'error'
 
 export function Login() {
   const router = useRouter()
-  const [step, setStep] = useState<Step>('email')
-  const [email, setEmail] = useState('')
-  const [signingInWith, setSigningInWith] = useState<'apple' | 'google' | null>(null)
+  const [step, setStep] = useState<Step>('credentials')
+  const [email, setEmail] = useState('owner@perokio.demo')
+  const [password, setPassword] = useState('demo1234')
+  const [errorMsg, setErrorMsg] = useState('')
+  const { login, loading, error, clearError } = useAuthStore()
+  const setRole = usePerokioStore((s) => s.setRole)
 
-  // Mock magic-link send — setTimeout, no actual email (Amendment #5)
-  const handleSendLink = (e: React.FormEvent) => {
+  // Restore session on mount (if user was previously logged in)
+  useEffect(() => {
+    const { restoreSession } = useAuthStore.getState()
+    if (restoreSession()) {
+      const { frontendRole } = useAuthStore.getState()
+      setRole(frontendRole as any)
+      router.push('/')
+    }
+  }, [router, setRole])
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!email.includes('@')) return
-    setStep('sent')
+    if (!email.includes('@') || !password) return
+    setStep('signing-in')
+    clearError()
+
+    const success = await login(email, password)
+    if (success) {
+      const { frontendRole } = useAuthStore.getState()
+      setRole(frontendRole as any)
+      router.push('/')
+    } else {
+      setErrorMsg(error || 'Login failed. Check your credentials.')
+      setStep('error')
+    }
   }
 
-  // Mock social sign-in — setTimeout, then route to app
-  const handleSocial = (provider: 'apple' | 'google') => {
-    setSigningInWith(provider)
-    setStep('signing-in')
-    setTimeout(() => {
-      router.push('/')
-    }, 1200)
+  // Quick-fill demo credentials for a specific role
+  const fillDemo = (role: 'brand' | 'creator' | 'qa') => {
+    if (role === 'brand') { setEmail('owner@perokio.demo'); setPassword('demo1234') }
+    if (role === 'creator') { setEmail('amira@perokio.demo'); setPassword('demo1234') }
+    if (role === 'qa') { setEmail('qa@perokio.demo'); setPassword('demo1234') }
   }
 
   return (
@@ -87,19 +106,28 @@ export function Login() {
             className="glass rounded-2xl p-6 lg:p-8 space-y-6"
           >
             <AnimatePresence mode="wait">
-              {/* === Step 1: email input === */}
-              {step === 'email' && (
+              {/* === Step 1: email + password input === */}
+              {step === 'credentials' && (
                 <motion.div
-                  key="email"
+                  key="credentials"
                   initial={{ opacity: 0, x: 10 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -10 }}
                   transition={springSnappy}
                   className="space-y-5"
                 >
-                  <form onSubmit={handleSendLink} className="space-y-3">
+                  {/* Backend connected indicator */}
+                  <div className="flex items-center gap-1.5 text-[10px] text-lime font-mono" data-mono>
+                    <span className="relative flex h-1.5 w-1.5">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-lime opacity-75" />
+                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-lime" />
+                    </span>
+                    BACKEND CONNECTED · localhost:4000
+                  </div>
+
+                  <form onSubmit={handleLogin} className="space-y-3">
                     <label htmlFor="email" className="text-xs text-muted-fg uppercase tracking-wider">
-                      Email or handle
+                      Email
                     </label>
                     <div className="relative">
                       <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-fg" />
@@ -114,35 +142,56 @@ export function Login() {
                         className="w-full pl-10 pr-3 py-3 rounded-xl glass border border-white/10 bg-white/[0.02] text-sm focus:outline-none focus:ring-2 focus:ring-lime/40 placeholder:text-subtle"
                       />
                     </div>
-                    <AnimatedCTA type="submit" className="w-full justify-center">
-                      Send magic link
-                      <ArrowRight className="h-4 w-4" />
+
+                    <label htmlFor="password" className="text-xs text-muted-fg uppercase tracking-wider pt-2 block">
+                      Password
+                    </label>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-fg" />
+                      <input
+                        id="password"
+                        type="password"
+                        required
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="••••••••"
+                        className="w-full pl-10 pr-3 py-3 rounded-xl glass border border-white/10 bg-white/[0.02] text-sm focus:outline-none focus:ring-2 focus:ring-lime/40 placeholder:text-subtle"
+                      />
+                    </div>
+
+                    <AnimatedCTA type="submit" className="w-full justify-center" disabled={loading}>
+                      {loading ? 'Signing in…' : 'Sign in'}
+                      {!loading && <ArrowRight className="h-4 w-4" />}
                     </AnimatedCTA>
                   </form>
 
-                  {/* Divider */}
-                  <div className="flex items-center gap-3 text-xs text-muted-fg">
-                    <div className="flex-1 h-px bg-white/[0.06]" />
-                    <span>or</span>
-                    <div className="flex-1 h-px bg-white/[0.06]" />
-                  </div>
-
-                  {/* Social sign-in (mock) */}
+                  {/* Demo credentials quick-fill */}
                   <div className="space-y-2">
-                    <button
-                      onClick={() => handleSocial('apple')}
-                      className="w-full flex items-center justify-center gap-2 py-3 rounded-xl glass border border-white/10 hover:bg-white/[0.05] transition-colors text-sm font-medium"
-                    >
-                      <AppleIcon className="h-4 w-4" />
-                      Continue with Apple
-                    </button>
-                    <button
-                      onClick={() => handleSocial('google')}
-                      className="w-full flex items-center justify-center gap-2 py-3 rounded-xl glass border border-white/10 hover:bg-white/[0.05] transition-colors text-sm font-medium"
-                    >
-                      <GoogleIcon className="h-4 w-4" />
-                      Continue with Google
-                    </button>
+                    <div className="flex items-center gap-3 text-xs text-muted-fg">
+                      <div className="flex-1 h-px bg-white/[0.06]" />
+                      <span>Demo accounts</span>
+                      <div className="flex-1 h-px bg-white/[0.06]" />
+                    </div>
+                    <div className="grid grid-cols-3 gap-2">
+                      <button
+                        onClick={() => fillDemo('brand')}
+                        className="py-2 px-2 rounded-lg glass border border-white/10 hover:bg-white/[0.05] transition-colors text-xs text-muted-fg hover:text-lime"
+                      >
+                        ☕ Brand
+                      </button>
+                      <button
+                        onClick={() => fillDemo('creator')}
+                        className="py-2 px-2 rounded-lg glass border border-white/10 hover:bg-white/[0.05] transition-colors text-xs text-muted-fg hover:text-lime"
+                      >
+                        🎬 Creator
+                      </button>
+                      <button
+                        onClick={() => fillDemo('qa')}
+                        className="py-2 px-2 rounded-lg glass border border-white/10 hover:bg-white/[0.05] transition-colors text-xs text-muted-fg hover:text-lime"
+                      >
+                        🔍 QA
+                      </button>
+                    </div>
                   </div>
 
                   <p className="text-[10px] text-subtle text-center leading-relaxed">
@@ -152,49 +201,7 @@ export function Login() {
                 </motion.div>
               )}
 
-              {/* === Step 2: "Check your inbox" — mock confirmation === */}
-              {step === 'sent' && (
-                <motion.div
-                  key="sent"
-                  initial={{ opacity: 0, x: 10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -10 }}
-                  transition={springSnappy}
-                  className="space-y-5 text-center"
-                >
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ ...springSnappy, delay: 0.1 }}
-                    className="mx-auto h-14 w-14 rounded-full glass-lime flex items-center justify-center"
-                  >
-                    <Check className="h-7 w-7 text-lime" />
-                  </motion.div>
-                  <div>
-                    <h2 className="font-serif text-xl font-semibold mb-1">Check your inbox</h2>
-                    <p className="text-sm text-muted-fg">
-                      We sent a magic link to
-                    </p>
-                    <p className="text-sm font-mono text-fg mt-1" data-mono>{email}</p>
-                  </div>
-                  <p className="text-xs text-muted-fg leading-relaxed">
-                    This is a demo — no actual email was sent. Click below to enter the app
-                    as Amira (the demo creator).
-                  </p>
-                  <AnimatedCTA onClick={() => router.push('/')} className="w-full justify-center">
-                    Open the demo
-                    <ArrowRight className="h-4 w-4" />
-                  </AnimatedCTA>
-                  <button
-                    onClick={() => setStep('email')}
-                    className="text-xs text-muted-fg hover:text-fg transition-colors"
-                  >
-                    ← Use a different email
-                  </button>
-                </motion.div>
-              )}
-
-              {/* === Step 3: signing in (mock loading) === */}
+              {/* === Step 2: signing in (real API call) === */}
               {step === 'signing-in' && (
                 <motion.div
                   key="signing-in"
@@ -212,11 +219,40 @@ export function Login() {
                     <ParrotLogo size={48} />
                   </motion.div>
                   <p className="text-sm text-muted-fg">
-                    Signing in with {signingInWith === 'apple' ? 'Apple' : 'Google'}…
+                    Authenticating…
                   </p>
-                  <p className="text-xs text-subtle">
-                    (Demo mode — redirecting to the app)
+                  <p className="text-xs text-subtle font-mono" data-mono>
+                    POST /api/auth/login
                   </p>
+                </motion.div>
+              )}
+
+              {/* === Step 3: error === */}
+              {step === 'error' && (
+                <motion.div
+                  key="error"
+                  initial={{ opacity: 0, x: 10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -10 }}
+                  transition={springSnappy}
+                  className="space-y-5 text-center"
+                >
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ ...springSnappy, delay: 0.1 }}
+                    className="mx-auto h-14 w-14 rounded-full glass-red flex items-center justify-center"
+                  >
+                    <AlertCircle className="h-7 w-7 text-red" />
+                  </motion.div>
+                  <div>
+                    <h2 className="font-serif text-xl font-semibold mb-1">Login failed</h2>
+                    <p className="text-sm text-muted-fg font-mono" data-mono>{errorMsg}</p>
+                  </div>
+                  <AnimatedCTA onClick={() => setStep('credentials')} className="w-full justify-center">
+                    Try again
+                    <ArrowRight className="h-4 w-4" />
+                  </AnimatedCTA>
                 </motion.div>
               )}
             </AnimatePresence>
