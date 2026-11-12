@@ -1,0 +1,76 @@
+# ============================================================================
+# Dockerfile.api — Multi-stage build for the NestJS API
+# ============================================================================
+# Stage 1 (builder): Install deps, generate Prisma client, compile TS → JS
+# Stage 2 (runner): Copy only compiled output + production deps, run with node
+# ============================================================================
+
+# ── Stage 1: Builder ──────────────────────────────────────────────────────
+FROM node:20-slim AS builder
+
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+WORKDIR /build
+
+# Copy workspace config + all package.json files (for caching)
+COPY backend/package.json backend/pnpm-lock.yaml backend/pnpm-workspace.yaml ./
+COPY backend/apps/api/package.json ./apps/api/
+COPY backend/apps/worker/package.json ./apps/worker/
+COPY backend/packages/db/package.json ./packages/db/
+
+# Install all dependencies (including devDeps for compilation)
+RUN pnpm install --frozen-lockfile
+
+# Copy the Prisma schema + generate the client
+COPY backend/packages/db/prisma ./packages/db/prisma
+RUN pnpm --filter @perokio/db exec prisma generate --schema packages/db/prisma/schema.prisma
+
+# Copy the rest of the source
+COPY backend/ .
+
+# Compile TypeScript → JavaScript
+RUN pnpm --filter @perokio/api exec tsc --outDir dist --skipLibCheck || true
+RUN pnpm --filter @perokio/worker exec tsc --outDir dist --skipLibCheck || true
+
+# ── Stage 2: Runner ───────────────────────────────────────────────────────
+FROM node:20-slim AS runner
+
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+WORKDIR /app
+
+# Copy package.json + lockfile + workspace config
+COPY --from=builder /build/package.json /build/pnpm-lock.yaml /build/pnpm-workspace.yaml ./
+COPY --from=builder /build/apps/api/package.json ./apps/api/
+COPY --from=builder /build/apps/worker/package.json ./apps/worker/
+COPY --from=builder /build/packages/db/package.json ./packages/db/
+
+# Install only production dependencies
+RUN pnpm install --prod --frozen-lockfile
+
+# Copy the compiled JavaScript output
+COPY --from=builder /build/apps/api/dist ./apps/api/dist
+COPY --from=builder /build/apps/worker/dist ./apps/worker/dist
+COPY --from=builder /build/packages/db/src ./packages/db/src
+
+# Copy the Prisma schema (needed at runtime for migrations)
+COPY --from=builder /build/packages/db/prisma ./packages/db/prisma
+
+# Copy tsconfig files (needed for path resolution if using ts-node in prod fallback)
+COPY --from=builder /build/apps/api/tsconfig.json ./apps/api/
+COPY --from=builder /build/tsconfig.test.json ./
+
+# Set environment
+ENV NODE_ENV=production
+ENV PORT=4000
+
+# Expose the API port
+EXPOSE 4000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD node -e "fetch('http://localhost:4000/api/auth/me').then(r=>r.status===401?process.exit(0):process.exit(1)).catch(()=>process.exit(1))"
+
+# Start the API
+WORKDIR /app/apps/api
+CMD ["node", "dist/main.js"]

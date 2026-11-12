@@ -1,0 +1,54 @@
+# ============================================================================
+# Dockerfile.web — Multi-stage build for the Next.js frontend (standalone)
+# ============================================================================
+# Uses Next.js standalone output mode for minimal image size.
+# The standalone output bundles only the needed node_modules.
+# ============================================================================
+
+# ── Stage 1: Builder ──────────────────────────────────────────────────────
+FROM node:20-slim AS builder
+
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+WORKDIR /build
+
+# Copy package files for caching
+COPY package.json pnpm-lock.yaml ./
+
+# Install dependencies
+RUN pnpm install --frozen-lockfile
+
+# Copy the rest of the source
+COPY . .
+
+# Set the API URL for the build (so NEXT_PUBLIC_API_URL is baked in)
+ARG NEXT_PUBLIC_API_URL=http://localhost:4000
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+
+# Build the Next.js app (produces .next/standalone)
+RUN pnpm build
+
+# ── Stage 2: Runner ───────────────────────────────────────────────────────
+FROM node:20-slim AS runner
+
+WORKDIR /app
+
+# Set environment
+ENV NODE_ENV=production
+ENV PORT=3000
+ENV HOSTNAME=0.0.0.0
+
+# Copy the standalone server + static assets + public folder
+COPY --from=builder /build/.next/standalone ./
+COPY --from=builder /build/.next/static ./.next/static
+COPY --from=builder /build/public ./public
+
+# Expose the web port
+EXPOSE 3000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD node -e "fetch('http://localhost:3000').then(r=>r.status===200?process.exit(0):process.exit(1)).catch(()=>process.exit(1))"
+
+# Start the Next.js standalone server
+CMD ["node", "server.js"]

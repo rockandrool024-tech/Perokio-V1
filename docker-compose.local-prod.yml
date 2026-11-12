@@ -1,0 +1,123 @@
+# ============================================================================
+# docker-compose.local-prod.yml — Local production simulation
+# ============================================================================
+# Orchestrates the full Perokio stack:
+#   - PostgreSQL 17 (with a local volume for persistence)
+#   - Redis 7 (for BullMQ queues + idempotency cache)
+#   - API (NestJS, port 4000) — depends on postgres + redis
+#   - Worker (NestJS BullMQ) — depends on postgres + redis
+#   - Web (Next.js standalone, port 3000) — depends on api
+#
+# Usage:
+#   cp .env.production.local .env.local
+#   docker compose -f docker-compose.local-prod.yml up --build
+# ============================================================================
+
+services:
+  # ── PostgreSQL ──────────────────────────────────────────────────────────
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-perokio}
+    volumes:
+      - perokio_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-perokio}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ── Redis ────────────────────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - perokio_redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ── API (NestJS) ─────────────────────────────────────────────────────────
+  api:
+    build:
+      context: ./backend
+      dockerfile: ../Dockerfile.api
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-perokio}?schema=public
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: ${JWT_SECRET:-perokio-dev-secret-change-in-production}
+      JWT_ACCESS_EXPIRES: ${JWT_ACCESS_EXPIRES:-15m}
+      JWT_REFRESH_EXPIRES: ${JWT_REFRESH_EXPIRES:-7d}
+      R2_ACCOUNT_ID: ${R2_ACCOUNT_ID:-dev}
+      R2_ACCESS_KEY_ID: ${R2_ACCESS_KEY_ID:-dev}
+      R2_SECRET_ACCESS_KEY: ${R2_SECRET_ACCESS_KEY:-dev}
+      R2_BUCKET: ${R2_BUCKET:-perokio-videos-dev}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:4000/api/auth/me').then(r=>r.status===401?process.exit(0):process.exit(1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+  # ── Worker (NestJS BullMQ) ───────────────────────────────────────────────
+  worker:
+    build:
+      context: ./backend
+      dockerfile: ../Dockerfile.worker
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-perokio}?schema=public
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: ${JWT_SECRET:-perokio-dev-secret-change-in-production}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      api:
+        condition: service_healthy
+
+  # ── Web (Next.js standalone) ─────────────────────────────────────────────
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:4000
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+      NEXT_PUBLIC_API_URL: http://localhost:4000
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  perokio_pgdata:
+    driver: local
+  perokio_redisdata:
+    driver: local

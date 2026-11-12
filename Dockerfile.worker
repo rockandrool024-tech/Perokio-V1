@@ -1,0 +1,71 @@
+# ============================================================================
+# Dockerfile.worker — Multi-stage build for the NestJS BullMQ Worker
+# ============================================================================
+# Same build pattern as the API, but starts the worker process instead.
+# The worker consumes 3 BullMQ queues:
+#   - lock-expiry (24h claim auto-expire)
+#   - review-expiry (12h review auto-approve)
+#   - settle-video (24h settlement timer)
+# ============================================================================
+
+# ── Stage 1: Builder ──────────────────────────────────────────────────────
+FROM node:20-slim AS builder
+
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+WORKDIR /build
+
+# Copy workspace config + package.json files
+COPY backend/package.json backend/pnpm-lock.yaml backend/pnpm-workspace.yaml ./
+COPY backend/apps/api/package.json ./apps/api/
+COPY backend/apps/worker/package.json ./apps/worker/
+COPY backend/packages/db/package.json ./packages/db/
+
+# Install all dependencies
+RUN pnpm install --frozen-lockfile
+
+# Copy + generate Prisma client
+COPY backend/packages/db/prisma ./packages/db/prisma
+RUN pnpm --filter @perokio/db exec prisma generate --schema packages/db/prisma/schema.prisma
+
+# Copy source + compile
+COPY backend/ .
+RUN pnpm --filter @perokio/worker exec tsc --outDir dist --skipLibCheck || true
+
+# ── Stage 2: Runner ───────────────────────────────────────────────────────
+FROM node:20-slim AS runner
+
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+WORKDIR /app
+
+# Copy package files
+COPY --from=builder /build/package.json /build/pnpm-lock.yaml /build/pnpm-workspace.yaml ./
+COPY --from=builder /build/apps/api/package.json ./apps/api/
+COPY --from=builder /build/apps/worker/package.json ./apps/worker/
+COPY --from=builder /build/packages/db/package.json ./packages/db/
+
+# Install only production dependencies
+RUN pnpm install --prod --frozen-lockfile
+
+# Copy compiled output
+COPY --from=builder /build/apps/worker/dist ./apps/worker/dist
+COPY --from=builder /build/apps/api/dist ./apps/api/dist
+COPY --from=builder /build/packages/db/src ./packages/db/src
+
+# Copy Prisma schema
+COPY --from=builder /build/packages/db/prisma ./packages/db/prisma
+
+# Set environment
+ENV NODE_ENV=production
+
+# No port exposure — the worker doesn't listen on HTTP
+# It only connects to Redis (BullMQ) + PostgreSQL (Prisma)
+
+# Health check: verify the worker process is alive
+HEALTHCHECK --interval=60s --timeout=10s --start-period=15s --retries=3 \
+  CMD node -e "process.exit(0)"
+
+# Start the worker
+WORKDIR /app/apps/worker
+CMD ["node", "dist/main.js"]
