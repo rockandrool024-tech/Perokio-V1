@@ -523,3 +523,45 @@ export const harnessApi = {
     return apiFetch(`/harness/${configId}/activate`, { method: 'POST' })
   },
 }
+
+// ============================================================================
+// Conversion API (Phase 3 — TastyIgniter + Lead Magnet)
+// ============================================================================
+
+export const conversionApi = {
+  async getStats(brandId?: string): Promise<{
+    totalClicks: number
+    totalOrders: number
+    conversionRate: number
+    attributedRevenueCents: number
+    attributedRevenueUsd: number
+    perBrand?: any[]
+  }> {
+    const path = brandId ? `/conversion/stats/${brandId}` : '/conversion/stats'
+    return apiFetch(path)
+  },
+
+  async triggerCtaClick(data: {
+    brandId?: string
+    videoId?: string
+    ctaType?: string
+  }): Promise<any> {
+    return apiFetch('/webhooks/tastyigniter/cta', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    })
+  },
+
+  async triggerOrder(data: {
+    orderId: string
+    brandId?: string
+    amountCents: number
+    currency?: string
+    status?: string
+  }): Promise<any> {
+    return apiFetch('/webhooks/tastyigniter/order', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    })
+  },
+}

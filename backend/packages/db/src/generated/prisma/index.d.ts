@@ -143,6 +143,16 @@ export type PrintRating = $Result.DefaultSelection<Prisma.$PrintRatingPayload>
  * 
  */
 export type Payout = $Result.DefaultSelection<Prisma.$PayoutPayload>
+/**
+ * Model CtaClickEvent
+ * 
+ */
+export type CtaClickEvent = $Result.DefaultSelection<Prisma.$CtaClickEventPayload>
+/**
+ * Model TastyIgniterOrder
+ * 
+ */
+export type TastyIgniterOrder = $Result.DefaultSelection<Prisma.$TastyIgniterOrderPayload>
 
 /**
  * Enums
@@ -619,6 +629,26 @@ export class PrismaClient<
     * ```
     */
   get payout(): Prisma.PayoutDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.ctaClickEvent`: Exposes CRUD operations for the **CtaClickEvent** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CtaClickEvents
+    * const ctaClickEvents = await prisma.ctaClickEvent.findMany()
+    * ```
+    */
+  get ctaClickEvent(): Prisma.CtaClickEventDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.tastyIgniterOrder`: Exposes CRUD operations for the **TastyIgniterOrder** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TastyIgniterOrders
+    * const tastyIgniterOrders = await prisma.tastyIgniterOrder.findMany()
+    * ```
+    */
+  get tastyIgniterOrder(): Prisma.TastyIgniterOrderDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1085,7 +1115,9 @@ export namespace Prisma {
     HarnessConfig: 'HarnessConfig',
     GenerationRun: 'GenerationRun',
     PrintRating: 'PrintRating',
-    Payout: 'Payout'
+    Payout: 'Payout',
+    CtaClickEvent: 'CtaClickEvent',
+    TastyIgniterOrder: 'TastyIgniterOrder'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1104,7 +1136,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "brand" | "brandContext" | "brandAsset" | "creator" | "calendarEntry" | "fact" | "scriptVersion" | "scriptLine" | "source" | "scriptLineSource" | "verificationReceipt" | "claim" | "video" | "policyCheck" | "publishJob" | "viewSnapshot" | "shortLink" | "clickEvent" | "ledgerAccount" | "ledgerEntry" | "domainEvent" | "harnessConfig" | "generationRun" | "printRating" | "payout"
+      modelProps: "user" | "brand" | "brandContext" | "brandAsset" | "creator" | "calendarEntry" | "fact" | "scriptVersion" | "scriptLine" | "source" | "scriptLineSource" | "verificationReceipt" | "claim" | "video" | "policyCheck" | "publishJob" | "viewSnapshot" | "shortLink" | "clickEvent" | "ledgerAccount" | "ledgerEntry" | "domainEvent" | "harnessConfig" | "generationRun" | "printRating" | "payout" | "ctaClickEvent" | "tastyIgniterOrder"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3032,6 +3064,154 @@ export namespace Prisma {
           }
         }
       }
+      CtaClickEvent: {
+        payload: Prisma.$CtaClickEventPayload<ExtArgs>
+        fields: Prisma.CtaClickEventFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CtaClickEventFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CtaClickEventPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CtaClickEventFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CtaClickEventPayload>
+          }
+          findFirst: {
+            args: Prisma.CtaClickEventFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CtaClickEventPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CtaClickEventFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CtaClickEventPayload>
+          }
+          findMany: {
+            args: Prisma.CtaClickEventFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CtaClickEventPayload>[]
+          }
+          create: {
+            args: Prisma.CtaClickEventCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CtaClickEventPayload>
+          }
+          createMany: {
+            args: Prisma.CtaClickEventCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CtaClickEventCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CtaClickEventPayload>[]
+          }
+          delete: {
+            args: Prisma.CtaClickEventDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CtaClickEventPayload>
+          }
+          update: {
+            args: Prisma.CtaClickEventUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CtaClickEventPayload>
+          }
+          deleteMany: {
+            args: Prisma.CtaClickEventDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CtaClickEventUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CtaClickEventUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CtaClickEventPayload>[]
+          }
+          upsert: {
+            args: Prisma.CtaClickEventUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CtaClickEventPayload>
+          }
+          aggregate: {
+            args: Prisma.CtaClickEventAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCtaClickEvent>
+          }
+          groupBy: {
+            args: Prisma.CtaClickEventGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CtaClickEventGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CtaClickEventCountArgs<ExtArgs>
+            result: $Utils.Optional<CtaClickEventCountAggregateOutputType> | number
+          }
+        }
+      }
+      TastyIgniterOrder: {
+        payload: Prisma.$TastyIgniterOrderPayload<ExtArgs>
+        fields: Prisma.TastyIgniterOrderFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TastyIgniterOrderFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TastyIgniterOrderPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TastyIgniterOrderFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TastyIgniterOrderPayload>
+          }
+          findFirst: {
+            args: Prisma.TastyIgniterOrderFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TastyIgniterOrderPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TastyIgniterOrderFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TastyIgniterOrderPayload>
+          }
+          findMany: {
+            args: Prisma.TastyIgniterOrderFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TastyIgniterOrderPayload>[]
+          }
+          create: {
+            args: Prisma.TastyIgniterOrderCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TastyIgniterOrderPayload>
+          }
+          createMany: {
+            args: Prisma.TastyIgniterOrderCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TastyIgniterOrderCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TastyIgniterOrderPayload>[]
+          }
+          delete: {
+            args: Prisma.TastyIgniterOrderDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TastyIgniterOrderPayload>
+          }
+          update: {
+            args: Prisma.TastyIgniterOrderUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TastyIgniterOrderPayload>
+          }
+          deleteMany: {
+            args: Prisma.TastyIgniterOrderDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TastyIgniterOrderUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TastyIgniterOrderUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TastyIgniterOrderPayload>[]
+          }
+          upsert: {
+            args: Prisma.TastyIgniterOrderUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TastyIgniterOrderPayload>
+          }
+          aggregate: {
+            args: Prisma.TastyIgniterOrderAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTastyIgniterOrder>
+          }
+          groupBy: {
+            args: Prisma.TastyIgniterOrderGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TastyIgniterOrderGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TastyIgniterOrderCountArgs<ExtArgs>
+            result: $Utils.Optional<TastyIgniterOrderCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3154,6 +3334,8 @@ export namespace Prisma {
     generationRun?: GenerationRunOmit
     printRating?: PrintRatingOmit
     payout?: PayoutOmit
+    ctaClickEvent?: CtaClickEventOmit
+    tastyIgniterOrder?: TastyIgniterOrderOmit
   }
 
   /* Types for Logging */
@@ -33463,6 +33645,2182 @@ export namespace Prisma {
 
 
   /**
+   * Model CtaClickEvent
+   */
+
+  export type AggregateCtaClickEvent = {
+    _count: CtaClickEventCountAggregateOutputType | null
+    _min: CtaClickEventMinAggregateOutputType | null
+    _max: CtaClickEventMaxAggregateOutputType | null
+  }
+
+  export type CtaClickEventMinAggregateOutputType = {
+    id: string | null
+    videoId: string | null
+    shortLinkId: string | null
+    brandId: string | null
+    creatorId: string | null
+    ipHash: string | null
+    userAgent: string | null
+    ctaType: string | null
+    clickedAt: Date | null
+  }
+
+  export type CtaClickEventMaxAggregateOutputType = {
+    id: string | null
+    videoId: string | null
+    shortLinkId: string | null
+    brandId: string | null
+    creatorId: string | null
+    ipHash: string | null
+    userAgent: string | null
+    ctaType: string | null
+    clickedAt: Date | null
+  }
+
+  export type CtaClickEventCountAggregateOutputType = {
+    id: number
+    videoId: number
+    shortLinkId: number
+    brandId: number
+    creatorId: number
+    ipHash: number
+    userAgent: number
+    ctaType: number
+    clickedAt: number
+    _all: number
+  }
+
+
+  export type CtaClickEventMinAggregateInputType = {
+    id?: true
+    videoId?: true
+    shortLinkId?: true
+    brandId?: true
+    creatorId?: true
+    ipHash?: true
+    userAgent?: true
+    ctaType?: true
+    clickedAt?: true
+  }
+
+  export type CtaClickEventMaxAggregateInputType = {
+    id?: true
+    videoId?: true
+    shortLinkId?: true
+    brandId?: true
+    creatorId?: true
+    ipHash?: true
+    userAgent?: true
+    ctaType?: true
+    clickedAt?: true
+  }
+
+  export type CtaClickEventCountAggregateInputType = {
+    id?: true
+    videoId?: true
+    shortLinkId?: true
+    brandId?: true
+    creatorId?: true
+    ipHash?: true
+    userAgent?: true
+    ctaType?: true
+    clickedAt?: true
+    _all?: true
+  }
+
+  export type CtaClickEventAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CtaClickEvent to aggregate.
+     */
+    where?: CtaClickEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CtaClickEvents to fetch.
+     */
+    orderBy?: CtaClickEventOrderByWithRelationInput | CtaClickEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CtaClickEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CtaClickEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CtaClickEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CtaClickEvents
+    **/
+    _count?: true | CtaClickEventCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CtaClickEventMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CtaClickEventMaxAggregateInputType
+  }
+
+  export type GetCtaClickEventAggregateType<T extends CtaClickEventAggregateArgs> = {
+        [P in keyof T & keyof AggregateCtaClickEvent]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCtaClickEvent[P]>
+      : GetScalarType<T[P], AggregateCtaClickEvent[P]>
+  }
+
+
+
+
+  export type CtaClickEventGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CtaClickEventWhereInput
+    orderBy?: CtaClickEventOrderByWithAggregationInput | CtaClickEventOrderByWithAggregationInput[]
+    by: CtaClickEventScalarFieldEnum[] | CtaClickEventScalarFieldEnum
+    having?: CtaClickEventScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CtaClickEventCountAggregateInputType | true
+    _min?: CtaClickEventMinAggregateInputType
+    _max?: CtaClickEventMaxAggregateInputType
+  }
+
+  export type CtaClickEventGroupByOutputType = {
+    id: string
+    videoId: string | null
+    shortLinkId: string | null
+    brandId: string | null
+    creatorId: string | null
+    ipHash: string
+    userAgent: string | null
+    ctaType: string
+    clickedAt: Date
+    _count: CtaClickEventCountAggregateOutputType | null
+    _min: CtaClickEventMinAggregateOutputType | null
+    _max: CtaClickEventMaxAggregateOutputType | null
+  }
+
+  type GetCtaClickEventGroupByPayload<T extends CtaClickEventGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CtaClickEventGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CtaClickEventGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CtaClickEventGroupByOutputType[P]>
+            : GetScalarType<T[P], CtaClickEventGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CtaClickEventSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    videoId?: boolean
+    shortLinkId?: boolean
+    brandId?: boolean
+    creatorId?: boolean
+    ipHash?: boolean
+    userAgent?: boolean
+    ctaType?: boolean
+    clickedAt?: boolean
+  }, ExtArgs["result"]["ctaClickEvent"]>
+
+  export type CtaClickEventSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    videoId?: boolean
+    shortLinkId?: boolean
+    brandId?: boolean
+    creatorId?: boolean
+    ipHash?: boolean
+    userAgent?: boolean
+    ctaType?: boolean
+    clickedAt?: boolean
+  }, ExtArgs["result"]["ctaClickEvent"]>
+
+  export type CtaClickEventSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    videoId?: boolean
+    shortLinkId?: boolean
+    brandId?: boolean
+    creatorId?: boolean
+    ipHash?: boolean
+    userAgent?: boolean
+    ctaType?: boolean
+    clickedAt?: boolean
+  }, ExtArgs["result"]["ctaClickEvent"]>
+
+  export type CtaClickEventSelectScalar = {
+    id?: boolean
+    videoId?: boolean
+    shortLinkId?: boolean
+    brandId?: boolean
+    creatorId?: boolean
+    ipHash?: boolean
+    userAgent?: boolean
+    ctaType?: boolean
+    clickedAt?: boolean
+  }
+
+  export type CtaClickEventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "videoId" | "shortLinkId" | "brandId" | "creatorId" | "ipHash" | "userAgent" | "ctaType" | "clickedAt", ExtArgs["result"]["ctaClickEvent"]>
+
+  export type $CtaClickEventPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CtaClickEvent"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      videoId: string | null
+      shortLinkId: string | null
+      brandId: string | null
+      creatorId: string | null
+      ipHash: string
+      userAgent: string | null
+      ctaType: string
+      clickedAt: Date
+    }, ExtArgs["result"]["ctaClickEvent"]>
+    composites: {}
+  }
+
+  type CtaClickEventGetPayload<S extends boolean | null | undefined | CtaClickEventDefaultArgs> = $Result.GetResult<Prisma.$CtaClickEventPayload, S>
+
+  type CtaClickEventCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CtaClickEventFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CtaClickEventCountAggregateInputType | true
+    }
+
+  export interface CtaClickEventDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CtaClickEvent'], meta: { name: 'CtaClickEvent' } }
+    /**
+     * Find zero or one CtaClickEvent that matches the filter.
+     * @param {CtaClickEventFindUniqueArgs} args - Arguments to find a CtaClickEvent
+     * @example
+     * // Get one CtaClickEvent
+     * const ctaClickEvent = await prisma.ctaClickEvent.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CtaClickEventFindUniqueArgs>(args: SelectSubset<T, CtaClickEventFindUniqueArgs<ExtArgs>>): Prisma__CtaClickEventClient<$Result.GetResult<Prisma.$CtaClickEventPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CtaClickEvent that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CtaClickEventFindUniqueOrThrowArgs} args - Arguments to find a CtaClickEvent
+     * @example
+     * // Get one CtaClickEvent
+     * const ctaClickEvent = await prisma.ctaClickEvent.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CtaClickEventFindUniqueOrThrowArgs>(args: SelectSubset<T, CtaClickEventFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CtaClickEventClient<$Result.GetResult<Prisma.$CtaClickEventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CtaClickEvent that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CtaClickEventFindFirstArgs} args - Arguments to find a CtaClickEvent
+     * @example
+     * // Get one CtaClickEvent
+     * const ctaClickEvent = await prisma.ctaClickEvent.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CtaClickEventFindFirstArgs>(args?: SelectSubset<T, CtaClickEventFindFirstArgs<ExtArgs>>): Prisma__CtaClickEventClient<$Result.GetResult<Prisma.$CtaClickEventPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CtaClickEvent that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CtaClickEventFindFirstOrThrowArgs} args - Arguments to find a CtaClickEvent
+     * @example
+     * // Get one CtaClickEvent
+     * const ctaClickEvent = await prisma.ctaClickEvent.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CtaClickEventFindFirstOrThrowArgs>(args?: SelectSubset<T, CtaClickEventFindFirstOrThrowArgs<ExtArgs>>): Prisma__CtaClickEventClient<$Result.GetResult<Prisma.$CtaClickEventPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CtaClickEvents that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CtaClickEventFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CtaClickEvents
+     * const ctaClickEvents = await prisma.ctaClickEvent.findMany()
+     * 
+     * // Get first 10 CtaClickEvents
+     * const ctaClickEvents = await prisma.ctaClickEvent.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const ctaClickEventWithIdOnly = await prisma.ctaClickEvent.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CtaClickEventFindManyArgs>(args?: SelectSubset<T, CtaClickEventFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CtaClickEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CtaClickEvent.
+     * @param {CtaClickEventCreateArgs} args - Arguments to create a CtaClickEvent.
+     * @example
+     * // Create one CtaClickEvent
+     * const CtaClickEvent = await prisma.ctaClickEvent.create({
+     *   data: {
+     *     // ... data to create a CtaClickEvent
+     *   }
+     * })
+     * 
+     */
+    create<T extends CtaClickEventCreateArgs>(args: SelectSubset<T, CtaClickEventCreateArgs<ExtArgs>>): Prisma__CtaClickEventClient<$Result.GetResult<Prisma.$CtaClickEventPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CtaClickEvents.
+     * @param {CtaClickEventCreateManyArgs} args - Arguments to create many CtaClickEvents.
+     * @example
+     * // Create many CtaClickEvents
+     * const ctaClickEvent = await prisma.ctaClickEvent.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CtaClickEventCreateManyArgs>(args?: SelectSubset<T, CtaClickEventCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CtaClickEvents and returns the data saved in the database.
+     * @param {CtaClickEventCreateManyAndReturnArgs} args - Arguments to create many CtaClickEvents.
+     * @example
+     * // Create many CtaClickEvents
+     * const ctaClickEvent = await prisma.ctaClickEvent.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CtaClickEvents and only return the `id`
+     * const ctaClickEventWithIdOnly = await prisma.ctaClickEvent.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CtaClickEventCreateManyAndReturnArgs>(args?: SelectSubset<T, CtaClickEventCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CtaClickEventPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CtaClickEvent.
+     * @param {CtaClickEventDeleteArgs} args - Arguments to delete one CtaClickEvent.
+     * @example
+     * // Delete one CtaClickEvent
+     * const CtaClickEvent = await prisma.ctaClickEvent.delete({
+     *   where: {
+     *     // ... filter to delete one CtaClickEvent
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CtaClickEventDeleteArgs>(args: SelectSubset<T, CtaClickEventDeleteArgs<ExtArgs>>): Prisma__CtaClickEventClient<$Result.GetResult<Prisma.$CtaClickEventPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CtaClickEvent.
+     * @param {CtaClickEventUpdateArgs} args - Arguments to update one CtaClickEvent.
+     * @example
+     * // Update one CtaClickEvent
+     * const ctaClickEvent = await prisma.ctaClickEvent.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CtaClickEventUpdateArgs>(args: SelectSubset<T, CtaClickEventUpdateArgs<ExtArgs>>): Prisma__CtaClickEventClient<$Result.GetResult<Prisma.$CtaClickEventPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CtaClickEvents.
+     * @param {CtaClickEventDeleteManyArgs} args - Arguments to filter CtaClickEvents to delete.
+     * @example
+     * // Delete a few CtaClickEvents
+     * const { count } = await prisma.ctaClickEvent.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CtaClickEventDeleteManyArgs>(args?: SelectSubset<T, CtaClickEventDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CtaClickEvents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CtaClickEventUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CtaClickEvents
+     * const ctaClickEvent = await prisma.ctaClickEvent.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CtaClickEventUpdateManyArgs>(args: SelectSubset<T, CtaClickEventUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CtaClickEvents and returns the data updated in the database.
+     * @param {CtaClickEventUpdateManyAndReturnArgs} args - Arguments to update many CtaClickEvents.
+     * @example
+     * // Update many CtaClickEvents
+     * const ctaClickEvent = await prisma.ctaClickEvent.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CtaClickEvents and only return the `id`
+     * const ctaClickEventWithIdOnly = await prisma.ctaClickEvent.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CtaClickEventUpdateManyAndReturnArgs>(args: SelectSubset<T, CtaClickEventUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CtaClickEventPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CtaClickEvent.
+     * @param {CtaClickEventUpsertArgs} args - Arguments to update or create a CtaClickEvent.
+     * @example
+     * // Update or create a CtaClickEvent
+     * const ctaClickEvent = await prisma.ctaClickEvent.upsert({
+     *   create: {
+     *     // ... data to create a CtaClickEvent
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CtaClickEvent we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CtaClickEventUpsertArgs>(args: SelectSubset<T, CtaClickEventUpsertArgs<ExtArgs>>): Prisma__CtaClickEventClient<$Result.GetResult<Prisma.$CtaClickEventPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CtaClickEvents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CtaClickEventCountArgs} args - Arguments to filter CtaClickEvents to count.
+     * @example
+     * // Count the number of CtaClickEvents
+     * const count = await prisma.ctaClickEvent.count({
+     *   where: {
+     *     // ... the filter for the CtaClickEvents we want to count
+     *   }
+     * })
+    **/
+    count<T extends CtaClickEventCountArgs>(
+      args?: Subset<T, CtaClickEventCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CtaClickEventCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CtaClickEvent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CtaClickEventAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CtaClickEventAggregateArgs>(args: Subset<T, CtaClickEventAggregateArgs>): Prisma.PrismaPromise<GetCtaClickEventAggregateType<T>>
+
+    /**
+     * Group by CtaClickEvent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CtaClickEventGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CtaClickEventGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CtaClickEventGroupByArgs['orderBy'] }
+        : { orderBy?: CtaClickEventGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CtaClickEventGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCtaClickEventGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CtaClickEvent model
+   */
+  readonly fields: CtaClickEventFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CtaClickEvent.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CtaClickEventClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CtaClickEvent model
+   */
+  interface CtaClickEventFieldRefs {
+    readonly id: FieldRef<"CtaClickEvent", 'String'>
+    readonly videoId: FieldRef<"CtaClickEvent", 'String'>
+    readonly shortLinkId: FieldRef<"CtaClickEvent", 'String'>
+    readonly brandId: FieldRef<"CtaClickEvent", 'String'>
+    readonly creatorId: FieldRef<"CtaClickEvent", 'String'>
+    readonly ipHash: FieldRef<"CtaClickEvent", 'String'>
+    readonly userAgent: FieldRef<"CtaClickEvent", 'String'>
+    readonly ctaType: FieldRef<"CtaClickEvent", 'String'>
+    readonly clickedAt: FieldRef<"CtaClickEvent", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CtaClickEvent findUnique
+   */
+  export type CtaClickEventFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CtaClickEvent
+     */
+    select?: CtaClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CtaClickEvent
+     */
+    omit?: CtaClickEventOmit<ExtArgs> | null
+    /**
+     * Filter, which CtaClickEvent to fetch.
+     */
+    where: CtaClickEventWhereUniqueInput
+  }
+
+  /**
+   * CtaClickEvent findUniqueOrThrow
+   */
+  export type CtaClickEventFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CtaClickEvent
+     */
+    select?: CtaClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CtaClickEvent
+     */
+    omit?: CtaClickEventOmit<ExtArgs> | null
+    /**
+     * Filter, which CtaClickEvent to fetch.
+     */
+    where: CtaClickEventWhereUniqueInput
+  }
+
+  /**
+   * CtaClickEvent findFirst
+   */
+  export type CtaClickEventFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CtaClickEvent
+     */
+    select?: CtaClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CtaClickEvent
+     */
+    omit?: CtaClickEventOmit<ExtArgs> | null
+    /**
+     * Filter, which CtaClickEvent to fetch.
+     */
+    where?: CtaClickEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CtaClickEvents to fetch.
+     */
+    orderBy?: CtaClickEventOrderByWithRelationInput | CtaClickEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CtaClickEvents.
+     */
+    cursor?: CtaClickEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CtaClickEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CtaClickEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CtaClickEvents.
+     */
+    distinct?: CtaClickEventScalarFieldEnum | CtaClickEventScalarFieldEnum[]
+  }
+
+  /**
+   * CtaClickEvent findFirstOrThrow
+   */
+  export type CtaClickEventFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CtaClickEvent
+     */
+    select?: CtaClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CtaClickEvent
+     */
+    omit?: CtaClickEventOmit<ExtArgs> | null
+    /**
+     * Filter, which CtaClickEvent to fetch.
+     */
+    where?: CtaClickEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CtaClickEvents to fetch.
+     */
+    orderBy?: CtaClickEventOrderByWithRelationInput | CtaClickEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CtaClickEvents.
+     */
+    cursor?: CtaClickEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CtaClickEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CtaClickEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CtaClickEvents.
+     */
+    distinct?: CtaClickEventScalarFieldEnum | CtaClickEventScalarFieldEnum[]
+  }
+
+  /**
+   * CtaClickEvent findMany
+   */
+  export type CtaClickEventFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CtaClickEvent
+     */
+    select?: CtaClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CtaClickEvent
+     */
+    omit?: CtaClickEventOmit<ExtArgs> | null
+    /**
+     * Filter, which CtaClickEvents to fetch.
+     */
+    where?: CtaClickEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CtaClickEvents to fetch.
+     */
+    orderBy?: CtaClickEventOrderByWithRelationInput | CtaClickEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CtaClickEvents.
+     */
+    cursor?: CtaClickEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CtaClickEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CtaClickEvents.
+     */
+    skip?: number
+    distinct?: CtaClickEventScalarFieldEnum | CtaClickEventScalarFieldEnum[]
+  }
+
+  /**
+   * CtaClickEvent create
+   */
+  export type CtaClickEventCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CtaClickEvent
+     */
+    select?: CtaClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CtaClickEvent
+     */
+    omit?: CtaClickEventOmit<ExtArgs> | null
+    /**
+     * The data needed to create a CtaClickEvent.
+     */
+    data: XOR<CtaClickEventCreateInput, CtaClickEventUncheckedCreateInput>
+  }
+
+  /**
+   * CtaClickEvent createMany
+   */
+  export type CtaClickEventCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CtaClickEvents.
+     */
+    data: CtaClickEventCreateManyInput | CtaClickEventCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CtaClickEvent createManyAndReturn
+   */
+  export type CtaClickEventCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CtaClickEvent
+     */
+    select?: CtaClickEventSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CtaClickEvent
+     */
+    omit?: CtaClickEventOmit<ExtArgs> | null
+    /**
+     * The data used to create many CtaClickEvents.
+     */
+    data: CtaClickEventCreateManyInput | CtaClickEventCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CtaClickEvent update
+   */
+  export type CtaClickEventUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CtaClickEvent
+     */
+    select?: CtaClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CtaClickEvent
+     */
+    omit?: CtaClickEventOmit<ExtArgs> | null
+    /**
+     * The data needed to update a CtaClickEvent.
+     */
+    data: XOR<CtaClickEventUpdateInput, CtaClickEventUncheckedUpdateInput>
+    /**
+     * Choose, which CtaClickEvent to update.
+     */
+    where: CtaClickEventWhereUniqueInput
+  }
+
+  /**
+   * CtaClickEvent updateMany
+   */
+  export type CtaClickEventUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CtaClickEvents.
+     */
+    data: XOR<CtaClickEventUpdateManyMutationInput, CtaClickEventUncheckedUpdateManyInput>
+    /**
+     * Filter which CtaClickEvents to update
+     */
+    where?: CtaClickEventWhereInput
+    /**
+     * Limit how many CtaClickEvents to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CtaClickEvent updateManyAndReturn
+   */
+  export type CtaClickEventUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CtaClickEvent
+     */
+    select?: CtaClickEventSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CtaClickEvent
+     */
+    omit?: CtaClickEventOmit<ExtArgs> | null
+    /**
+     * The data used to update CtaClickEvents.
+     */
+    data: XOR<CtaClickEventUpdateManyMutationInput, CtaClickEventUncheckedUpdateManyInput>
+    /**
+     * Filter which CtaClickEvents to update
+     */
+    where?: CtaClickEventWhereInput
+    /**
+     * Limit how many CtaClickEvents to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CtaClickEvent upsert
+   */
+  export type CtaClickEventUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CtaClickEvent
+     */
+    select?: CtaClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CtaClickEvent
+     */
+    omit?: CtaClickEventOmit<ExtArgs> | null
+    /**
+     * The filter to search for the CtaClickEvent to update in case it exists.
+     */
+    where: CtaClickEventWhereUniqueInput
+    /**
+     * In case the CtaClickEvent found by the `where` argument doesn't exist, create a new CtaClickEvent with this data.
+     */
+    create: XOR<CtaClickEventCreateInput, CtaClickEventUncheckedCreateInput>
+    /**
+     * In case the CtaClickEvent was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CtaClickEventUpdateInput, CtaClickEventUncheckedUpdateInput>
+  }
+
+  /**
+   * CtaClickEvent delete
+   */
+  export type CtaClickEventDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CtaClickEvent
+     */
+    select?: CtaClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CtaClickEvent
+     */
+    omit?: CtaClickEventOmit<ExtArgs> | null
+    /**
+     * Filter which CtaClickEvent to delete.
+     */
+    where: CtaClickEventWhereUniqueInput
+  }
+
+  /**
+   * CtaClickEvent deleteMany
+   */
+  export type CtaClickEventDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CtaClickEvents to delete
+     */
+    where?: CtaClickEventWhereInput
+    /**
+     * Limit how many CtaClickEvents to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CtaClickEvent without action
+   */
+  export type CtaClickEventDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CtaClickEvent
+     */
+    select?: CtaClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CtaClickEvent
+     */
+    omit?: CtaClickEventOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model TastyIgniterOrder
+   */
+
+  export type AggregateTastyIgniterOrder = {
+    _count: TastyIgniterOrderCountAggregateOutputType | null
+    _avg: TastyIgniterOrderAvgAggregateOutputType | null
+    _sum: TastyIgniterOrderSumAggregateOutputType | null
+    _min: TastyIgniterOrderMinAggregateOutputType | null
+    _max: TastyIgniterOrderMaxAggregateOutputType | null
+  }
+
+  export type TastyIgniterOrderAvgAggregateOutputType = {
+    amountCents: number | null
+  }
+
+  export type TastyIgniterOrderSumAggregateOutputType = {
+    amountCents: number | null
+  }
+
+  export type TastyIgniterOrderMinAggregateOutputType = {
+    id: string | null
+    orderId: string | null
+    videoId: string | null
+    brandId: string | null
+    shortLinkId: string | null
+    amountCents: number | null
+    currency: string | null
+    status: string | null
+    customerEmail: string | null
+    customerPhone: string | null
+    orderedAt: Date | null
+    webhookReceivedAt: Date | null
+  }
+
+  export type TastyIgniterOrderMaxAggregateOutputType = {
+    id: string | null
+    orderId: string | null
+    videoId: string | null
+    brandId: string | null
+    shortLinkId: string | null
+    amountCents: number | null
+    currency: string | null
+    status: string | null
+    customerEmail: string | null
+    customerPhone: string | null
+    orderedAt: Date | null
+    webhookReceivedAt: Date | null
+  }
+
+  export type TastyIgniterOrderCountAggregateOutputType = {
+    id: number
+    orderId: number
+    videoId: number
+    brandId: number
+    shortLinkId: number
+    amountCents: number
+    currency: number
+    status: number
+    customerEmail: number
+    customerPhone: number
+    items: number
+    orderedAt: number
+    webhookReceivedAt: number
+    _all: number
+  }
+
+
+  export type TastyIgniterOrderAvgAggregateInputType = {
+    amountCents?: true
+  }
+
+  export type TastyIgniterOrderSumAggregateInputType = {
+    amountCents?: true
+  }
+
+  export type TastyIgniterOrderMinAggregateInputType = {
+    id?: true
+    orderId?: true
+    videoId?: true
+    brandId?: true
+    shortLinkId?: true
+    amountCents?: true
+    currency?: true
+    status?: true
+    customerEmail?: true
+    customerPhone?: true
+    orderedAt?: true
+    webhookReceivedAt?: true
+  }
+
+  export type TastyIgniterOrderMaxAggregateInputType = {
+    id?: true
+    orderId?: true
+    videoId?: true
+    brandId?: true
+    shortLinkId?: true
+    amountCents?: true
+    currency?: true
+    status?: true
+    customerEmail?: true
+    customerPhone?: true
+    orderedAt?: true
+    webhookReceivedAt?: true
+  }
+
+  export type TastyIgniterOrderCountAggregateInputType = {
+    id?: true
+    orderId?: true
+    videoId?: true
+    brandId?: true
+    shortLinkId?: true
+    amountCents?: true
+    currency?: true
+    status?: true
+    customerEmail?: true
+    customerPhone?: true
+    items?: true
+    orderedAt?: true
+    webhookReceivedAt?: true
+    _all?: true
+  }
+
+  export type TastyIgniterOrderAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TastyIgniterOrder to aggregate.
+     */
+    where?: TastyIgniterOrderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TastyIgniterOrders to fetch.
+     */
+    orderBy?: TastyIgniterOrderOrderByWithRelationInput | TastyIgniterOrderOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TastyIgniterOrderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TastyIgniterOrders from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TastyIgniterOrders.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TastyIgniterOrders
+    **/
+    _count?: true | TastyIgniterOrderCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TastyIgniterOrderAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TastyIgniterOrderSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TastyIgniterOrderMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TastyIgniterOrderMaxAggregateInputType
+  }
+
+  export type GetTastyIgniterOrderAggregateType<T extends TastyIgniterOrderAggregateArgs> = {
+        [P in keyof T & keyof AggregateTastyIgniterOrder]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTastyIgniterOrder[P]>
+      : GetScalarType<T[P], AggregateTastyIgniterOrder[P]>
+  }
+
+
+
+
+  export type TastyIgniterOrderGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TastyIgniterOrderWhereInput
+    orderBy?: TastyIgniterOrderOrderByWithAggregationInput | TastyIgniterOrderOrderByWithAggregationInput[]
+    by: TastyIgniterOrderScalarFieldEnum[] | TastyIgniterOrderScalarFieldEnum
+    having?: TastyIgniterOrderScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TastyIgniterOrderCountAggregateInputType | true
+    _avg?: TastyIgniterOrderAvgAggregateInputType
+    _sum?: TastyIgniterOrderSumAggregateInputType
+    _min?: TastyIgniterOrderMinAggregateInputType
+    _max?: TastyIgniterOrderMaxAggregateInputType
+  }
+
+  export type TastyIgniterOrderGroupByOutputType = {
+    id: string
+    orderId: string
+    videoId: string | null
+    brandId: string | null
+    shortLinkId: string | null
+    amountCents: number
+    currency: string
+    status: string
+    customerEmail: string | null
+    customerPhone: string | null
+    items: JsonValue | null
+    orderedAt: Date
+    webhookReceivedAt: Date
+    _count: TastyIgniterOrderCountAggregateOutputType | null
+    _avg: TastyIgniterOrderAvgAggregateOutputType | null
+    _sum: TastyIgniterOrderSumAggregateOutputType | null
+    _min: TastyIgniterOrderMinAggregateOutputType | null
+    _max: TastyIgniterOrderMaxAggregateOutputType | null
+  }
+
+  type GetTastyIgniterOrderGroupByPayload<T extends TastyIgniterOrderGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TastyIgniterOrderGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TastyIgniterOrderGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TastyIgniterOrderGroupByOutputType[P]>
+            : GetScalarType<T[P], TastyIgniterOrderGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TastyIgniterOrderSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    orderId?: boolean
+    videoId?: boolean
+    brandId?: boolean
+    shortLinkId?: boolean
+    amountCents?: boolean
+    currency?: boolean
+    status?: boolean
+    customerEmail?: boolean
+    customerPhone?: boolean
+    items?: boolean
+    orderedAt?: boolean
+    webhookReceivedAt?: boolean
+  }, ExtArgs["result"]["tastyIgniterOrder"]>
+
+  export type TastyIgniterOrderSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    orderId?: boolean
+    videoId?: boolean
+    brandId?: boolean
+    shortLinkId?: boolean
+    amountCents?: boolean
+    currency?: boolean
+    status?: boolean
+    customerEmail?: boolean
+    customerPhone?: boolean
+    items?: boolean
+    orderedAt?: boolean
+    webhookReceivedAt?: boolean
+  }, ExtArgs["result"]["tastyIgniterOrder"]>
+
+  export type TastyIgniterOrderSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    orderId?: boolean
+    videoId?: boolean
+    brandId?: boolean
+    shortLinkId?: boolean
+    amountCents?: boolean
+    currency?: boolean
+    status?: boolean
+    customerEmail?: boolean
+    customerPhone?: boolean
+    items?: boolean
+    orderedAt?: boolean
+    webhookReceivedAt?: boolean
+  }, ExtArgs["result"]["tastyIgniterOrder"]>
+
+  export type TastyIgniterOrderSelectScalar = {
+    id?: boolean
+    orderId?: boolean
+    videoId?: boolean
+    brandId?: boolean
+    shortLinkId?: boolean
+    amountCents?: boolean
+    currency?: boolean
+    status?: boolean
+    customerEmail?: boolean
+    customerPhone?: boolean
+    items?: boolean
+    orderedAt?: boolean
+    webhookReceivedAt?: boolean
+  }
+
+  export type TastyIgniterOrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "orderId" | "videoId" | "brandId" | "shortLinkId" | "amountCents" | "currency" | "status" | "customerEmail" | "customerPhone" | "items" | "orderedAt" | "webhookReceivedAt", ExtArgs["result"]["tastyIgniterOrder"]>
+
+  export type $TastyIgniterOrderPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TastyIgniterOrder"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      orderId: string
+      videoId: string | null
+      brandId: string | null
+      shortLinkId: string | null
+      amountCents: number
+      currency: string
+      status: string
+      customerEmail: string | null
+      customerPhone: string | null
+      items: Prisma.JsonValue | null
+      orderedAt: Date
+      webhookReceivedAt: Date
+    }, ExtArgs["result"]["tastyIgniterOrder"]>
+    composites: {}
+  }
+
+  type TastyIgniterOrderGetPayload<S extends boolean | null | undefined | TastyIgniterOrderDefaultArgs> = $Result.GetResult<Prisma.$TastyIgniterOrderPayload, S>
+
+  type TastyIgniterOrderCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TastyIgniterOrderFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TastyIgniterOrderCountAggregateInputType | true
+    }
+
+  export interface TastyIgniterOrderDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TastyIgniterOrder'], meta: { name: 'TastyIgniterOrder' } }
+    /**
+     * Find zero or one TastyIgniterOrder that matches the filter.
+     * @param {TastyIgniterOrderFindUniqueArgs} args - Arguments to find a TastyIgniterOrder
+     * @example
+     * // Get one TastyIgniterOrder
+     * const tastyIgniterOrder = await prisma.tastyIgniterOrder.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TastyIgniterOrderFindUniqueArgs>(args: SelectSubset<T, TastyIgniterOrderFindUniqueArgs<ExtArgs>>): Prisma__TastyIgniterOrderClient<$Result.GetResult<Prisma.$TastyIgniterOrderPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one TastyIgniterOrder that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TastyIgniterOrderFindUniqueOrThrowArgs} args - Arguments to find a TastyIgniterOrder
+     * @example
+     * // Get one TastyIgniterOrder
+     * const tastyIgniterOrder = await prisma.tastyIgniterOrder.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TastyIgniterOrderFindUniqueOrThrowArgs>(args: SelectSubset<T, TastyIgniterOrderFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TastyIgniterOrderClient<$Result.GetResult<Prisma.$TastyIgniterOrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TastyIgniterOrder that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TastyIgniterOrderFindFirstArgs} args - Arguments to find a TastyIgniterOrder
+     * @example
+     * // Get one TastyIgniterOrder
+     * const tastyIgniterOrder = await prisma.tastyIgniterOrder.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TastyIgniterOrderFindFirstArgs>(args?: SelectSubset<T, TastyIgniterOrderFindFirstArgs<ExtArgs>>): Prisma__TastyIgniterOrderClient<$Result.GetResult<Prisma.$TastyIgniterOrderPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TastyIgniterOrder that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TastyIgniterOrderFindFirstOrThrowArgs} args - Arguments to find a TastyIgniterOrder
+     * @example
+     * // Get one TastyIgniterOrder
+     * const tastyIgniterOrder = await prisma.tastyIgniterOrder.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TastyIgniterOrderFindFirstOrThrowArgs>(args?: SelectSubset<T, TastyIgniterOrderFindFirstOrThrowArgs<ExtArgs>>): Prisma__TastyIgniterOrderClient<$Result.GetResult<Prisma.$TastyIgniterOrderPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more TastyIgniterOrders that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TastyIgniterOrderFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TastyIgniterOrders
+     * const tastyIgniterOrders = await prisma.tastyIgniterOrder.findMany()
+     * 
+     * // Get first 10 TastyIgniterOrders
+     * const tastyIgniterOrders = await prisma.tastyIgniterOrder.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const tastyIgniterOrderWithIdOnly = await prisma.tastyIgniterOrder.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TastyIgniterOrderFindManyArgs>(args?: SelectSubset<T, TastyIgniterOrderFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TastyIgniterOrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a TastyIgniterOrder.
+     * @param {TastyIgniterOrderCreateArgs} args - Arguments to create a TastyIgniterOrder.
+     * @example
+     * // Create one TastyIgniterOrder
+     * const TastyIgniterOrder = await prisma.tastyIgniterOrder.create({
+     *   data: {
+     *     // ... data to create a TastyIgniterOrder
+     *   }
+     * })
+     * 
+     */
+    create<T extends TastyIgniterOrderCreateArgs>(args: SelectSubset<T, TastyIgniterOrderCreateArgs<ExtArgs>>): Prisma__TastyIgniterOrderClient<$Result.GetResult<Prisma.$TastyIgniterOrderPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many TastyIgniterOrders.
+     * @param {TastyIgniterOrderCreateManyArgs} args - Arguments to create many TastyIgniterOrders.
+     * @example
+     * // Create many TastyIgniterOrders
+     * const tastyIgniterOrder = await prisma.tastyIgniterOrder.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TastyIgniterOrderCreateManyArgs>(args?: SelectSubset<T, TastyIgniterOrderCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TastyIgniterOrders and returns the data saved in the database.
+     * @param {TastyIgniterOrderCreateManyAndReturnArgs} args - Arguments to create many TastyIgniterOrders.
+     * @example
+     * // Create many TastyIgniterOrders
+     * const tastyIgniterOrder = await prisma.tastyIgniterOrder.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TastyIgniterOrders and only return the `id`
+     * const tastyIgniterOrderWithIdOnly = await prisma.tastyIgniterOrder.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TastyIgniterOrderCreateManyAndReturnArgs>(args?: SelectSubset<T, TastyIgniterOrderCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TastyIgniterOrderPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a TastyIgniterOrder.
+     * @param {TastyIgniterOrderDeleteArgs} args - Arguments to delete one TastyIgniterOrder.
+     * @example
+     * // Delete one TastyIgniterOrder
+     * const TastyIgniterOrder = await prisma.tastyIgniterOrder.delete({
+     *   where: {
+     *     // ... filter to delete one TastyIgniterOrder
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TastyIgniterOrderDeleteArgs>(args: SelectSubset<T, TastyIgniterOrderDeleteArgs<ExtArgs>>): Prisma__TastyIgniterOrderClient<$Result.GetResult<Prisma.$TastyIgniterOrderPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one TastyIgniterOrder.
+     * @param {TastyIgniterOrderUpdateArgs} args - Arguments to update one TastyIgniterOrder.
+     * @example
+     * // Update one TastyIgniterOrder
+     * const tastyIgniterOrder = await prisma.tastyIgniterOrder.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TastyIgniterOrderUpdateArgs>(args: SelectSubset<T, TastyIgniterOrderUpdateArgs<ExtArgs>>): Prisma__TastyIgniterOrderClient<$Result.GetResult<Prisma.$TastyIgniterOrderPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more TastyIgniterOrders.
+     * @param {TastyIgniterOrderDeleteManyArgs} args - Arguments to filter TastyIgniterOrders to delete.
+     * @example
+     * // Delete a few TastyIgniterOrders
+     * const { count } = await prisma.tastyIgniterOrder.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TastyIgniterOrderDeleteManyArgs>(args?: SelectSubset<T, TastyIgniterOrderDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TastyIgniterOrders.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TastyIgniterOrderUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TastyIgniterOrders
+     * const tastyIgniterOrder = await prisma.tastyIgniterOrder.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TastyIgniterOrderUpdateManyArgs>(args: SelectSubset<T, TastyIgniterOrderUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TastyIgniterOrders and returns the data updated in the database.
+     * @param {TastyIgniterOrderUpdateManyAndReturnArgs} args - Arguments to update many TastyIgniterOrders.
+     * @example
+     * // Update many TastyIgniterOrders
+     * const tastyIgniterOrder = await prisma.tastyIgniterOrder.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more TastyIgniterOrders and only return the `id`
+     * const tastyIgniterOrderWithIdOnly = await prisma.tastyIgniterOrder.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TastyIgniterOrderUpdateManyAndReturnArgs>(args: SelectSubset<T, TastyIgniterOrderUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TastyIgniterOrderPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one TastyIgniterOrder.
+     * @param {TastyIgniterOrderUpsertArgs} args - Arguments to update or create a TastyIgniterOrder.
+     * @example
+     * // Update or create a TastyIgniterOrder
+     * const tastyIgniterOrder = await prisma.tastyIgniterOrder.upsert({
+     *   create: {
+     *     // ... data to create a TastyIgniterOrder
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TastyIgniterOrder we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TastyIgniterOrderUpsertArgs>(args: SelectSubset<T, TastyIgniterOrderUpsertArgs<ExtArgs>>): Prisma__TastyIgniterOrderClient<$Result.GetResult<Prisma.$TastyIgniterOrderPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of TastyIgniterOrders.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TastyIgniterOrderCountArgs} args - Arguments to filter TastyIgniterOrders to count.
+     * @example
+     * // Count the number of TastyIgniterOrders
+     * const count = await prisma.tastyIgniterOrder.count({
+     *   where: {
+     *     // ... the filter for the TastyIgniterOrders we want to count
+     *   }
+     * })
+    **/
+    count<T extends TastyIgniterOrderCountArgs>(
+      args?: Subset<T, TastyIgniterOrderCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TastyIgniterOrderCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TastyIgniterOrder.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TastyIgniterOrderAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TastyIgniterOrderAggregateArgs>(args: Subset<T, TastyIgniterOrderAggregateArgs>): Prisma.PrismaPromise<GetTastyIgniterOrderAggregateType<T>>
+
+    /**
+     * Group by TastyIgniterOrder.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TastyIgniterOrderGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TastyIgniterOrderGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TastyIgniterOrderGroupByArgs['orderBy'] }
+        : { orderBy?: TastyIgniterOrderGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TastyIgniterOrderGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTastyIgniterOrderGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TastyIgniterOrder model
+   */
+  readonly fields: TastyIgniterOrderFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TastyIgniterOrder.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TastyIgniterOrderClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TastyIgniterOrder model
+   */
+  interface TastyIgniterOrderFieldRefs {
+    readonly id: FieldRef<"TastyIgniterOrder", 'String'>
+    readonly orderId: FieldRef<"TastyIgniterOrder", 'String'>
+    readonly videoId: FieldRef<"TastyIgniterOrder", 'String'>
+    readonly brandId: FieldRef<"TastyIgniterOrder", 'String'>
+    readonly shortLinkId: FieldRef<"TastyIgniterOrder", 'String'>
+    readonly amountCents: FieldRef<"TastyIgniterOrder", 'Int'>
+    readonly currency: FieldRef<"TastyIgniterOrder", 'String'>
+    readonly status: FieldRef<"TastyIgniterOrder", 'String'>
+    readonly customerEmail: FieldRef<"TastyIgniterOrder", 'String'>
+    readonly customerPhone: FieldRef<"TastyIgniterOrder", 'String'>
+    readonly items: FieldRef<"TastyIgniterOrder", 'Json'>
+    readonly orderedAt: FieldRef<"TastyIgniterOrder", 'DateTime'>
+    readonly webhookReceivedAt: FieldRef<"TastyIgniterOrder", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TastyIgniterOrder findUnique
+   */
+  export type TastyIgniterOrderFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TastyIgniterOrder
+     */
+    select?: TastyIgniterOrderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TastyIgniterOrder
+     */
+    omit?: TastyIgniterOrderOmit<ExtArgs> | null
+    /**
+     * Filter, which TastyIgniterOrder to fetch.
+     */
+    where: TastyIgniterOrderWhereUniqueInput
+  }
+
+  /**
+   * TastyIgniterOrder findUniqueOrThrow
+   */
+  export type TastyIgniterOrderFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TastyIgniterOrder
+     */
+    select?: TastyIgniterOrderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TastyIgniterOrder
+     */
+    omit?: TastyIgniterOrderOmit<ExtArgs> | null
+    /**
+     * Filter, which TastyIgniterOrder to fetch.
+     */
+    where: TastyIgniterOrderWhereUniqueInput
+  }
+
+  /**
+   * TastyIgniterOrder findFirst
+   */
+  export type TastyIgniterOrderFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TastyIgniterOrder
+     */
+    select?: TastyIgniterOrderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TastyIgniterOrder
+     */
+    omit?: TastyIgniterOrderOmit<ExtArgs> | null
+    /**
+     * Filter, which TastyIgniterOrder to fetch.
+     */
+    where?: TastyIgniterOrderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TastyIgniterOrders to fetch.
+     */
+    orderBy?: TastyIgniterOrderOrderByWithRelationInput | TastyIgniterOrderOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TastyIgniterOrders.
+     */
+    cursor?: TastyIgniterOrderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TastyIgniterOrders from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TastyIgniterOrders.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TastyIgniterOrders.
+     */
+    distinct?: TastyIgniterOrderScalarFieldEnum | TastyIgniterOrderScalarFieldEnum[]
+  }
+
+  /**
+   * TastyIgniterOrder findFirstOrThrow
+   */
+  export type TastyIgniterOrderFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TastyIgniterOrder
+     */
+    select?: TastyIgniterOrderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TastyIgniterOrder
+     */
+    omit?: TastyIgniterOrderOmit<ExtArgs> | null
+    /**
+     * Filter, which TastyIgniterOrder to fetch.
+     */
+    where?: TastyIgniterOrderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TastyIgniterOrders to fetch.
+     */
+    orderBy?: TastyIgniterOrderOrderByWithRelationInput | TastyIgniterOrderOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TastyIgniterOrders.
+     */
+    cursor?: TastyIgniterOrderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TastyIgniterOrders from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TastyIgniterOrders.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TastyIgniterOrders.
+     */
+    distinct?: TastyIgniterOrderScalarFieldEnum | TastyIgniterOrderScalarFieldEnum[]
+  }
+
+  /**
+   * TastyIgniterOrder findMany
+   */
+  export type TastyIgniterOrderFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TastyIgniterOrder
+     */
+    select?: TastyIgniterOrderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TastyIgniterOrder
+     */
+    omit?: TastyIgniterOrderOmit<ExtArgs> | null
+    /**
+     * Filter, which TastyIgniterOrders to fetch.
+     */
+    where?: TastyIgniterOrderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TastyIgniterOrders to fetch.
+     */
+    orderBy?: TastyIgniterOrderOrderByWithRelationInput | TastyIgniterOrderOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TastyIgniterOrders.
+     */
+    cursor?: TastyIgniterOrderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TastyIgniterOrders from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TastyIgniterOrders.
+     */
+    skip?: number
+    distinct?: TastyIgniterOrderScalarFieldEnum | TastyIgniterOrderScalarFieldEnum[]
+  }
+
+  /**
+   * TastyIgniterOrder create
+   */
+  export type TastyIgniterOrderCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TastyIgniterOrder
+     */
+    select?: TastyIgniterOrderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TastyIgniterOrder
+     */
+    omit?: TastyIgniterOrderOmit<ExtArgs> | null
+    /**
+     * The data needed to create a TastyIgniterOrder.
+     */
+    data: XOR<TastyIgniterOrderCreateInput, TastyIgniterOrderUncheckedCreateInput>
+  }
+
+  /**
+   * TastyIgniterOrder createMany
+   */
+  export type TastyIgniterOrderCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TastyIgniterOrders.
+     */
+    data: TastyIgniterOrderCreateManyInput | TastyIgniterOrderCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TastyIgniterOrder createManyAndReturn
+   */
+  export type TastyIgniterOrderCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TastyIgniterOrder
+     */
+    select?: TastyIgniterOrderSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TastyIgniterOrder
+     */
+    omit?: TastyIgniterOrderOmit<ExtArgs> | null
+    /**
+     * The data used to create many TastyIgniterOrders.
+     */
+    data: TastyIgniterOrderCreateManyInput | TastyIgniterOrderCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TastyIgniterOrder update
+   */
+  export type TastyIgniterOrderUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TastyIgniterOrder
+     */
+    select?: TastyIgniterOrderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TastyIgniterOrder
+     */
+    omit?: TastyIgniterOrderOmit<ExtArgs> | null
+    /**
+     * The data needed to update a TastyIgniterOrder.
+     */
+    data: XOR<TastyIgniterOrderUpdateInput, TastyIgniterOrderUncheckedUpdateInput>
+    /**
+     * Choose, which TastyIgniterOrder to update.
+     */
+    where: TastyIgniterOrderWhereUniqueInput
+  }
+
+  /**
+   * TastyIgniterOrder updateMany
+   */
+  export type TastyIgniterOrderUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TastyIgniterOrders.
+     */
+    data: XOR<TastyIgniterOrderUpdateManyMutationInput, TastyIgniterOrderUncheckedUpdateManyInput>
+    /**
+     * Filter which TastyIgniterOrders to update
+     */
+    where?: TastyIgniterOrderWhereInput
+    /**
+     * Limit how many TastyIgniterOrders to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TastyIgniterOrder updateManyAndReturn
+   */
+  export type TastyIgniterOrderUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TastyIgniterOrder
+     */
+    select?: TastyIgniterOrderSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TastyIgniterOrder
+     */
+    omit?: TastyIgniterOrderOmit<ExtArgs> | null
+    /**
+     * The data used to update TastyIgniterOrders.
+     */
+    data: XOR<TastyIgniterOrderUpdateManyMutationInput, TastyIgniterOrderUncheckedUpdateManyInput>
+    /**
+     * Filter which TastyIgniterOrders to update
+     */
+    where?: TastyIgniterOrderWhereInput
+    /**
+     * Limit how many TastyIgniterOrders to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TastyIgniterOrder upsert
+   */
+  export type TastyIgniterOrderUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TastyIgniterOrder
+     */
+    select?: TastyIgniterOrderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TastyIgniterOrder
+     */
+    omit?: TastyIgniterOrderOmit<ExtArgs> | null
+    /**
+     * The filter to search for the TastyIgniterOrder to update in case it exists.
+     */
+    where: TastyIgniterOrderWhereUniqueInput
+    /**
+     * In case the TastyIgniterOrder found by the `where` argument doesn't exist, create a new TastyIgniterOrder with this data.
+     */
+    create: XOR<TastyIgniterOrderCreateInput, TastyIgniterOrderUncheckedCreateInput>
+    /**
+     * In case the TastyIgniterOrder was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TastyIgniterOrderUpdateInput, TastyIgniterOrderUncheckedUpdateInput>
+  }
+
+  /**
+   * TastyIgniterOrder delete
+   */
+  export type TastyIgniterOrderDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TastyIgniterOrder
+     */
+    select?: TastyIgniterOrderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TastyIgniterOrder
+     */
+    omit?: TastyIgniterOrderOmit<ExtArgs> | null
+    /**
+     * Filter which TastyIgniterOrder to delete.
+     */
+    where: TastyIgniterOrderWhereUniqueInput
+  }
+
+  /**
+   * TastyIgniterOrder deleteMany
+   */
+  export type TastyIgniterOrderDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TastyIgniterOrders to delete
+     */
+    where?: TastyIgniterOrderWhereInput
+    /**
+     * Limit how many TastyIgniterOrders to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * TastyIgniterOrder without action
+   */
+  export type TastyIgniterOrderDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TastyIgniterOrder
+     */
+    select?: TastyIgniterOrderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TastyIgniterOrder
+     */
+    omit?: TastyIgniterOrderOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -33835,6 +36193,40 @@ export namespace Prisma {
   };
 
   export type PayoutScalarFieldEnum = (typeof PayoutScalarFieldEnum)[keyof typeof PayoutScalarFieldEnum]
+
+
+  export const CtaClickEventScalarFieldEnum: {
+    id: 'id',
+    videoId: 'videoId',
+    shortLinkId: 'shortLinkId',
+    brandId: 'brandId',
+    creatorId: 'creatorId',
+    ipHash: 'ipHash',
+    userAgent: 'userAgent',
+    ctaType: 'ctaType',
+    clickedAt: 'clickedAt'
+  };
+
+  export type CtaClickEventScalarFieldEnum = (typeof CtaClickEventScalarFieldEnum)[keyof typeof CtaClickEventScalarFieldEnum]
+
+
+  export const TastyIgniterOrderScalarFieldEnum: {
+    id: 'id',
+    orderId: 'orderId',
+    videoId: 'videoId',
+    brandId: 'brandId',
+    shortLinkId: 'shortLinkId',
+    amountCents: 'amountCents',
+    currency: 'currency',
+    status: 'status',
+    customerEmail: 'customerEmail',
+    customerPhone: 'customerPhone',
+    items: 'items',
+    orderedAt: 'orderedAt',
+    webhookReceivedAt: 'webhookReceivedAt'
+  };
+
+  export type TastyIgniterOrderScalarFieldEnum = (typeof TastyIgniterOrderScalarFieldEnum)[keyof typeof TastyIgniterOrderScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -35975,6 +38367,172 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Payout"> | Date | string
   }
 
+  export type CtaClickEventWhereInput = {
+    AND?: CtaClickEventWhereInput | CtaClickEventWhereInput[]
+    OR?: CtaClickEventWhereInput[]
+    NOT?: CtaClickEventWhereInput | CtaClickEventWhereInput[]
+    id?: StringFilter<"CtaClickEvent"> | string
+    videoId?: StringNullableFilter<"CtaClickEvent"> | string | null
+    shortLinkId?: StringNullableFilter<"CtaClickEvent"> | string | null
+    brandId?: StringNullableFilter<"CtaClickEvent"> | string | null
+    creatorId?: StringNullableFilter<"CtaClickEvent"> | string | null
+    ipHash?: StringFilter<"CtaClickEvent"> | string
+    userAgent?: StringNullableFilter<"CtaClickEvent"> | string | null
+    ctaType?: StringFilter<"CtaClickEvent"> | string
+    clickedAt?: DateTimeFilter<"CtaClickEvent"> | Date | string
+  }
+
+  export type CtaClickEventOrderByWithRelationInput = {
+    id?: SortOrder
+    videoId?: SortOrderInput | SortOrder
+    shortLinkId?: SortOrderInput | SortOrder
+    brandId?: SortOrderInput | SortOrder
+    creatorId?: SortOrderInput | SortOrder
+    ipHash?: SortOrder
+    userAgent?: SortOrderInput | SortOrder
+    ctaType?: SortOrder
+    clickedAt?: SortOrder
+  }
+
+  export type CtaClickEventWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: CtaClickEventWhereInput | CtaClickEventWhereInput[]
+    OR?: CtaClickEventWhereInput[]
+    NOT?: CtaClickEventWhereInput | CtaClickEventWhereInput[]
+    videoId?: StringNullableFilter<"CtaClickEvent"> | string | null
+    shortLinkId?: StringNullableFilter<"CtaClickEvent"> | string | null
+    brandId?: StringNullableFilter<"CtaClickEvent"> | string | null
+    creatorId?: StringNullableFilter<"CtaClickEvent"> | string | null
+    ipHash?: StringFilter<"CtaClickEvent"> | string
+    userAgent?: StringNullableFilter<"CtaClickEvent"> | string | null
+    ctaType?: StringFilter<"CtaClickEvent"> | string
+    clickedAt?: DateTimeFilter<"CtaClickEvent"> | Date | string
+  }, "id">
+
+  export type CtaClickEventOrderByWithAggregationInput = {
+    id?: SortOrder
+    videoId?: SortOrderInput | SortOrder
+    shortLinkId?: SortOrderInput | SortOrder
+    brandId?: SortOrderInput | SortOrder
+    creatorId?: SortOrderInput | SortOrder
+    ipHash?: SortOrder
+    userAgent?: SortOrderInput | SortOrder
+    ctaType?: SortOrder
+    clickedAt?: SortOrder
+    _count?: CtaClickEventCountOrderByAggregateInput
+    _max?: CtaClickEventMaxOrderByAggregateInput
+    _min?: CtaClickEventMinOrderByAggregateInput
+  }
+
+  export type CtaClickEventScalarWhereWithAggregatesInput = {
+    AND?: CtaClickEventScalarWhereWithAggregatesInput | CtaClickEventScalarWhereWithAggregatesInput[]
+    OR?: CtaClickEventScalarWhereWithAggregatesInput[]
+    NOT?: CtaClickEventScalarWhereWithAggregatesInput | CtaClickEventScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CtaClickEvent"> | string
+    videoId?: StringNullableWithAggregatesFilter<"CtaClickEvent"> | string | null
+    shortLinkId?: StringNullableWithAggregatesFilter<"CtaClickEvent"> | string | null
+    brandId?: StringNullableWithAggregatesFilter<"CtaClickEvent"> | string | null
+    creatorId?: StringNullableWithAggregatesFilter<"CtaClickEvent"> | string | null
+    ipHash?: StringWithAggregatesFilter<"CtaClickEvent"> | string
+    userAgent?: StringNullableWithAggregatesFilter<"CtaClickEvent"> | string | null
+    ctaType?: StringWithAggregatesFilter<"CtaClickEvent"> | string
+    clickedAt?: DateTimeWithAggregatesFilter<"CtaClickEvent"> | Date | string
+  }
+
+  export type TastyIgniterOrderWhereInput = {
+    AND?: TastyIgniterOrderWhereInput | TastyIgniterOrderWhereInput[]
+    OR?: TastyIgniterOrderWhereInput[]
+    NOT?: TastyIgniterOrderWhereInput | TastyIgniterOrderWhereInput[]
+    id?: StringFilter<"TastyIgniterOrder"> | string
+    orderId?: StringFilter<"TastyIgniterOrder"> | string
+    videoId?: StringNullableFilter<"TastyIgniterOrder"> | string | null
+    brandId?: StringNullableFilter<"TastyIgniterOrder"> | string | null
+    shortLinkId?: StringNullableFilter<"TastyIgniterOrder"> | string | null
+    amountCents?: IntFilter<"TastyIgniterOrder"> | number
+    currency?: StringFilter<"TastyIgniterOrder"> | string
+    status?: StringFilter<"TastyIgniterOrder"> | string
+    customerEmail?: StringNullableFilter<"TastyIgniterOrder"> | string | null
+    customerPhone?: StringNullableFilter<"TastyIgniterOrder"> | string | null
+    items?: JsonNullableFilter<"TastyIgniterOrder">
+    orderedAt?: DateTimeFilter<"TastyIgniterOrder"> | Date | string
+    webhookReceivedAt?: DateTimeFilter<"TastyIgniterOrder"> | Date | string
+  }
+
+  export type TastyIgniterOrderOrderByWithRelationInput = {
+    id?: SortOrder
+    orderId?: SortOrder
+    videoId?: SortOrderInput | SortOrder
+    brandId?: SortOrderInput | SortOrder
+    shortLinkId?: SortOrderInput | SortOrder
+    amountCents?: SortOrder
+    currency?: SortOrder
+    status?: SortOrder
+    customerEmail?: SortOrderInput | SortOrder
+    customerPhone?: SortOrderInput | SortOrder
+    items?: SortOrderInput | SortOrder
+    orderedAt?: SortOrder
+    webhookReceivedAt?: SortOrder
+  }
+
+  export type TastyIgniterOrderWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    orderId?: string
+    AND?: TastyIgniterOrderWhereInput | TastyIgniterOrderWhereInput[]
+    OR?: TastyIgniterOrderWhereInput[]
+    NOT?: TastyIgniterOrderWhereInput | TastyIgniterOrderWhereInput[]
+    videoId?: StringNullableFilter<"TastyIgniterOrder"> | string | null
+    brandId?: StringNullableFilter<"TastyIgniterOrder"> | string | null
+    shortLinkId?: StringNullableFilter<"TastyIgniterOrder"> | string | null
+    amountCents?: IntFilter<"TastyIgniterOrder"> | number
+    currency?: StringFilter<"TastyIgniterOrder"> | string
+    status?: StringFilter<"TastyIgniterOrder"> | string
+    customerEmail?: StringNullableFilter<"TastyIgniterOrder"> | string | null
+    customerPhone?: StringNullableFilter<"TastyIgniterOrder"> | string | null
+    items?: JsonNullableFilter<"TastyIgniterOrder">
+    orderedAt?: DateTimeFilter<"TastyIgniterOrder"> | Date | string
+    webhookReceivedAt?: DateTimeFilter<"TastyIgniterOrder"> | Date | string
+  }, "id" | "orderId">
+
+  export type TastyIgniterOrderOrderByWithAggregationInput = {
+    id?: SortOrder
+    orderId?: SortOrder
+    videoId?: SortOrderInput | SortOrder
+    brandId?: SortOrderInput | SortOrder
+    shortLinkId?: SortOrderInput | SortOrder
+    amountCents?: SortOrder
+    currency?: SortOrder
+    status?: SortOrder
+    customerEmail?: SortOrderInput | SortOrder
+    customerPhone?: SortOrderInput | SortOrder
+    items?: SortOrderInput | SortOrder
+    orderedAt?: SortOrder
+    webhookReceivedAt?: SortOrder
+    _count?: TastyIgniterOrderCountOrderByAggregateInput
+    _avg?: TastyIgniterOrderAvgOrderByAggregateInput
+    _max?: TastyIgniterOrderMaxOrderByAggregateInput
+    _min?: TastyIgniterOrderMinOrderByAggregateInput
+    _sum?: TastyIgniterOrderSumOrderByAggregateInput
+  }
+
+  export type TastyIgniterOrderScalarWhereWithAggregatesInput = {
+    AND?: TastyIgniterOrderScalarWhereWithAggregatesInput | TastyIgniterOrderScalarWhereWithAggregatesInput[]
+    OR?: TastyIgniterOrderScalarWhereWithAggregatesInput[]
+    NOT?: TastyIgniterOrderScalarWhereWithAggregatesInput | TastyIgniterOrderScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"TastyIgniterOrder"> | string
+    orderId?: StringWithAggregatesFilter<"TastyIgniterOrder"> | string
+    videoId?: StringNullableWithAggregatesFilter<"TastyIgniterOrder"> | string | null
+    brandId?: StringNullableWithAggregatesFilter<"TastyIgniterOrder"> | string | null
+    shortLinkId?: StringNullableWithAggregatesFilter<"TastyIgniterOrder"> | string | null
+    amountCents?: IntWithAggregatesFilter<"TastyIgniterOrder"> | number
+    currency?: StringWithAggregatesFilter<"TastyIgniterOrder"> | string
+    status?: StringWithAggregatesFilter<"TastyIgniterOrder"> | string
+    customerEmail?: StringNullableWithAggregatesFilter<"TastyIgniterOrder"> | string | null
+    customerPhone?: StringNullableWithAggregatesFilter<"TastyIgniterOrder"> | string | null
+    items?: JsonNullableWithAggregatesFilter<"TastyIgniterOrder">
+    orderedAt?: DateTimeWithAggregatesFilter<"TastyIgniterOrder"> | Date | string
+    webhookReceivedAt?: DateTimeWithAggregatesFilter<"TastyIgniterOrder"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     email: string
@@ -38045,6 +40603,202 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type CtaClickEventCreateInput = {
+    id?: string
+    videoId?: string | null
+    shortLinkId?: string | null
+    brandId?: string | null
+    creatorId?: string | null
+    ipHash: string
+    userAgent?: string | null
+    ctaType?: string
+    clickedAt?: Date | string
+  }
+
+  export type CtaClickEventUncheckedCreateInput = {
+    id?: string
+    videoId?: string | null
+    shortLinkId?: string | null
+    brandId?: string | null
+    creatorId?: string | null
+    ipHash: string
+    userAgent?: string | null
+    ctaType?: string
+    clickedAt?: Date | string
+  }
+
+  export type CtaClickEventUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    videoId?: NullableStringFieldUpdateOperationsInput | string | null
+    shortLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    brandId?: NullableStringFieldUpdateOperationsInput | string | null
+    creatorId?: NullableStringFieldUpdateOperationsInput | string | null
+    ipHash?: StringFieldUpdateOperationsInput | string
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    ctaType?: StringFieldUpdateOperationsInput | string
+    clickedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CtaClickEventUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    videoId?: NullableStringFieldUpdateOperationsInput | string | null
+    shortLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    brandId?: NullableStringFieldUpdateOperationsInput | string | null
+    creatorId?: NullableStringFieldUpdateOperationsInput | string | null
+    ipHash?: StringFieldUpdateOperationsInput | string
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    ctaType?: StringFieldUpdateOperationsInput | string
+    clickedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CtaClickEventCreateManyInput = {
+    id?: string
+    videoId?: string | null
+    shortLinkId?: string | null
+    brandId?: string | null
+    creatorId?: string | null
+    ipHash: string
+    userAgent?: string | null
+    ctaType?: string
+    clickedAt?: Date | string
+  }
+
+  export type CtaClickEventUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    videoId?: NullableStringFieldUpdateOperationsInput | string | null
+    shortLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    brandId?: NullableStringFieldUpdateOperationsInput | string | null
+    creatorId?: NullableStringFieldUpdateOperationsInput | string | null
+    ipHash?: StringFieldUpdateOperationsInput | string
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    ctaType?: StringFieldUpdateOperationsInput | string
+    clickedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CtaClickEventUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    videoId?: NullableStringFieldUpdateOperationsInput | string | null
+    shortLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    brandId?: NullableStringFieldUpdateOperationsInput | string | null
+    creatorId?: NullableStringFieldUpdateOperationsInput | string | null
+    ipHash?: StringFieldUpdateOperationsInput | string
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    ctaType?: StringFieldUpdateOperationsInput | string
+    clickedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TastyIgniterOrderCreateInput = {
+    id?: string
+    orderId: string
+    videoId?: string | null
+    brandId?: string | null
+    shortLinkId?: string | null
+    amountCents: number
+    currency?: string
+    status?: string
+    customerEmail?: string | null
+    customerPhone?: string | null
+    items?: NullableJsonNullValueInput | InputJsonValue
+    orderedAt?: Date | string
+    webhookReceivedAt?: Date | string
+  }
+
+  export type TastyIgniterOrderUncheckedCreateInput = {
+    id?: string
+    orderId: string
+    videoId?: string | null
+    brandId?: string | null
+    shortLinkId?: string | null
+    amountCents: number
+    currency?: string
+    status?: string
+    customerEmail?: string | null
+    customerPhone?: string | null
+    items?: NullableJsonNullValueInput | InputJsonValue
+    orderedAt?: Date | string
+    webhookReceivedAt?: Date | string
+  }
+
+  export type TastyIgniterOrderUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orderId?: StringFieldUpdateOperationsInput | string
+    videoId?: NullableStringFieldUpdateOperationsInput | string | null
+    brandId?: NullableStringFieldUpdateOperationsInput | string | null
+    shortLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    amountCents?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    customerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    customerPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    items?: NullableJsonNullValueInput | InputJsonValue
+    orderedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    webhookReceivedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TastyIgniterOrderUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orderId?: StringFieldUpdateOperationsInput | string
+    videoId?: NullableStringFieldUpdateOperationsInput | string | null
+    brandId?: NullableStringFieldUpdateOperationsInput | string | null
+    shortLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    amountCents?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    customerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    customerPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    items?: NullableJsonNullValueInput | InputJsonValue
+    orderedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    webhookReceivedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TastyIgniterOrderCreateManyInput = {
+    id?: string
+    orderId: string
+    videoId?: string | null
+    brandId?: string | null
+    shortLinkId?: string | null
+    amountCents: number
+    currency?: string
+    status?: string
+    customerEmail?: string | null
+    customerPhone?: string | null
+    items?: NullableJsonNullValueInput | InputJsonValue
+    orderedAt?: Date | string
+    webhookReceivedAt?: Date | string
+  }
+
+  export type TastyIgniterOrderUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orderId?: StringFieldUpdateOperationsInput | string
+    videoId?: NullableStringFieldUpdateOperationsInput | string | null
+    brandId?: NullableStringFieldUpdateOperationsInput | string | null
+    shortLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    amountCents?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    customerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    customerPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    items?: NullableJsonNullValueInput | InputJsonValue
+    orderedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    webhookReceivedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TastyIgniterOrderUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orderId?: StringFieldUpdateOperationsInput | string
+    videoId?: NullableStringFieldUpdateOperationsInput | string | null
+    brandId?: NullableStringFieldUpdateOperationsInput | string | null
+    shortLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    amountCents?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    customerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    customerPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    items?: NullableJsonNullValueInput | InputJsonValue
+    orderedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    webhookReceivedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -39741,6 +42495,96 @@ export namespace Prisma {
   }
 
   export type PayoutSumOrderByAggregateInput = {
+    amountCents?: SortOrder
+  }
+
+  export type CtaClickEventCountOrderByAggregateInput = {
+    id?: SortOrder
+    videoId?: SortOrder
+    shortLinkId?: SortOrder
+    brandId?: SortOrder
+    creatorId?: SortOrder
+    ipHash?: SortOrder
+    userAgent?: SortOrder
+    ctaType?: SortOrder
+    clickedAt?: SortOrder
+  }
+
+  export type CtaClickEventMaxOrderByAggregateInput = {
+    id?: SortOrder
+    videoId?: SortOrder
+    shortLinkId?: SortOrder
+    brandId?: SortOrder
+    creatorId?: SortOrder
+    ipHash?: SortOrder
+    userAgent?: SortOrder
+    ctaType?: SortOrder
+    clickedAt?: SortOrder
+  }
+
+  export type CtaClickEventMinOrderByAggregateInput = {
+    id?: SortOrder
+    videoId?: SortOrder
+    shortLinkId?: SortOrder
+    brandId?: SortOrder
+    creatorId?: SortOrder
+    ipHash?: SortOrder
+    userAgent?: SortOrder
+    ctaType?: SortOrder
+    clickedAt?: SortOrder
+  }
+
+  export type TastyIgniterOrderCountOrderByAggregateInput = {
+    id?: SortOrder
+    orderId?: SortOrder
+    videoId?: SortOrder
+    brandId?: SortOrder
+    shortLinkId?: SortOrder
+    amountCents?: SortOrder
+    currency?: SortOrder
+    status?: SortOrder
+    customerEmail?: SortOrder
+    customerPhone?: SortOrder
+    items?: SortOrder
+    orderedAt?: SortOrder
+    webhookReceivedAt?: SortOrder
+  }
+
+  export type TastyIgniterOrderAvgOrderByAggregateInput = {
+    amountCents?: SortOrder
+  }
+
+  export type TastyIgniterOrderMaxOrderByAggregateInput = {
+    id?: SortOrder
+    orderId?: SortOrder
+    videoId?: SortOrder
+    brandId?: SortOrder
+    shortLinkId?: SortOrder
+    amountCents?: SortOrder
+    currency?: SortOrder
+    status?: SortOrder
+    customerEmail?: SortOrder
+    customerPhone?: SortOrder
+    orderedAt?: SortOrder
+    webhookReceivedAt?: SortOrder
+  }
+
+  export type TastyIgniterOrderMinOrderByAggregateInput = {
+    id?: SortOrder
+    orderId?: SortOrder
+    videoId?: SortOrder
+    brandId?: SortOrder
+    shortLinkId?: SortOrder
+    amountCents?: SortOrder
+    currency?: SortOrder
+    status?: SortOrder
+    customerEmail?: SortOrder
+    customerPhone?: SortOrder
+    orderedAt?: SortOrder
+    webhookReceivedAt?: SortOrder
+  }
+
+  export type TastyIgniterOrderSumOrderByAggregateInput = {
     amountCents?: SortOrder
   }
 

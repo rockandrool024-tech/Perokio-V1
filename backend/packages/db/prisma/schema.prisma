@@ -538,3 +538,42 @@ model Payout {
   @@index([creatorId, status])
   @@index([status])
 }
+
+// ============================================================================
+// 12. CONVERSION TRACKING (Phase 3 — TastyIgniter + Lead Magnet)
+// ============================================================================
+
+model CtaClickEvent {
+  id          String   @id @default(cuid())
+  videoId     String?
+  shortLinkId String?
+  brandId     String?
+  creatorId   String?
+  ipHash      String
+  userAgent   String?
+  ctaType     String   @default("order_now") // "order_now" | "visit_menu" | "claim_offer"
+  clickedAt   DateTime @default(now())
+
+  @@index([brandId, clickedAt])
+  @@index([videoId, clickedAt])
+}
+
+model TastyIgniterOrder {
+  id              String   @id @default(cuid())
+  orderId         String   @unique // TastyIgniter's order ID
+  videoId         String?
+  brandId          String?
+  shortLinkId     String?
+  amountCents     Int      // order total in cents
+  currency        String   @default("USD")
+  status          String   @default("completed") // completed | refunded | pending
+  customerEmail   String?
+  customerPhone   String?
+  items           Json?    // array of { name, qty, priceCents }
+  orderedAt       DateTime @default(now())
+  webhookReceivedAt DateTime @default(now())
+
+  @@index([brandId, orderedAt])
+  @@index([videoId, orderedAt])
+  @@index([status])
+}

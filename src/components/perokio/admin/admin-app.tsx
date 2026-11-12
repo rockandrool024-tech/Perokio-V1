@@ -4,7 +4,7 @@ import { usePerokioStore } from '@/store/perokio'
 import { SidebarItem } from '@/components/perokio/shared/sidebar-item'
 import { SCRIPT_QA, FACTS } from '@/lib/perokio/data'
 import { useT } from '@/lib/perokio/i18n'
-import { Building2, Users, ShieldCheck, TrendingUp, Activity, Sparkles } from 'lucide-react'
+import { Building2, Users, ShieldCheck, TrendingUp, Activity, Sparkles, BarChart3 } from 'lucide-react'
 import { BrandPipeline } from './brand-pipeline'
 import { CreatorVetting } from './creator-vetting'
 import { ScriptQA } from './script-qa'
@@ -13,6 +13,7 @@ import { WallMonitor } from './wall-monitor'
 import { FactAuthoring } from './fact-authoring'
 import { CommandPalette } from './command-palette'
 import { QualityDashboard } from './quality-dashboard'
+import { LeadMagnet } from './lead-magnet'
 
 export function AdminApp() {
   const view = usePerokioStore((s) => s.adminView)
@@ -53,6 +54,7 @@ export function AdminApp() {
           <SidebarItem icon={Activity} label={t('Wall Monitor')} code="A05" active={view === 'monitor'} badge={liveFacts} onClick={() => setView('monitor')} />
           <SidebarItem icon={ShieldCheck} label="Quality Dashboard" code="A06" active={view === 'quality'} onClick={() => setView('quality')} />
           <SidebarItem icon={Sparkles} label={t('Fact Authoring')} code="A07" active={view === 'authoring'} onClick={() => setView('authoring')} />
+          <SidebarItem icon={BarChart3} label="Lead Magnet" code="A08" active={view === 'leadmagnet'} onClick={() => setView('leadmagnet')} />
         </nav>
 
         {/* Footer status */}
@@ -81,6 +83,7 @@ export function AdminApp() {
           {view === 'monitor' && <WallMonitor />}
           {view === 'quality' && <QualityDashboard />}
           {view === 'authoring' && <FactAuthoring />}
+          {view === 'leadmagnet' && <LeadMagnet />}
         </div>
       </div>
 

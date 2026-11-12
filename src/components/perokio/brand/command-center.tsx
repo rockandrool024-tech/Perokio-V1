@@ -12,7 +12,7 @@ import { getBrandStats, MARQUEE_ACTIVITY, VIEWS_CURVE_24H } from '@/lib/perokio/
 import { useT, usePick } from '@/lib/perokio/i18n'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Eye, Wallet, Film, TrendingUp, Flame, Zap, ArrowUpRight, Sparkles, Activity, DollarSign, EyeOff } from 'lucide-react'
+import { Eye, Wallet, Film, TrendingUp, Flame, Zap, ArrowUpRight, Sparkles, Activity, DollarSign, EyeOff, ShoppingBag } from 'lucide-react'
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { motion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
@@ -176,12 +176,15 @@ export function CommandCenter() {
         </div>
       </div>
 
-      {/* === KPI cards === */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* === KPI cards — now with Orders + Revenue (Phase 3) === */}
+      <div className="grid grid-cols-2 lg:grid-cols-6 gap-4">
         <StatCard label={t('Weekly ROI')} value={`${brandStats.weeklyRoi}×`} icon={TrendingUp} delta={`+${brandStats.weeklyRoiDelta} ${t('vs last week')}`} deltaType="up" accent="lime" />
         <StatCard label={t('Avg CPM')} value={`$${brand.avgCpm}`} icon={DollarSign} delta={t(brandStats.industryLabel)} deltaType="up" accent="orange" />
-        <StatCard label={t('Active Fact Bundles')} value={activeFacts.length} icon={Flame} delta={`${brand.videoCredits - brand.videoCreditsUsed} ${t('video credits left')}`} deltaType="neutral" accent="teal" />
-        <StatCard label={t('Spent this month')} value={formatUSD(brand.walletSpent)} icon={Activity} delta={`/${formatUSD(brand.monthlyBudget)}`} deltaType="neutral" accent="violet" />
+        <StatCard label={t('Active Facts')} value={activeFacts.length} icon={Flame} delta={`${brand.videoCredits - brand.videoCreditsUsed} ${t('credits left')}`} deltaType="neutral" accent="teal" />
+        <StatCard label={t('Spent')} value={formatUSD(brand.walletSpent)} icon={Activity} delta={`/${formatUSD(brand.monthlyBudget)}`} deltaType="neutral" accent="violet" />
+        {/* Phase 3: Orders + Revenue cards (the ROI anchors) */}
+        <StatCard label={t('Orders')} value="0" icon={ShoppingBag} delta="TastyIgniter" deltaType="neutral" accent="lime" />
+        <StatCard label={t('Revenue')} value="$0" icon={DollarSign} delta="attributed" deltaType="up" accent="lime" />
       </div>
 
       {/* === Mini glowing SVG chart + Wallet/budget === */}

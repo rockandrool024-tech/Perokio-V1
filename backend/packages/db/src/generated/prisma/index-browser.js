@@ -404,6 +404,34 @@ exports.Prisma.PayoutScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.CtaClickEventScalarFieldEnum = {
+  id: 'id',
+  videoId: 'videoId',
+  shortLinkId: 'shortLinkId',
+  brandId: 'brandId',
+  creatorId: 'creatorId',
+  ipHash: 'ipHash',
+  userAgent: 'userAgent',
+  ctaType: 'ctaType',
+  clickedAt: 'clickedAt'
+};
+
+exports.Prisma.TastyIgniterOrderScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  videoId: 'videoId',
+  brandId: 'brandId',
+  shortLinkId: 'shortLinkId',
+  amountCents: 'amountCents',
+  currency: 'currency',
+  status: 'status',
+  customerEmail: 'customerEmail',
+  customerPhone: 'customerPhone',
+  items: 'items',
+  orderedAt: 'orderedAt',
+  webhookReceivedAt: 'webhookReceivedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -510,7 +538,9 @@ exports.Prisma.ModelName = {
   HarnessConfig: 'HarnessConfig',
   GenerationRun: 'GenerationRun',
   PrintRating: 'PrintRating',
-  Payout: 'Payout'
+  Payout: 'Payout',
+  CtaClickEvent: 'CtaClickEvent',
+  TastyIgniterOrder: 'TastyIgniterOrder'
 };
 
 /**

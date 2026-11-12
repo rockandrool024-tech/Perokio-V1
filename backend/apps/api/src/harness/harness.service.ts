@@ -150,6 +150,53 @@ export class HarnessService {
       const prompt = `Generate a 20-second TikTok script for fact ${factId} (${fact.language})`;
       const result = await this.llm.generateScriptWithRAG(prompt, ragContext, draftModel);
 
+      // 5b. VALIDATION GATE — reject if the LLM returned a source_id not in verifiedSources
+      // This is the HALLUCINATION_DETECTED check.
+      const validSourceIds = new Set(allSources.map((s: any) => s.id));
+      const hallucinatedLines = result.lines.filter(
+        (l: any) => l.suggestedSourceId && !validSourceIds.has(l.suggestedSourceId),
+      );
+
+      if (hallucinatedLines.length > 0) {
+        // Log the hallucination + reject the generation
+        this.logger.warn(`🚨 HALLUCINATION_DETECTED: LLM returned ${hallucinatedLines.length} lines with invalid source_ids`);
+
+        await prisma.generationRun.update({
+          where: { id: run.id },
+          data: {
+            status: 'failed',
+            endedAt: new Date(),
+          },
+        });
+
+        throw new BadRequestException({
+          error: 'HALLUCINATION_DETECTED',
+          message: `The LLM returned ${hallucinatedLines.length} script line(s) with source_ids that are not in Fact.verifiedSources. Generation rejected.`,
+          hallucinatedLines: hallucinatedLines.map((l: any) => ({
+            position: l.position,
+            text: l.text,
+            invalidSourceId: l.suggestedSourceId,
+          })),
+          validSourceIds: Array.from(validSourceIds),
+        });
+      }
+
+      // Also check for hallucinated content (the LLM "hallucinated" flag from keyword detection)
+      const contentHallucinations = result.lines.filter((l: any) => l.hallucinated);
+      if (contentHallucinations.length > 0) {
+        this.logger.warn(`🚨 HALLUCINATION_DETECTED: LLM content flagged as hallucinated`);
+
+        await prisma.generationRun.update({
+          where: { id: run.id },
+          data: { status: 'failed', endedAt: new Date() },
+        });
+
+        throw new BadRequestException({
+          error: 'HALLUCINATION_DETECTED',
+          message: 'The LLM attempted to verify a claim that is not backed by any source. Generation rejected.',
+        });
+      }
+
       // 6. Create the ScriptVersion (status: draft — needs QA)
       const scriptVersion = await prisma.scriptVersion.create({
         data: {

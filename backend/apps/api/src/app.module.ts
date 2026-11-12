@@ -9,6 +9,7 @@ import { HarnessModule } from './harness/harness.module';
 import { AdminModule } from './admin/admin.module';
 import { DistributionModule } from './distribution/distribution.module';
 import { LedgerModule } from './ledger/ledger.module';
+import { ConversionModule } from './conversion/conversion.module';
 import { AuditInterceptor } from './common/interceptors/audit.interceptor';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 
@@ -31,6 +32,7 @@ export class PrismaModule {}
     AdminModule,
     DistributionModule,
     LedgerModule,
+    ConversionModule,
   ],
   providers: [
     {
