@@ -381,6 +381,126 @@
     animation: ring-pulse 2.2s ease-in-out infinite;
   }
 
+  /* ============================================================================
+     PREMIUM OVERHAUL — The $499/month feel
+     ============================================================================ */
+
+  /* ---------- Premium Glass — deeper blur, ring-1, subtle inner glow ---------- */
+  .glass-premium {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(32px) saturate(160%);
+    -webkit-backdrop-filter: blur(32px) saturate(160%);
+    box-shadow:
+      0 20px 60px -10px rgba(0, 0, 0, 0.5),
+      0 0 0 1px rgba(255, 255, 255, 0.02) inset,
+      0 1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  }
+  .ring-glass {
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+  }
+
+  /* ---------- Breathing Pulse (Monday Lock indicator) ---------- */
+  @keyframes breathe-slow {
+    0%, 100% {
+      opacity: 0.6;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.08);
+    }
+  }
+  .animate-breathe-slow {
+    animation: breathe-slow 3.5s ease-in-out infinite;
+  }
+
+  /* ---------- Count-up number animation ---------- */
+  @keyframes count-up {
+    0% { opacity: 0; transform: translateY(4px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  .animate-count-up {
+    animation: count-up 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  }
+
+  /* ---------- Skeleton shimmer (AI loading state) ---------- */
+  @keyframes skeleton-pulse {
+    0%, 100% {
+      background: rgba(255, 255, 255, 0.03);
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+    50% {
+      background: rgba(216, 239, 112, 0.06);
+      border-color: rgba(216, 239, 112, 0.15);
+    }
+  }
+  .skeleton-premium {
+    animation: skeleton-pulse 1.8s ease-in-out infinite;
+  }
+
+  /* ---------- Success Score SVG ring glow ---------- */
+  .success-ring-glow {
+    filter: drop-shadow(0 0 6px rgba(216, 239, 112, 0.6));
+  }
+
+  /* ---------- Source chip (🔒 SRC-01) ---------- */
+  .source-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-family: var(--font-jetbrains), monospace;
+    font-weight: 600;
+    background: linear-gradient(135deg, rgba(216, 239, 112, 0.12), rgba(216, 239, 112, 0.04));
+    border: 1px solid rgba(216, 239, 112, 0.25);
+    color: #D8EF70;
+    transition: all 0.2s ease;
+  }
+  .source-chip:hover {
+    background: linear-gradient(135deg, rgba(216, 239, 112, 0.18), rgba(216, 239, 112, 0.08));
+    border-color: rgba(216, 239, 112, 0.4);
+    box-shadow: 0 0 12px -2px rgba(216, 239, 112, 0.3);
+  }
+
+  /* ---------- Locked gate (B11 disabled button) ---------- */
+  .gate-locked {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: grayscale(40%);
+    pointer-events: auto;
+  }
+
+  /* ---------- Premium hover raise (WeekGrid day column) ---------- */
+  .day-column {
+    transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.3s ease;
+  }
+  .day-column:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.4);
+  }
+
+  /* ---------- Confetti particle ---------- */
+  .confetti-particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 1px;
+    pointer-events: none;
+  }
+
+  /* ---------- Certificate modal border (SHA-256 receipt) ---------- */
+  .certificate-border {
+    border: 1px solid rgba(216, 239, 112, 0.3);
+    background: linear-gradient(135deg, rgba(216, 239, 112, 0.04), rgba(216, 239, 112, 0.01));
+    box-shadow:
+      0 0 0 1px rgba(216, 239, 112, 0.08),
+      0 20px 60px -10px rgba(0, 0, 0, 0.5),
+      0 0 24px -4px rgba(216, 239, 112, 0.2);
+  }
+
   /* Hide number input arrows */
   input[type="number"]::-webkit-outer-spin-button,
   input[type="number"]::-webkit-inner-spin-button {
