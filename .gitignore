@@ -1,32 +1,26 @@
-# dependencies
-node_modules
-/.pnp
-.pnp.*
+# Large build artifacts — don't commit
+*.git.bundle
+*.tar.gz
+download/perokio-v1-complete*
 
-# next.js
-/.next/
-/out/
+# Dependencies
+node_modules/
+backend/node_modules/
 
-# production
-/build
+# Build output
+.next/
+dist/
+backend/apps/*/dist/
 
-# misc
-.DS_Store
-*.pem
-
-# debug
+# Logs
 *.log
+dev.log
+server.log
 
-# env files
-.env*
+# Environment
+.env.local
+.env.production
 
-# typescript
-*.tsbuildinfo
-next-env.d.ts
-
-# sandbox artifacts
-.zscripts
-tool-results
-upload
-db/custom.db
-db/custom.db-journal
+# OS files
+.DS_Store
+Thumbs.db
