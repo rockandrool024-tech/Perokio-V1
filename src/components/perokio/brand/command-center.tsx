@@ -5,8 +5,8 @@ import { StatCard } from '@/components/perokio/shared/stat-card'
 import { ViewTicker } from '@/components/perokio/shared/view-ticker'
 import { Countdown } from '@/components/perokio/shared/countdown'
 import { WeekGrid } from '@/components/perokio/shared/week-grid'
-import { CommandCenterToolbar } from '@/components/perokio/brand/command-center-toolbar'
-import { CampaignStudio } from '@/components/perokio/brand/campaign-studio'
+import { CommandCenterToolbar } from '@/components/perokio/campaign/command-center-toolbar'
+import { CampaignStudio } from '@/components/perokio/campaign/campaign-studio'
 import { ParrotEye, ParrotEyeHandle, ParrotLogo } from '@/components/perokio/shared/parrot-logo'
 import { usePerokioLiveViews, formatUSD, formatCompact, formatNumber } from '@/lib/perokio/live'
 import { usePerokioStore } from '@/store/perokio'
@@ -67,7 +67,7 @@ export function CommandCenter() {
         </div>
       </div>
 
-      {/* === WeekGrid — the Calendar-as-Spine (replaces the dashboard hero) === */}
+      {/* === WeekGrid — the Calendar-as-Spine === */}
       <WeekGrid
         onEntryClick={(entry) => {
           if (entry.factId) {
@@ -77,11 +77,22 @@ export function CommandCenter() {
         }}
       />
 
-      {/* === Command Center Toolbar — power tools + AI Copilot === */}
+      {/* === Command Center Toolbar (power tools + AI Copilot) === */}
       <CommandCenterToolbar
-        onScanMarket={() => {}}
-        onBoost={() => setView('results')}
-        onGenerateFact={() => setView('library')}
+        onScanMarket={() => {
+          setView('next')
+        }}
+        onCreatePromo={() => {
+          setCampaignStudioOpen(true)
+        }}
+      />
+
+      {/* === Campaign Studio modal === */}
+      <CampaignStudio
+        open={campaignStudioOpen}
+        onClose={() => setCampaignStudioOpen(false)}
+        factClaim="Spicy Chicken Burger Launch"
+        brandName={pick(brand.name, brand.nameAr)}
       />
 
       {/* === Hero — Parrot Eye + Live views + Wallet === */}
@@ -475,14 +486,6 @@ export function CommandCenter() {
         <ArrowUpRight className="h-5 w-5" />
       </Button>
 
-      {/* === Campaign Studio (full-screen modal) === */}
-      <CampaignStudio
-        open={campaignStudioOpen}
-        onClose={() => setCampaignStudioOpen(false)}
-        factClaim="Dar Zaitouna arabica beans come from Cap Bon"
-        factCode="F-2024-1101-01"
-        brandName={pick(brand.name, brand.nameAr)}
-      />
     </div>
   )
 }
