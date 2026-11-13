@@ -4,9 +4,16 @@ import { useEffect, useRef, useState } from 'react'
 import { StatCard } from '@/components/perokio/shared/stat-card'
 import { ViewTicker } from '@/components/perokio/shared/view-ticker'
 import { Countdown } from '@/components/perokio/shared/countdown'
-import { WeekGrid } from '@/components/perokio/shared/week-grid'
+import { MediaCalendar } from '@/components/perokio/calendar/media-calendar'
 import { CommandCenterToolbar } from '@/components/perokio/campaign/command-center-toolbar'
-import { CampaignStudio } from '@/components/perokio/campaign/campaign-studio'
+import dynamic from 'next/dynamic'
+
+// CampaignStudio is loaded dynamically to prevent the Chai Builder SDK
+// from being evaluated during SSR (it pulls in 377 packages)
+const CampaignStudio = dynamic(
+  () => import('@/components/perokio/campaign/campaign-studio').then(m => ({ default: m.CampaignStudio })),
+  { ssr: false, loading: () => null }
+)
 import { ParrotEye, ParrotEyeHandle, ParrotLogo } from '@/components/perokio/shared/parrot-logo'
 import { usePerokioLiveViews, formatUSD, formatCompact, formatNumber } from '@/lib/perokio/live'
 import { usePerokioStore } from '@/store/perokio'
@@ -72,13 +79,17 @@ export function CommandCenter() {
         </div>
       </div>
 
-      {/* === WeekGrid — the Calendar-as-Spine === */}
-      <WeekGrid
+      {/* === MediaCalendar — the Visual Media Command Center === */}
+      <MediaCalendar
         onEntryClick={(entry) => {
           if (entry.factId) {
             setActiveFact(entry.factId)
             setView('script')
           }
+        }}
+        onReschedule={(entryId, newDate) => {
+          // V2: POST to /api/calendar/reschedule
+          console.log('[MediaCalendar] Reschedule:', entryId, '→', newDate.toISOString())
         }}
       />
 
