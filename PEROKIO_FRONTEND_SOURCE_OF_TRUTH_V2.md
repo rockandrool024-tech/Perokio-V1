@@ -228,3 +228,85 @@ When the user clicks [Save Page] in Phase 2:
 |---|---|
 | `NEXT_PUBLIC_OPENROUTER_API_KEY` | The API key for the Chai Builder AI assistant. Billed to Perokio's account. |
 | `NEXT_PUBLIC_CHAI_BUILDER_LICENSE` | (Optional) Chai Builder Pro license key for removing watermarks. |
+
+---
+
+## THE ASSEMBLED COMMAND CENTER & UX LOOP
+
+### B08 Command Center Layout (The Tracking Hub)
+
+The B08 Command Center is the undisputed central hub. Its vertical layout (top to bottom):
+
+1. **Scrolling Marquee** — Live creator activity ticker (claimed, locked, printed events)
+2. **MediaCalendar** — The Visual Media Command Center (Month/Week/Day segmented toggle, Monday 9am Lock indicator, today's glowing border, drag-and-drop reschedule, inline metrics on hover)
+3. **CommandCenterToolbar** — Action buttons: [ + Schedule Content ], [ 📡 Scan Market ], [ 📊 View Campaigns ], [ 🚀 Build New Campaign ] (lime, prominent)
+4. **6-Card KPI Grid** — Campaign Performance tracking:
+   - Total Views (from `useLiveViews`) — lime accent
+   - Total Clicks (1,240 · 14.8% CTR) — orange accent
+   - Orders (45 · 3.6% CVR) — lime accent
+   - Revenue ($1,350 · glowing lime — the ROI anchor)
+   - Active Facts — teal accent
+   - Total Spent — violet accent
+5. **Views Trend Chart** — 24h area chart (Recharts)
+6. **Wallet & Budget** — Monthly budget progress bar, CPM rate, video credits
+7. **Active Fact Bundles** — Horizontal scroll of fact cards with [Edit Fact] + [View Details]
+8. **Recent Videos** — List with Grade badges, Clicks + CTR, [View Analytics] + [Boost]
+9. **Bottom CTA** — [Create New Promo Cycle →] (glowing lime, full-width)
+10. **AI Copilot** — Floating glassmorphic pill at bottom center (rotates suggestions every 8s)
+
+### The UX Loop (User Journey)
+
+The "Promo Cycle" is the compounding flywheel. Here is the exact clickable path:
+
+**Step 1 — B08 Command Center**
+- User sees the MediaCalendar (week view by default) with Facts + Sparks scheduled
+- KPI grid shows: Views, Clicks, Orders, Revenue — all updating live
+- AI Copilot suggests: "🔥 Trend Alert: #IcedCoffee is exploding. [Generate Fact]"
+- User clicks **[ 🚀 Build New Campaign ]**
+
+**Step 2 — CampaignStudio Phase 1 (Smart Link)**
+- User types a slug: `pero.to/spicy-chicken-burger`
+- Clicks [Copy Link] → confetti burst → shortlink stored in Zustand
+- Configures A/B testing: Variant A (TastyIgniter Menu) vs Variant B (WhatsApp)
+- Clicks [Build Landing Page →]
+
+**Step 3 — CampaignStudio Phase 2 (Page Editor)**
+- User selects template: "Lunch Special" / "New Product Launch" / "Weekend Promo"
+- Edits headline: "The Spiciest Chicken in Tunis"
+- Clicks [✨ Magic Write] → AI suggests 3 headlines (via OpenRouter)
+- Edits subhead, social proof, CTA text
+- iPhone preview updates live with spring physics
+- Clicks [Save Page] → content stored in Zustand `activeCampaign.pageContent`
+- Clicks [View ROI Funnel →]
+
+**Step 4 — CampaignStudio Phase 3 (ROI Command Center)**
+- Revenue Waterfall renders: Views (10k) → Clicks (1.2k) → Page Views (1k) → Orders (45)
+- CountUp animations on all metrics
+- Revenue chart (7-day area chart, Recharts)
+- Attribution Leaderboard: Amira ($1,840, 41%), Yassine ($1,320, 29%), Omar ($980, 22%)
+- After 2s delay → [Launch Next Campaign →] button appears (glowing lime)
+- User clicks it → returns to B08
+
+**Step 5 — B10 Fact Library + B11 Script Review**
+- User navigates to B10 → clicks [🚀 Build Campaign] or [+ Generate Fact Bundle]
+- B11 Script Review: verifies lines with source chips (🔒 SRC-01)
+- B11 ApproveButton: physically locked until 100% verified
+- On approval → SHA-256 rubber stamp animation → Certificate modal
+
+**Step 6 — Return to B08**
+- KPI cards update: Revenue increases, Orders tick up
+- AI Copilot: "📈 You hit $1,350 in attributed revenue. [Launch Campaign]"
+- The loop repeats — compounding ROI
+
+### Component Access Points Summary
+
+| Screen | Button | Opens | Phase |
+|---|---|---|---|
+| B08 | [🚀 Build New Campaign] | CampaignStudio | Phase 1 (Create) |
+| B08 | [📊 View Campaigns] | CampaignStudio | Phase 3 (Monitor) |
+| B08 | [Create New Promo Cycle →] | CampaignStudio | Phase 1 or 3 |
+| B08 | AI Copilot "Launch Campaign" | CampaignStudio | Phase 3 |
+| B10 | [🚀 Build Campaign] | CampaignStudio | Phase 1 (no active campaign) |
+| B10 | [📊 Monitor Campaign] | CampaignStudio | Phase 3 (active campaign) |
+| A08 | Total Clicks card | CampaignStudio | Phase 3 |
+| A08 | Attributed Revenue card | CampaignStudio | Phase 3 |
