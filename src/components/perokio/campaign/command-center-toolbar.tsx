@@ -8,7 +8,7 @@ import { useT } from '@/lib/perokio/i18n'
 import { springSoft, springSnappy, easeEditorial } from '@/lib/perokio/motion'
 import { cn } from '@/lib/utils'
 import {
-  Plus, Radar, Zap, TrendingUp, AlertTriangle, Flame, ChevronRight, X, BarChart3,
+  Plus, Radar, Zap, TrendingUp, AlertTriangle, Flame, ChevronRight, X, BarChart3, Rocket,
 } from 'lucide-react'
 
 // ============================================================================
@@ -80,6 +80,17 @@ export function CommandCenterToolbar({
         >
           <BarChart3 className="h-4 w-4 text-lime" />
           {t('View Campaigns')}
+        </Button>
+
+        {/* 🚀 Build New Campaign — prominent primary CTA */}
+        <Button
+          size="sm"
+          onClick={onCreatePromo}
+          className="gap-2 bg-lime text-[#0A0F0D] hover:bg-lime/90 shadow-lime-glow shrink-0"
+        >
+          <Rocket className="h-4 w-4" />
+          <span className="hidden sm:inline">Build New Campaign</span>
+          <span className="sm:hidden">Build</span>
         </Button>
       </div>
 
