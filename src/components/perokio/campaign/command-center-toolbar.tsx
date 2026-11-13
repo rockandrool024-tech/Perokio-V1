@@ -8,7 +8,7 @@ import { useT } from '@/lib/perokio/i18n'
 import { springSoft, springSnappy, easeEditorial } from '@/lib/perokio/motion'
 import { cn } from '@/lib/utils'
 import {
-  Plus, Radar, Zap, TrendingUp, AlertTriangle, Flame, ChevronRight, X,
+  Plus, Radar, Zap, TrendingUp, AlertTriangle, Flame, ChevronRight, X, BarChart3,
 } from 'lucide-react'
 
 // ============================================================================
@@ -19,10 +19,11 @@ interface CommandCenterToolbarProps {
   onScheduleContent?: () => void
   onScanMarket?: () => void
   onCreatePromo?: () => void
+  onViewCampaigns?: () => void
 }
 
 export function CommandCenterToolbar({
-  onScheduleContent, onScanMarket, onCreatePromo,
+  onScheduleContent, onScanMarket, onCreatePromo, onViewCampaigns,
 }: CommandCenterToolbarProps) {
   const t = useT()
   const [scanning, setScanning] = useState(false)
@@ -68,6 +69,17 @@ export function CommandCenterToolbar({
             <Radar className="h-4 w-4 text-orange" />
           )}
           {scanning ? 'Scanning...' : t('Scan Market')}
+        </Button>
+
+        {/* View Campaigns — opens CampaignStudio at Phase 3 (Monitor) */}
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={onViewCampaigns}
+          className="gap-2 glass border-white/10 hover:bg-white/5"
+        >
+          <BarChart3 className="h-4 w-4 text-lime" />
+          {t('View Campaigns')}
         </Button>
       </div>
 

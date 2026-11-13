@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { CountUp } from '@/components/perokio/shared/count-up'
 import { conversionApi } from '@/lib/perokio/api-client'
+import { usePerokioStore } from '@/store/perokio'
 import { useT } from '@/lib/perokio/i18n'
 import { easeEditorial, springSoft } from '@/lib/perokio/motion'
 import {
@@ -26,6 +27,7 @@ import { cn } from '@/lib/utils'
 
 export function LeadMagnet() {
   const t = useT()
+  const openCampaignStudio = usePerokioStore((s) => s.openCampaignStudio)
   const [stats, setStats] = useState<any>(null)
   const [loading, setLoading] = useState(true)
 
@@ -98,14 +100,16 @@ export function LeadMagnet() {
 
       {/* === 4-card metric grid === */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Total Clicks */}
-        <MetricCard
-          icon={MousePointerClick}
-          label="Total Clicks"
-          value={stats.totalClicks}
-          accent="orange"
-          delay={0}
-        />
+        {/* Total Clicks — clickable → CampaignStudio Phase 3 */}
+        <div onClick={() => openCampaignStudio(3)} className="cursor-pointer">
+          <MetricCard
+            icon={MousePointerClick}
+            label="Total Clicks"
+            value={stats.totalClicks}
+            accent="orange"
+            delay={0}
+          />
+        </div>
 
         {/* Total Orders */}
         <MetricCard
@@ -127,16 +131,18 @@ export function LeadMagnet() {
           format={(n) => n.toFixed(1)}
         />
 
-        {/* Attributed Revenue */}
-        <MetricCard
-          icon={DollarSign}
-          label="Attributed Revenue"
-          value={stats.attributedRevenueUsd}
-          prefix="$"
-          accent="lime"
-          delay={0.3}
-          format={(n) => n.toFixed(2)}
-        />
+        {/* Attributed Revenue — clickable → CampaignStudio Phase 3 */}
+        <div onClick={() => openCampaignStudio(3)} className="cursor-pointer">
+          <MetricCard
+            icon={DollarSign}
+            label="Attributed Revenue"
+            value={stats.attributedRevenueUsd}
+            prefix="$"
+            accent="lime"
+            delay={0.3}
+            format={(n) => n.toFixed(2)}
+          />
+        </div>
       </div>
 
       {/* === Per-brand breakdown === */}

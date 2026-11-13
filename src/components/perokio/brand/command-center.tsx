@@ -38,7 +38,12 @@ export function CommandCenter() {
 
   const eyeRef = useRef<ParrotEyeHandle>(null)
   const [walletVisible, setWalletVisible] = useState(true)
-  const [campaignStudioOpen, setCampaignStudioOpen] = useState(false)
+
+  // Campaign Studio state — from the Zustand store (Campaign & Link Lifecycle)
+  const campaignStudioOpen = usePerokioStore((s) => s.campaignStudioOpen)
+  const openCampaignStudio = usePerokioStore((s) => s.openCampaignStudio)
+  const closeCampaignStudio = usePerokioStore((s) => s.closeCampaignStudio)
+  const hasActiveCampaign = usePerokioStore((s) => s.activeCampaign.id !== null)
 
   const recentVideos = VIDEOS.filter((v) => v.brandName === brand.name).slice(-5)
   const activeFacts = FACTS.filter((f) => f.brandId === brand.id && f.status !== 'paid')
@@ -83,16 +88,20 @@ export function CommandCenter() {
           setView('next')
         }}
         onCreatePromo={() => {
-          setCampaignStudioOpen(true)
+          openCampaignStudio(hasActiveCampaign ? 3 : 1)
+        }}
+        onViewCampaigns={() => {
+          openCampaignStudio(3)
         }}
       />
 
       {/* === Campaign Studio modal === */}
       <CampaignStudio
         open={campaignStudioOpen}
-        onClose={() => setCampaignStudioOpen(false)}
+        onClose={closeCampaignStudio}
         factClaim="Spicy Chicken Burger Launch"
         brandName={pick(brand.name, brand.nameAr)}
+        brandId={brand.id}
       />
 
       {/* === Hero — Parrot Eye + Live views + Wallet === */}
@@ -478,7 +487,7 @@ export function CommandCenter() {
 
       {/* === Full-width "Create New Promo Cycle" CTA === */}
       <Button
-        onClick={() => setCampaignStudioOpen(true)}
+        onClick={() => openCampaignStudio(hasActiveCampaign ? 3 : 1)}
         className="w-full h-14 text-base font-bold gap-3 bg-lime text-[#0A0F0D] hover:bg-lime/90 glow-lime"
       >
         <Sparkles className="h-5 w-5" />

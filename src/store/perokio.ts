@@ -44,6 +44,28 @@ interface PerokioState {
   liveFacts: FactBundle[]
   loadingFacts: boolean
 
+  // Campaign Studio state — tracks the active campaign lifecycle
+  campaignStudioOpen: boolean
+  campaignPhase: 1 | 2 | 3  // 1=Link, 2=Edit, 3=Monitor
+  activeCampaign: {
+    id: string | null
+    shortlink: string | null       // e.g., "pero.to/spicy-chicken"
+    pageContent: {
+      headline: string
+      subhead: string
+      ctaText: string
+      socialProof: string
+      heroImageR2Key: string | null
+    } | null
+    funnelData: {
+      views: number
+      clicks: number
+      pageViews: number
+      orders: number
+      revenueCents: number
+    } | null
+  }
+
   // Actions
   setRole: (role: Role) => void
   setBrandView: (v: BrandView) => void
@@ -53,6 +75,15 @@ interface PerokioState {
   setActiveFact: (id: string | null) => void
   setActiveVideo: (id: string | null) => void
   setActiveBrand: (id: string) => void
+
+  // Campaign Studio actions
+  openCampaignStudio: (phase?: 1 | 2 | 3) => void
+  closeCampaignStudio: () => void
+  setCampaignPhase: (phase: 1 | 2 | 3) => void
+  setCampaignShortlink: (slug: string) => void
+  saveCampaignPage: (content: { headline: string; subhead: string; ctaText: string; socialProof: string }) => void
+  setCampaignFunnel: (data: { views: number; clicks: number; pageViews: number; orders: number; revenueCents: number }) => void
+  hasActiveCampaign: () => boolean
 
   // Data fetching
   fetchFacts: (brandId?: string) => Promise<void>
@@ -86,6 +117,16 @@ export const usePerokioStore = create<PerokioState>((set, get) => ({
   liveFacts: [],
   loadingFacts: false,
 
+  // Campaign Studio initial state — no active campaign
+  campaignStudioOpen: false,
+  campaignPhase: 1,
+  activeCampaign: {
+    id: null,
+    shortlink: null,
+    pageContent: null,
+    funnelData: null,
+  },
+
   setRole: (role) => set({ role }),
   setBrandView: (brandView) => set({ brandView }),
   setCreatorView: (creatorView) => set({ creatorView }),
@@ -99,6 +140,65 @@ export const usePerokioStore = create<PerokioState>((set, get) => ({
       activeFactId: null,
       walletTick: s.walletTick + 1,
     })),
+
+  // ============================================================================
+  // Campaign Studio actions — the Link & Page Lifecycle
+  // ============================================================================
+
+  openCampaignStudio: (phase = 1) => {
+    set((s) => ({
+      campaignStudioOpen: true,
+      campaignPhase: phase,
+      // If opening at Phase 1 (Create), reset the active campaign
+      // If opening at Phase 3 (Monitor), keep the existing campaign
+      activeCampaign: phase === 1
+        ? { id: null, shortlink: null, pageContent: null, funnelData: null }
+        : s.activeCampaign,
+    }))
+  },
+
+  closeCampaignStudio: () => set({ campaignStudioOpen: false }),
+
+  setCampaignPhase: (phase) => set({ campaignPhase: phase }),
+
+  setCampaignShortlink: (slug) => {
+    set((s) => ({
+      activeCampaign: {
+        ...s.activeCampaign,
+        shortlink: `pero.to/${slug}`,
+        id: s.activeCampaign.id || `camp_${Date.now()}`,
+      },
+      walletTick: s.walletTick + 1,
+    }))
+  },
+
+  saveCampaignPage: (content) => {
+    set((s) => ({
+      activeCampaign: {
+        ...s.activeCampaign,
+        pageContent: {
+          ...content,
+          heroImageR2Key: s.activeCampaign.pageContent?.heroImageR2Key || null,
+        },
+        id: s.activeCampaign.id || `camp_${Date.now()}`,
+      },
+      walletTick: s.walletTick + 1,
+    }))
+  },
+
+  setCampaignFunnel: (data) => {
+    set((s) => ({
+      activeCampaign: {
+        ...s.activeCampaign,
+        funnelData: data,
+      },
+      walletTick: s.walletTick + 1,
+    }))
+  },
+
+  hasActiveCampaign: () => {
+    return get().activeCampaign.id !== null
+  },
 
   // ============================================================================
   // fetchFacts — fetches from GET /api/facts (live) or uses mock data (demo)

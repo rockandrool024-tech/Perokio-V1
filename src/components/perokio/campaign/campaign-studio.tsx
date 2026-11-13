@@ -1,24 +1,39 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { CountUp } from '@/components/perokio/shared/count-up'
+import { usePerokioStore } from '@/store/perokio'
+import { conversionApi } from '@/lib/perokio/api-client'
 import { useT } from '@/lib/perokio/i18n'
 import { springSoft, springSnappy, easeEditorial } from '@/lib/perokio/motion'
 import { cn } from '@/lib/utils'
 import {
   X, ArrowRight, ArrowLeft, Check, Copy, Link2, Sparkles, Wand2,
   Image as ImageIcon, Type, Flame, ShoppingBag, TrendingDown, DollarSign,
-  Eye, MousePointerClick, Zap, ChevronRight, Plus, Trash2,
+  Eye, MousePointerClick, Zap, ChevronRight, Plus, Trash2, Save,
 } from 'lucide-react'
 import {
-  AreaChart, Area, BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip,
+  AreaChart, Area, XAxis, YAxis, ResponsiveContainer,
 } from 'recharts'
 
 // ============================================================================
-// CampaignStudio — The $499 Feature
+// CampaignStudio — The $499 Feature (Campaign & Link Lifecycle)
+// ============================================================================
+// 3-phase wizard, now wired to the Zustand store (activeCampaign):
+//   Phase 1: Link Creation — pero.to/ slug + A/B routing → setCampaignShortlink()
+//   Phase 2: Page Editing — split-screen editor + iframe-ready mobile preview → saveCampaignPage()
+//   Phase 3: Funnel Monitoring — Revenue Waterfall + Attribution → setCampaignFunnel()
+//
+// External SDK Integration:
+//   - Page Editor (Phase 2): The right-side "Live Mobile Preview" is structured
+//     as an iframe container ready to host Chai Builder / Plasmic SDK.
+//     For V1, we render a mock iPhone preview. The <PageBuilderHost> component
+//     is the integration point — swap its inner content for the SDK.
+//   - Conversion Engine (Phase 3): Pulls live data from
+//     GET /api/conversion/stats/:brandId (TastyIgniter webhooks → Clicks → Orders → Revenue).
 // ============================================================================
 
 type Phase = 1 | 2 | 3
@@ -26,16 +41,17 @@ type Phase = 1 | 2 | 3
 interface CampaignStudioProps {
   open: boolean
   onClose: () => void
-  factId?: string
   factClaim?: string
   brandName?: string
+  brandId?: string
 }
 
 export function CampaignStudio({
-  open, onClose, factId, factClaim = 'Spicy Chicken Burger Launch', brandName = 'Café Dar Zaitouna',
+  open, onClose, factClaim = 'Spicy Chicken Burger Launch', brandName = 'Café Dar Zaitouna', brandId,
 }: CampaignStudioProps) {
   const t = useT()
-  const [phase, setPhase] = useState<Phase>(1)
+  const campaignPhase = usePerokioStore((s) => s.campaignPhase)
+  const setCampaignPhase = usePerokioStore((s) => s.setCampaignPhase)
 
   return (
     <AnimatePresence>
@@ -76,19 +92,19 @@ export function CampaignStudio({
                   <div key={p} className="flex items-center gap-1.5">
                     <motion.div
                       animate={{
-                        scale: phase === p ? 1.1 : 1,
-                        backgroundColor: phase >= p ? 'rgba(216,239,112,0.15)' : 'rgba(255,255,255,0.04)',
+                        scale: campaignPhase === p ? 1.1 : 1,
+                        backgroundColor: campaignPhase >= p ? 'rgba(216,239,112,0.15)' : 'rgba(255,255,255,0.04)',
                       }}
                       transition={springSnappy}
                       className={cn(
                         'h-7 w-7 rounded-lg flex items-center justify-center text-xs font-mono font-bold border transition-colors',
-                        phase >= p ? 'border-lime/30 text-lime' : 'border-white/10 text-muted-fg',
+                        campaignPhase >= p ? 'border-lime/30 text-lime' : 'border-white/10 text-muted-fg',
                       )}
                       data-mono
                     >
-                      {phase > p ? <Check className="h-3.5 w-3.5" /> : p}
+                      {campaignPhase > p ? <Check className="h-3.5 w-3.5" /> : p}
                     </motion.div>
-                    {p < 3 && <div className={cn('h-px w-6', phase > p ? 'bg-lime/30' : 'bg-white/10')} />}
+                    {p < 3 && <div className={cn('h-px w-6', campaignPhase > p ? 'bg-lime/30' : 'bg-white/10')} />}
                   </div>
                 ))}
               </div>
@@ -101,9 +117,9 @@ export function CampaignStudio({
             {/* === Phase content === */}
             <div className="flex-1 overflow-hidden">
               <AnimatePresence mode="wait">
-                {phase === 1 && <SmartLinkPhase key="p1" onNext={() => setPhase(2)} />}
-                {phase === 2 && <PageEditorPhase key="p2" factClaim={factClaim} onNext={() => setPhase(3)} onBack={() => setPhase(1)} />}
-                {phase === 3 && <RoiFunnelPhase key="p3" onBack={() => setPhase(2)} onClose={onClose} />}
+                {campaignPhase === 1 && <SmartLinkPhase key="p1" onNext={() => setCampaignPhase(2)} />}
+                {campaignPhase === 2 && <PageEditorPhase key="p2" factClaim={factClaim} onNext={() => setCampaignPhase(3)} onBack={() => setCampaignPhase(1)} />}
+                {campaignPhase === 3 && <RoiFunnelPhase key="p3" brandId={brandId} onBack={() => setCampaignPhase(2)} onClose={onClose} />}
               </AnimatePresence>
             </div>
           </motion.div>
@@ -114,12 +130,14 @@ export function CampaignStudio({
 }
 
 // ============================================================================
-// PHASE 1: Smart Link & Routing Hub
+// PHASE 1: Smart Link & Routing Hub — Link Creation (The Hook)
 // ============================================================================
 
 function SmartLinkPhase({ onNext }: { onNext: () => void }) {
   const t = useT()
-  const [linkCode, setLinkCode] = useState('spicy-chicken-burger')
+  const setCampaignShortlink = usePerokioStore((s) => s.setCampaignShortlink)
+  const activeShortlink = usePerokioStore((s) => s.activeCampaign.shortlink)
+  const [linkCode, setLinkCode] = useState(activeShortlink?.replace('pero.to/', '') || 'spicy-chicken-burger')
   const [variants, setVariants] = useState([
     { id: 'a', label: 'Variant A: TastyIgniter Menu', url: 'https://order.darzitouna.tn/menu', weight: 50 },
     { id: 'b', label: 'Variant B: WhatsApp Order', url: 'https://wa.me/21612345678', weight: 50 },
@@ -128,6 +146,8 @@ function SmartLinkPhase({ onNext }: { onNext: () => void }) {
   const [showConfetti, setShowConfetti] = useState(false)
 
   const handleCopy = () => {
+    // Update the Zustand store with the new shortlink
+    setCampaignShortlink(linkCode)
     if (navigator.clipboard) {
       navigator.clipboard.writeText(`pero.to/${linkCode}`).catch(() => {})
     }
@@ -207,6 +227,11 @@ function SmartLinkPhase({ onNext }: { onNext: () => void }) {
               )}
             </motion.button>
           </div>
+          {activeShortlink && (
+            <p className="text-[10px] text-lime mt-2 font-mono" data-mono>
+              ✓ Active campaign shortlink: {activeShortlink}
+            </p>
+          )}
         </div>
 
         {/* === Dynamic Routing (A/B Testing) === */}
@@ -261,7 +286,6 @@ function SmartLinkPhase({ onNext }: { onNext: () => void }) {
                   className="w-full px-3 py-2 rounded-lg glass border border-white/10 bg-white/[0.02] text-xs font-mono focus:outline-none focus:ring-2 focus:ring-lime/30"
                   data-mono
                 />
-                {/* Weight slider */}
                 <div className="flex items-center gap-3">
                   <div className="flex-1 h-1.5 rounded-full bg-white/[0.04] overflow-hidden">
                     <motion.div
@@ -281,7 +305,7 @@ function SmartLinkPhase({ onNext }: { onNext: () => void }) {
 
       {/* Footer CTA */}
       <div className="pt-4 border-t border-white/[0.06] flex justify-end">
-        <Button onClick={onNext} className="gap-2 bg-lime text-[#0A0F0D] hover:bg-lime/90">
+        <Button onClick={() => { setCampaignShortlink(linkCode); onNext() }} className="gap-2 bg-lime text-[#0A0F0D] hover:bg-lime/90">
           Build Landing Page <ArrowRight className="h-4 w-4" />
         </Button>
       </div>
@@ -290,23 +314,37 @@ function SmartLinkPhase({ onNext }: { onNext: () => void }) {
 }
 
 // ============================================================================
-// PHASE 2: Conversion Canvas (Page Editor)
+// PHASE 2: Conversion Canvas (Page Editor) — Page Editing (The Value)
+// ============================================================================
+// The right side is an iframe-ready container. For V1, we render a mock
+// iPhone preview. To integrate Chai Builder / Plasmic, replace the content
+// of <PageBuilderHost> with the SDK's React component or an iframe.
 // ============================================================================
 
 function PageEditorPhase({ factClaim, onNext, onBack }: { factClaim: string; onNext: () => void; onBack: () => void }) {
   const t = useT()
-  const [headline, setHeadline] = useState('The Spiciest Chicken in Tunis')
-  const [subhead, setSubhead] = useState('Made with Cap Bon peppers. Available for 48 hours.')
-  const [ctaText, setCtaText] = useState('Order Now')
-  const [socialProof, setSocialProof] = useState('1,240 people ordered this week')
+  const saveCampaignPage = usePerokioStore((s) => s.saveCampaignPage)
+  const savedContent = usePerokioStore((s) => s.activeCampaign.pageContent)
+
+  const [headline, setHeadline] = useState(savedContent?.headline || 'The Spiciest Chicken in Tunis')
+  const [subhead, setSubhead] = useState(savedContent?.subhead || 'Made with Cap Bon peppers. Available for 48 hours.')
+  const [ctaText, setCtaText] = useState(savedContent?.ctaText || 'Order Now')
+  const [socialProof, setSocialProof] = useState(savedContent?.socialProof || '1,240 people ordered this week')
   const [magicOpen, setMagicOpen] = useState(false)
   const [magicSuggestions, setMagicSuggestions] = useState<string[]>([])
   const [generating, setGenerating] = useState(false)
+  const [saved, setSaved] = useState(false)
+
+  const handleSave = () => {
+    saveCampaignPage({ headline, subhead, ctaText, socialProof })
+    setSaved(true)
+    setTimeout(() => setSaved(false), 2000)
+    // In production, this would also POST to the Plasmic/Chai Builder API
+  }
 
   const handleMagicWrite = () => {
     setMagicOpen(true)
     setGenerating(true)
-    // Mock AI generation using the fact's RAG data
     setTimeout(() => {
       setMagicSuggestions([
         `${factClaim.substring(0, 40)} — Limited Drop`,
@@ -357,7 +395,6 @@ function PageEditorPhase({ factClaim, onNext, onBack }: { factClaim: string; onN
               onChange={(e) => setHeadline(e.target.value)}
               className="w-full px-4 py-3 rounded-xl glass border border-white/10 bg-white/[0.02] text-sm focus:outline-none focus:ring-2 focus:ring-lime/30 font-medium"
             />
-            {/* Magic Write suggestions */}
             <AnimatePresence>
               {magicOpen && (
                 <motion.div
@@ -431,11 +468,35 @@ function PageEditorPhase({ factClaim, onNext, onBack }: { factClaim: string; onN
               <span className="text-xs font-mono text-muted-fg" data-mono>TastyIgniter</span>
             </div>
           </div>
+
+          {/* Save button */}
+          <Button
+            onClick={handleSave}
+            className="w-full gap-2"
+            variant={saved ? 'default' : 'outline'}
+          >
+            {saved ? (
+              <><Check className="h-4 w-4" /> Saved to campaign</>
+            ) : (
+              <><Save className="h-4 w-4" /> Save Page</>
+            )}
+          </Button>
         </div>
 
-        {/* === Right: iPhone preview === */}
+        {/* === Right: Page Builder Host (iframe-ready container) === */}
         <div className="flex items-center justify-center">
-          <IPhonePreview
+          {/*
+            INTEGRATION POINT:
+            Replace <MockPhonePreview> with the Chai Builder / Plasmic SDK component.
+            The SDK would render inside an iframe or a React component tree.
+            Example:
+              <iframe src={`https://editor.chaibuilder.com/embed/${campaignId}`} className="w-full h-full" />
+            or:
+              <PlasmicComponent component="CampaignPage" props={{ headline, subhead, ctaText }} />
+
+            For V1, we render the mock phone preview that mirrors the editor state.
+          */}
+          <PageBuilderHost
             headline={headline}
             subhead={subhead}
             socialProof={socialProof}
@@ -449,7 +510,7 @@ function PageEditorPhase({ factClaim, onNext, onBack }: { factClaim: string; onN
         <Button variant="ghost" onClick={onBack} className="gap-2 text-muted-fg hover:text-fg">
           <ArrowLeft className="h-4 w-4" /> Back
         </Button>
-        <Button onClick={onNext} className="gap-2 bg-lime text-[#0A0F0D] hover:bg-lime/90">
+        <Button onClick={() => { handleSave(); onNext() }} className="gap-2 bg-lime text-[#0A0F0D] hover:bg-lime/90">
           View ROI Funnel <ArrowRight className="h-4 w-4" />
         </Button>
       </div>
@@ -458,10 +519,43 @@ function PageEditorPhase({ factClaim, onNext, onBack }: { factClaim: string; onN
 }
 
 // ============================================================================
-// iPhone Preview
+// PageBuilderHost — the integration point for Chai Builder / Plasmic SDK
 // ============================================================================
 
-function IPhonePreview({ headline, subhead, socialProof, ctaText }: {
+function PageBuilderHost({ headline, subhead, socialProof, ctaText }: {
+  headline: string; subhead: string; socialProof: string; ctaText: string
+}) {
+  return (
+    <div className="relative" style={{ width: 300, height: 620 }}>
+      {/*
+        SDK INTEGRATION NOTE:
+        This container is structured to accept an iframe or React component
+        from Chai Builder (github.com/chaibuilder/sdk) or Plasmic
+        (github.com/plasmicapp/plasmic).
+
+        To integrate:
+          1. Install the SDK: pnpm add @chaibuilder/sdk (or @plasmicapp/loader-react)
+          2. Replace the <MockPhonePreview> below with:
+             <iframe src={chaibuilderEmbedUrl} className="w-full h-full rounded-[2.5rem]" />
+          3. Pass the editor state (headline, subhead, etc.) as props/URL params
+
+        For V1, we render a live-updating iPhone mock that mirrors the editor.
+      */}
+      <MockPhonePreview headline={headline} subhead={subhead} socialProof={socialProof} ctaText={ctaText} />
+
+      {/* SDK badge */}
+      <div className="absolute -top-3 -right-3 px-2 py-0.5 rounded-full glass-strong text-[9px] text-muted-fg font-mono border border-white/10" data-mono>
+        SDK READY · iframe host
+      </div>
+    </div>
+  )
+}
+
+// ============================================================================
+// MockPhonePreview — the V1 iPhone preview (replaced by SDK in production)
+// ============================================================================
+
+function MockPhonePreview({ headline, subhead, socialProof, ctaText }: {
   headline: string; subhead: string; socialProof: string; ctaText: string
 }) {
   return (
@@ -469,10 +563,9 @@ function IPhonePreview({ headline, subhead, socialProof, ctaText }: {
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={easeEditorial}
-      className="relative"
-      style={{ width: 300, height: 620 }}
+      className="absolute inset-0"
     >
-      <div className="absolute inset-0 rounded-[3rem] bg-gradient-to-b from-zinc-800 to-zinc-900 p-2 shadow-2xl">
+      <div className="h-full rounded-[3rem] bg-gradient-to-b from-zinc-800 to-zinc-900 p-2 shadow-2xl">
         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-24 h-6 bg-zinc-900 rounded-b-2xl z-10" />
         <div className="h-full rounded-[2.5rem] overflow-hidden bg-[#0A0F0D] relative">
           <div className="aspect-square w-full glass relative">
@@ -525,19 +618,55 @@ function IPhonePreview({ headline, subhead, socialProof, ctaText }: {
 }
 
 // ============================================================================
-// PHASE 3: ROI Command Center
+// PHASE 3: ROI Command Center — Funnel Monitoring (The ROI)
+// ============================================================================
+// Pulls live data from GET /api/conversion/stats/:brandId
+// Shows the Revenue Waterfall: Views → Clicks → Page Views → Orders → Revenue
 // ============================================================================
 
-function RoiFunnelPhase({ onBack, onClose }: { onBack: () => void; onClose: () => void }) {
+function RoiFunnelPhase({ brandId, onBack, onClose }: { brandId?: string; onBack: () => void; onClose: () => void }) {
   const t = useT()
+  const setCampaignFunnel = usePerokioStore((s) => s.setCampaignFunnel)
+  const [stats, setStats] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
   const [showLaunchButton, setShowLaunchButton] = useState(false)
 
-  const funnelData = [
-    { label: 'Views', value: 10000, color: '#D8EF70', icon: Eye },
-    { label: 'Clicks', value: 1240, color: '#ED7A42', icon: MousePointerClick },
-    { label: 'Page Views', value: 1000, color: '#6FD3C7', icon: TrendingDown },
-    { label: 'Orders', value: 45, color: '#B6A6FF', icon: ShoppingBag },
-  ]
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const data = await conversionApi.getStats(brandId)
+        setStats(data)
+        // Store the funnel data in the Zustand campaign state
+        setCampaignFunnel({
+          views: data.totalClicks * 8, // estimate: ~8 views per click
+          clicks: data.totalClicks,
+          pageViews: Math.round(data.totalClicks * 0.8),
+          orders: data.totalOrders,
+          revenueCents: data.attributedRevenueCents,
+        })
+      } catch {
+        // Fallback to demo data if API unavailable
+        setStats({
+          totalClicks: 1240,
+          totalOrders: 45,
+          conversionRate: 3.6,
+          attributedRevenueCents: 135000,
+          attributedRevenueUsd: 1350,
+        })
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchStats()
+    setTimeout(() => setShowLaunchButton(true), 2000)
+  }, [brandId])
+
+  const funnelData = stats ? [
+    { label: 'Views', value: stats.totalClicks * 8 || 10000, color: '#D8EF70', icon: Eye },
+    { label: 'Clicks', value: stats.totalClicks, color: '#ED7A42', icon: MousePointerClick },
+    { label: 'Page Views', value: Math.round((stats.totalClicks || 1240) * 0.8), color: '#6FD3C7', icon: TrendingDown },
+    { label: 'Orders', value: stats.totalOrders, color: '#B6A6FF', icon: ShoppingBag },
+  ] : []
 
   const revenueData = [
     { day: 'Mon', revenue: 120 },
@@ -555,10 +684,8 @@ function RoiFunnelPhase({ onBack, onClose }: { onBack: () => void; onClose: () =
     { name: 'Omar', avatar: '👨🏽', revenue: 980, orders: 8, pct: 22 },
   ]
 
-  const totalRevenue = leaderboard.reduce((s, c) => s + c.revenue, 0)
-  const maxFunnel = funnelData[0].value
-
-  setTimeout(() => setShowLaunchButton(true), 2000)
+  const totalRevenue = stats?.attributedRevenueUsd || leaderboard.reduce((s, c) => s + c.revenue, 0)
+  const maxFunnel = funnelData[0]?.value || 1
 
   return (
     <motion.div
@@ -568,138 +695,151 @@ function RoiFunnelPhase({ onBack, onClose }: { onBack: () => void; onClose: () =
       transition={easeEditorial}
       className="h-full flex flex-col overflow-y-auto scrollbar-thin"
     >
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        {/* === Revenue Waterfall === */}
-        <div className="glass-premium rounded-2xl p-5">
-          <h3 className="font-serif text-lg font-semibold mb-4 flex items-center gap-2">
-            <TrendingDown className="h-4 w-4 text-lime" /> Revenue Waterfall
-          </h3>
-          <div className="space-y-3">
-            {funnelData.map((stage, idx) => {
-              const pct = (stage.value / maxFunnel) * 100
-              const dropoff = idx > 0 ? ((funnelData[idx - 1].value - stage.value) / funnelData[idx - 1].value * 100).toFixed(0) : null
-              const Icon = stage.icon
-              return (
+      {loading ? (
+        <div className="space-y-4">
+          <div className="h-8 w-48 skeleton-premium rounded-lg" />
+          <div className="grid grid-cols-2 gap-4">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="h-16 skeleton-premium rounded-xl border" />
+            ))}
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            {/* === Revenue Waterfall === */}
+            <div className="glass-premium rounded-2xl p-5">
+              <h3 className="font-serif text-lg font-semibold mb-4 flex items-center gap-2">
+                <TrendingDown className="h-4 w-4 text-lime" /> Revenue Waterfall
+              </h3>
+              <div className="space-y-3">
+                {funnelData.map((stage, idx) => {
+                  const pct = (stage.value / maxFunnel) * 100
+                  const dropoff = idx > 0 ? ((funnelData[idx - 1].value - stage.value) / funnelData[idx - 1].value * 100).toFixed(0) : null
+                  const Icon = stage.icon
+                  return (
+                    <motion.div
+                      key={stage.label}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: idx * 0.15, ...springSoft }}
+                    >
+                      <div className="flex items-center justify-between mb-1">
+                        <div className="flex items-center gap-2">
+                          <Icon className="h-3.5 w-3.5" style={{ color: stage.color }} />
+                          <span className="text-xs font-medium text-muted-fg">{stage.label}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          {dropoff && <span className="text-[10px] text-muted-fg font-mono" data-mono>-{dropoff}%</span>}
+                          <CountUp value={stage.value} className="text-sm font-mono font-bold" delay={idx * 0.15} />
+                        </div>
+                      </div>
+                      <div className="h-8 rounded-lg bg-white/[0.02] overflow-hidden">
+                        <motion.div
+                          className="h-full rounded-lg flex items-center justify-end pe-2"
+                          style={{ background: `${stage.color}20`, borderRight: `2px solid ${stage.color}` }}
+                          initial={{ width: 0 }}
+                          animate={{ width: `${pct}%` }}
+                          transition={{ delay: idx * 0.15 + 0.3, duration: 0.8, ease: [0.22, 0.61, 0.36, 1] }}
+                        >
+                          <span className="text-[10px] font-mono text-muted-fg" data-mono>{pct.toFixed(0)}%</span>
+                        </motion.div>
+                      </div>
+                    </motion.div>
+                  )
+                })}
+              </div>
+            </div>
+
+            {/* === Revenue chart === */}
+            <div className="glass-premium rounded-2xl p-5">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-serif text-lg font-semibold flex items-center gap-2">
+                  <DollarSign className="h-4 w-4 text-lime" /> Revenue · 7 days
+                </h3>
+                <Badge className="text-[10px] bg-lime/10 text-lime border border-lime/25">Live</Badge>
+              </div>
+              <div className="mb-4">
+                <CountUp value={totalRevenue} delay={0.3} format={(n) => `$${Math.round(n).toLocaleString()}`} className="text-3xl font-mono font-bold text-lime" />
+              </div>
+              <ResponsiveContainer width="100%" height={180}>
+                <AreaChart data={revenueData}>
+                  <defs>
+                    <linearGradient id="revGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#D8EF70" stopOpacity={0.4} />
+                      <stop offset="100%" stopColor="#D8EF70" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <XAxis dataKey="day" tick={{ fontSize: 10, fill: 'rgba(255,255,255,0.4)' }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fontSize: 10, fill: 'rgba(255,255,255,0.4)' }} axisLine={false} tickLine={false} />
+                  <Area type="monotone" dataKey="revenue" stroke="#D8EF70" strokeWidth={2} fill="url(#revGrad)" />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          {/* === Attribution Leaderboard === */}
+          <div className="glass rounded-2xl p-5 mb-6">
+            <h3 className="font-serif text-lg font-semibold mb-4 flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-lime" /> Attribution Leaderboard
+            </h3>
+            <div className="space-y-2">
+              {leaderboard.map((creator, idx) => (
                 <motion.div
-                  key={stage.label}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: idx * 0.15, ...springSoft }}
+                  key={creator.name}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.1, ...springSoft }}
+                  className="flex items-center gap-4 p-3 rounded-xl glass hover:bg-white/[0.05] transition-colors"
                 >
-                  <div className="flex items-center justify-between mb-1">
-                    <div className="flex items-center gap-2">
-                      <Icon className="h-3.5 w-3.5" style={{ color: stage.color }} />
-                      <span className="text-xs font-medium text-muted-fg">{stage.label}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {dropoff && <span className="text-[10px] text-muted-fg font-mono" data-mono>-{dropoff}%</span>}
-                      <CountUp value={stage.value} className="text-sm font-mono font-bold" delay={idx * 0.15} />
+                  <div className="text-lg font-mono font-bold text-muted-fg w-6" data-mono>{idx + 1}</div>
+                  <div className="text-2xl">{creator.avatar}</div>
+                  <div className="flex-1">
+                    <div className="text-sm font-medium">{creator.name}</div>
+                    <div className="text-[10px] text-muted-fg font-mono" data-mono>{creator.orders} orders · {creator.pct}% share</div>
+                  </div>
+                  <div className="w-32">
+                    <div className="h-1.5 rounded-full bg-white/[0.04] overflow-hidden mb-1">
+                      <motion.div
+                        className="h-full rounded-full bg-gradient-to-r from-lime to-teal"
+                        initial={{ width: 0 }}
+                        animate={{ width: `${creator.pct}%` }}
+                        transition={{ delay: idx * 0.1 + 0.3, duration: 0.8 }}
+                      />
                     </div>
                   </div>
-                  <div className="h-8 rounded-lg bg-white/[0.02] overflow-hidden">
-                    <motion.div
-                      className="h-full rounded-lg flex items-center justify-end pe-2"
-                      style={{ background: `${stage.color}20`, borderRight: `2px solid ${stage.color}` }}
-                      initial={{ width: 0 }}
-                      animate={{ width: `${pct}%` }}
-                      transition={{ delay: idx * 0.15 + 0.3, duration: 0.8, ease: [0.22, 0.61, 0.36, 1] }}
-                    >
-                      <span className="text-[10px] font-mono text-muted-fg" data-mono>{pct.toFixed(0)}%</span>
-                    </motion.div>
+                  <div className="text-sm font-mono font-bold text-lime w-20 text-end" data-mono>
+                    <CountUp value={creator.revenue} delay={idx * 0.1 + 0.2} format={(n) => `$${Math.round(n)}`} className="text-sm font-mono font-bold text-lime" />
                   </div>
                 </motion.div>
-              )
-            })}
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* === Revenue chart === */}
-        <div className="glass-premium rounded-2xl p-5">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="font-serif text-lg font-semibold flex items-center gap-2">
-              <DollarSign className="h-4 w-4 text-lime" /> Revenue · 7 days
-            </h3>
-            <Badge className="text-[10px] bg-lime/10 text-lime border border-lime/25">Live</Badge>
-          </div>
-          <div className="mb-4">
-            <CountUp value={totalRevenue} delay={0.3} format={(n) => `$${Math.round(n)}`} className="text-3xl font-mono font-bold text-lime" />
-          </div>
-          <ResponsiveContainer width="100%" height={180}>
-            <AreaChart data={revenueData}>
-              <defs>
-                <linearGradient id="revGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#D8EF70" stopOpacity={0.4} />
-                  <stop offset="100%" stopColor="#D8EF70" stopOpacity={0} />
-                </linearGradient>
-              </defs>
-              <XAxis dataKey="day" tick={{ fontSize: 10, fill: 'rgba(255,255,255,0.4)' }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fontSize: 10, fill: 'rgba(255,255,255,0.4)' }} axisLine={false} tickLine={false} />
-              <Area type="monotone" dataKey="revenue" stroke="#D8EF70" strokeWidth={2} fill="url(#revGrad)" />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-
-      {/* === Attribution Leaderboard === */}
-      <div className="glass rounded-2xl p-5 mb-6">
-        <h3 className="font-serif text-lg font-semibold mb-4 flex items-center gap-2">
-          <Sparkles className="h-4 w-4 text-lime" /> Attribution Leaderboard
-        </h3>
-        <div className="space-y-2">
-          {leaderboard.map((creator, idx) => (
-            <motion.div
-              key={creator.name}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1, ...springSoft }}
-              className="flex items-center gap-4 p-3 rounded-xl glass hover:bg-white/[0.05] transition-colors"
-            >
-              <div className="text-lg font-mono font-bold text-muted-fg w-6" data-mono>{idx + 1}</div>
-              <div className="text-2xl">{creator.avatar}</div>
-              <div className="flex-1">
-                <div className="text-sm font-medium">{creator.name}</div>
-                <div className="text-[10px] text-muted-fg font-mono" data-mono>{creator.orders} orders · {creator.pct}% share</div>
-              </div>
-              <div className="w-32">
-                <div className="h-1.5 rounded-full bg-white/[0.04] overflow-hidden mb-1">
-                  <motion.div
-                    className="h-full rounded-full bg-gradient-to-r from-lime to-teal"
-                    initial={{ width: 0 }}
-                    animate={{ width: `${creator.pct}%` }}
-                    transition={{ delay: idx * 0.1 + 0.3, duration: 0.8 }}
-                  />
-                </div>
-              </div>
-              <div className="text-sm font-mono font-bold text-lime w-20 text-end" data-mono>
-                <CountUp value={creator.revenue} delay={idx * 0.1 + 0.2} format={(n) => `$${Math.round(n)}`} className="text-sm font-mono font-bold text-lime" />
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-
-      {/* === Loop CTA === */}
-      <AnimatePresence>
-        {showLaunchButton && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={springSnappy}
-            className="flex justify-center pb-4"
-          >
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              transition={springSnappy}
-              onClick={onClose}
-              className="px-8 py-4 rounded-2xl bg-lime text-[#0A0F0D] font-bold text-base flex items-center gap-2 glow-lime"
-            >
-              Launch Next Campaign
-              <ArrowRight className="h-5 w-5" />
-            </motion.button>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          {/* === Loop CTA === */}
+          <AnimatePresence>
+            {showLaunchButton && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={springSnappy}
+                className="flex justify-center pb-4"
+              >
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={springSnappy}
+                  onClick={onClose}
+                  className="px-8 py-4 rounded-2xl bg-lime text-[#0A0F0D] font-bold text-base flex items-center gap-2 glow-lime"
+                >
+                  Launch Next Campaign
+                  <ArrowRight className="h-5 w-5" />
+                </motion.button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </>
+      )}
 
       {/* Footer */}
       <div className="pt-4 border-t border-white/[0.06] flex justify-start">

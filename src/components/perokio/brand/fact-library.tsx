@@ -31,7 +31,7 @@ import { Button } from '@/components/ui/button'
 import { useToast } from '@/hooks/use-toast'
 import {
   Library, Flame, Star, Eye, TrendingUp, ShieldCheck, Filter, Search,
-  X, ChevronRight, Plus,
+  X, ChevronRight, Plus, Rocket, BarChart3,
 } from 'lucide-react'
 
 type TierFilter = 'all' | 'Hot' | 'Premium' | 'Standard'
@@ -70,9 +70,22 @@ export function FactLibrary() {
   const setActiveFact = usePerokioStore((s) => s.setActiveFact)
   const setRole = usePerokioStore((s) => s.setRole)
   const setAdminView = usePerokioStore((s) => s.setAdminView)
+  const openCampaignStudio = usePerokioStore((s) => s.openCampaignStudio)
+  const hasActiveCampaign = usePerokioStore((s) => s.activeCampaign.id !== null)
   const t = useT()
   const { toast } = useToast()
   const [transitioning, setTransitioning] = useState(false)
+
+  // Campaign & Link Lifecycle: [Build Campaign] opens Phase 1 (Create)
+  // If a campaign already exists, the button changes to [Monitor Campaign]
+  // and opens Phase 3 (Monitor)
+  const handleCampaignAction = () => {
+    if (hasActiveCampaign) {
+      openCampaignStudio(3) // Monitor existing campaign
+    } else {
+      openCampaignStudio(1) // Create new campaign
+    }
+  }
 
   // Issue 1 fix (refined): "New Fact" shows a toast + 400ms transition
   // BEFORE switching to Studio role. The delay signals intent and prevents
@@ -168,6 +181,32 @@ export function FactLibrary() {
                 <Plus className="h-4 w-4" />
                 <span className="hidden sm:inline">New Fact</span>
                 <span className="sm:hidden">New</span>
+              </>
+            )}
+          </Button>
+
+          {/* Campaign & Link Lifecycle: Build / Monitor Campaign button */}
+          <Button
+            onClick={handleCampaignAction}
+            variant="outline"
+            className={cn(
+              'gap-2 shrink-0',
+              hasActiveCampaign
+                ? 'glass border-lime/25 text-lime hover:bg-lime/10'
+                : 'glass border-white/10 hover:bg-white/5'
+            )}
+          >
+            {hasActiveCampaign ? (
+              <>
+                <BarChart3 className="h-4 w-4" />
+                <span className="hidden sm:inline">Monitor Campaign</span>
+                <span className="sm:hidden">Monitor</span>
+              </>
+            ) : (
+              <>
+                <Rocket className="h-4 w-4" />
+                <span className="hidden sm:inline">Build Campaign</span>
+                <span className="sm:hidden">Build</span>
               </>
             )}
           </Button>
