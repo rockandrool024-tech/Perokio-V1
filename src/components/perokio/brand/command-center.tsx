@@ -1,9 +1,12 @@
 'use client'
 
+import { useEffect, useRef, useState } from 'react'
 import { StatCard } from '@/components/perokio/shared/stat-card'
 import { ViewTicker } from '@/components/perokio/shared/view-ticker'
 import { Countdown } from '@/components/perokio/shared/countdown'
 import { WeekGrid } from '@/components/perokio/shared/week-grid'
+import { CommandCenterToolbar } from '@/components/perokio/brand/command-center-toolbar'
+import { CampaignStudio } from '@/components/perokio/brand/campaign-studio'
 import { ParrotEye, ParrotEyeHandle, ParrotLogo } from '@/components/perokio/shared/parrot-logo'
 import { usePerokioLiveViews, formatUSD, formatCompact, formatNumber } from '@/lib/perokio/live'
 import { usePerokioStore } from '@/store/perokio'
@@ -15,7 +18,6 @@ import { Button } from '@/components/ui/button'
 import { Eye, Wallet, Film, TrendingUp, Flame, Zap, ArrowUpRight, Sparkles, Activity, DollarSign, EyeOff, ShoppingBag } from 'lucide-react'
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { motion } from 'framer-motion'
-import { useEffect, useRef, useState } from 'react'
 
 const viewsChartData = VIEWS_CURVE_24H
 
@@ -36,6 +38,7 @@ export function CommandCenter() {
 
   const eyeRef = useRef<ParrotEyeHandle>(null)
   const [walletVisible, setWalletVisible] = useState(true)
+  const [campaignStudioOpen, setCampaignStudioOpen] = useState(false)
 
   const recentVideos = VIDEOS.filter((v) => v.brandName === brand.name).slice(-5)
   const activeFacts = FACTS.filter((f) => f.brandId === brand.id && f.status !== 'paid')
@@ -72,6 +75,13 @@ export function CommandCenter() {
             setView('script')
           }
         }}
+      />
+
+      {/* === Command Center Toolbar — power tools + AI Copilot === */}
+      <CommandCenterToolbar
+        onScanMarket={() => {}}
+        onBoost={() => setView('results')}
+        onGenerateFact={() => setView('library')}
       />
 
       {/* === Hero — Parrot Eye + Live views + Wallet === */}
@@ -454,6 +464,25 @@ export function CommandCenter() {
           })}
         </div>
       </div>
+
+      {/* === Full-width "Create New Promo Cycle" CTA === */}
+      <Button
+        onClick={() => setCampaignStudioOpen(true)}
+        className="w-full h-14 text-base font-bold gap-3 bg-lime text-[#0A0F0D] hover:bg-lime/90 glow-lime"
+      >
+        <Sparkles className="h-5 w-5" />
+        Create New Promo Cycle
+        <ArrowUpRight className="h-5 w-5" />
+      </Button>
+
+      {/* === Campaign Studio (full-screen modal) === */}
+      <CampaignStudio
+        open={campaignStudioOpen}
+        onClose={() => setCampaignStudioOpen(false)}
+        factClaim="Dar Zaitouna arabica beans come from Cap Bon"
+        factCode="F-2024-1101-01"
+        brandName={pick(brand.name, brand.nameAr)}
+      />
     </div>
   )
 }
