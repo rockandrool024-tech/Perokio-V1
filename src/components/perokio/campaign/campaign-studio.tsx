@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { CountUp } from '@/components/perokio/shared/count-up'
+import { PageBuilderHost } from '@/components/perokio/campaign/page-builder-host'
 import { usePerokioStore } from '@/store/perokio'
 import { conversionApi } from '@/lib/perokio/api-client'
 import { useT } from '@/lib/perokio/i18n'
@@ -118,7 +119,7 @@ export function CampaignStudio({
             <div className="flex-1 overflow-hidden">
               <AnimatePresence mode="wait">
                 {campaignPhase === 1 && <SmartLinkPhase key="p1" onNext={() => setCampaignPhase(2)} />}
-                {campaignPhase === 2 && <PageEditorPhase key="p2" factClaim={factClaim} onNext={() => setCampaignPhase(3)} onBack={() => setCampaignPhase(1)} />}
+                {campaignPhase === 2 && <PageEditorPhase key="p2" factClaim={factClaim} brandId={brandId} onNext={() => setCampaignPhase(3)} onBack={() => setCampaignPhase(1)} />}
                 {campaignPhase === 3 && <RoiFunnelPhase key="p3" brandId={brandId} onBack={() => setCampaignPhase(2)} onClose={onClose} />}
               </AnimatePresence>
             </div>
@@ -321,7 +322,7 @@ function SmartLinkPhase({ onNext }: { onNext: () => void }) {
 // of <PageBuilderHost> with the SDK's React component or an iframe.
 // ============================================================================
 
-function PageEditorPhase({ factClaim, onNext, onBack }: { factClaim: string; onNext: () => void; onBack: () => void }) {
+function PageEditorPhase({ factClaim, onNext, onBack, brandId }: { factClaim: string; onNext: () => void; onBack: () => void; brandId?: string }) {
   const t = useT()
   const saveCampaignPage = usePerokioStore((s) => s.saveCampaignPage)
   const savedContent = usePerokioStore((s) => s.activeCampaign.pageContent)
@@ -501,6 +502,12 @@ function PageEditorPhase({ factClaim, onNext, onBack }: { factClaim: string; onN
             subhead={subhead}
             socialProof={socialProof}
             ctaText={ctaText}
+            onSave={(data) => {
+              // The PageBuilderHost saves the Chai Builder block tree
+              // In V2, this would POST to the NestJS backend
+              console.log('[CampaignStudio] Page saved:', data.blocks?.length, 'blocks')
+            }}
+            brandId={brandId}
           />
         </div>
       </div>
@@ -513,105 +520,6 @@ function PageEditorPhase({ factClaim, onNext, onBack }: { factClaim: string; onN
         <Button onClick={() => { handleSave(); onNext() }} className="gap-2 bg-lime text-[#0A0F0D] hover:bg-lime/90">
           View ROI Funnel <ArrowRight className="h-4 w-4" />
         </Button>
-      </div>
-    </motion.div>
-  )
-}
-
-// ============================================================================
-// PageBuilderHost — the integration point for Chai Builder / Plasmic SDK
-// ============================================================================
-
-function PageBuilderHost({ headline, subhead, socialProof, ctaText }: {
-  headline: string; subhead: string; socialProof: string; ctaText: string
-}) {
-  return (
-    <div className="relative" style={{ width: 300, height: 620 }}>
-      {/*
-        SDK INTEGRATION NOTE:
-        This container is structured to accept an iframe or React component
-        from Chai Builder (github.com/chaibuilder/sdk) or Plasmic
-        (github.com/plasmicapp/plasmic).
-
-        To integrate:
-          1. Install the SDK: pnpm add @chaibuilder/sdk (or @plasmicapp/loader-react)
-          2. Replace the <MockPhonePreview> below with:
-             <iframe src={chaibuilderEmbedUrl} className="w-full h-full rounded-[2.5rem]" />
-          3. Pass the editor state (headline, subhead, etc.) as props/URL params
-
-        For V1, we render a live-updating iPhone mock that mirrors the editor.
-      */}
-      <MockPhonePreview headline={headline} subhead={subhead} socialProof={socialProof} ctaText={ctaText} />
-
-      {/* SDK badge */}
-      <div className="absolute -top-3 -right-3 px-2 py-0.5 rounded-full glass-strong text-[9px] text-muted-fg font-mono border border-white/10" data-mono>
-        SDK READY · iframe host
-      </div>
-    </div>
-  )
-}
-
-// ============================================================================
-// MockPhonePreview — the V1 iPhone preview (replaced by SDK in production)
-// ============================================================================
-
-function MockPhonePreview({ headline, subhead, socialProof, ctaText }: {
-  headline: string; subhead: string; socialProof: string; ctaText: string
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={easeEditorial}
-      className="absolute inset-0"
-    >
-      <div className="h-full rounded-[3rem] bg-gradient-to-b from-zinc-800 to-zinc-900 p-2 shadow-2xl">
-        <div className="absolute top-2 left-1/2 -translate-x-1/2 w-24 h-6 bg-zinc-900 rounded-b-2xl z-10" />
-        <div className="h-full rounded-[2.5rem] overflow-hidden bg-[#0A0F0D] relative">
-          <div className="aspect-square w-full glass relative">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <Flame className="h-16 w-16 text-orange/30" />
-            </div>
-          </div>
-          <div className="p-4 space-y-3">
-            <motion.h3
-              key={headline}
-              initial={{ opacity: 0.5 }}
-              animate={{ opacity: 1 }}
-              transition={springSnappy}
-              className="font-serif text-lg font-bold leading-tight"
-            >
-              {headline}
-            </motion.h3>
-            <motion.p
-              key={subhead}
-              initial={{ opacity: 0.5 }}
-              animate={{ opacity: 1 }}
-              transition={springSnappy}
-              className="text-xs text-muted-fg leading-relaxed"
-            >
-              {subhead}
-            </motion.p>
-            <motion.div
-              key={socialProof}
-              initial={{ opacity: 0.5 }}
-              animate={{ opacity: 1 }}
-              transition={springSnappy}
-              className="flex items-center gap-1.5 text-[10px] text-orange"
-            >
-              <Flame className="h-3 w-3" /> {socialProof}
-            </motion.div>
-            <motion.button
-              key={ctaText}
-              initial={{ opacity: 0.5 }}
-              animate={{ opacity: 1 }}
-              transition={springSnappy}
-              className="w-full py-3 rounded-xl bg-lime text-[#0A0F0D] font-bold text-sm"
-            >
-              {ctaText}
-            </motion.button>
-          </div>
-        </div>
       </div>
     </motion.div>
   )

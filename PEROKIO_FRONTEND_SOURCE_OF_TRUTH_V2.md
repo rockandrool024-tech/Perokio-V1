@@ -181,3 +181,50 @@ No new design tokens were added. The Campaign & Link Engine uses the existing lo
 - Violet #B6A6FF for Magic Write AI suggestions
 - The `glass-premium` class for Campaign Studio containers
 - The `skeleton-premium` class for AI loading states
+
+---
+
+## EMBEDDED PAGE EDITOR (CHAI BUILDER)
+
+### SDK Integration
+
+**Package:** `@chaibuilder/sdk` v4.0.0-beta.51 (github.com/chaibuilder/sdk)
+**Integration point:** `src/components/perokio/campaign/page-builder-host.tsx`
+
+The `PageBuilderHost` component wraps the Chai Builder `ChaiBuilderEditor` and provides:
+
+1. **Dynamic loading** via `next/dynamic` — the SDK is 377 packages heavy. Loading it lazily prevents bundle bloat. The editor only loads when the Campaign Studio Phase 2 is opened.
+
+2. **Template selection** — 3 pre-built QSR campaign templates (Lunch Special, New Product Launch, Weekend Promo) are available as selectable tabs above the editor. Each template provides an `initialBlocks` array.
+
+3. **Custom block registration** — 3 Perokio-specific blocks are registered via `registerChaiLibrary()`:
+   - `TastyIgniterMenuBlock` — fetches and renders TastyIgniter menu items (mock in V1, headless API in V2)
+   - `SparkCTA` — a lime/orange button that links to a `pero.to/` shortlink
+   - `CountdownTimer` — urgency timer with 3 variants (urgent=red, launch=lime, standard=orange)
+
+4. **AI assistant** — the `askAiCallBack` prop is wired. V1 returns mock suggestions. V2 will call OpenRouter API (`NEXT_PUBLIC_OPENROUTER_API_KEY`) with `anthropic/claude-3.5-sonnet`.
+
+5. **Graceful fallback** — if the SDK fails to load (network error, version conflict), the component falls back to the `MockPhonePreview` — a live-updating iPhone mock that mirrors the editor state.
+
+### Files
+
+| File | Purpose |
+|---|---|
+| `src/components/perokio/campaign/page-builder-host.tsx` | The wrapper component. Dynamically imports `ChaiBuilderEditor`, registers blocks, provides template selector, handles save callback. Falls back to mock preview on error. |
+| `src/lib/perokio/campaign-templates.ts` | 3 pre-built template definitions (Lunch Special, New Product Launch, Weekend Promo). Each template has a `blocks` array in ChaiBlock format. |
+| `src/lib/perokio/chai-blocks.tsx` | 3 custom block definitions (TastyIgniterMenuBlock, SparkCTA, CountdownTimer) + `registerPerokioBlocks()` function that calls `registerChaiLibrary()`. |
+
+### onSave Flow
+
+When the user clicks [Save Page] in Phase 2:
+1. The `ChaiBuilderEditor` calls `onSave({ blocks, autoSave })`
+2. `PageBuilderHost.handleSave()` stores the block tree
+3. The `onSave` prop callback fires — CampaignStudio stores it via `saveCampaignPage()`
+4. In V2, this will also `POST` the block tree to the NestJS backend for persistence
+
+### Environment Variables
+
+| Variable | Purpose |
+|---|---|
+| `NEXT_PUBLIC_OPENROUTER_API_KEY` | The API key for the Chai Builder AI assistant. Billed to Perokio's account. |
+| `NEXT_PUBLIC_CHAI_BUILDER_LICENSE` | (Optional) Chai Builder Pro license key for removing watermarks. |
